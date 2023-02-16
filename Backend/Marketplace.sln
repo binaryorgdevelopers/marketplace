@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Marketplace.Api", "Marketpl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Api", "..\src\Api\Marketplace.Api\Marketplace.Api.csproj", "{66851837-50F1-4921-A479-567513E479C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Test", "..\src\Test\Marketplace.Test\Marketplace.Test.csproj", "{868EDA92-7440-46E9-B0CD-7092858BA4C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,5 +52,9 @@ Global
 		{66851837-50F1-4921-A479-567513E479C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66851837-50F1-4921-A479-567513E479C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66851837-50F1-4921-A479-567513E479C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{868EDA92-7440-46E9-B0CD-7092858BA4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868EDA92-7440-46E9-B0CD-7092858BA4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868EDA92-7440-46E9-B0CD-7092858BA4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868EDA92-7440-46E9-B0CD-7092858BA4C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
