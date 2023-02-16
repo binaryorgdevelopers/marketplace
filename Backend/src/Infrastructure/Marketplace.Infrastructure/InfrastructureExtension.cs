@@ -2,6 +2,7 @@
 using Marketplace.Application.Common;
 using Marketplace.Application.Common.Interface.Authentication;
 using Marketplace.Application.Common.Interface.Database;
+using Marketplace.Application.Queries;
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Repositories;
 using Marketplace.Infrastructure.Common.Authentication;
@@ -19,9 +20,9 @@ public static class InfrastructureExtension
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
         ConfigurationManager configuration)
     {
-        services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
-        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IUserCreateCommand, UserCreateCommand>();
+        services.AddScoped<IUserSignInQuery, UserSignInQuery>();
+
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
         services.AddScoped<IUserRepository, UserRepository>();

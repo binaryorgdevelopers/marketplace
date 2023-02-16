@@ -2,14 +2,18 @@
 using Marketplace.Domain.Abstractions;
 using Marketplace.Domain.Constants;
 using Marketplace.Domain.Exceptions;
+using Marketplace.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Marketplace.Domain.Entities;
 
 public class User : IIdentifiable, ICommon
 {
-    private static readonly Regex EmailRegex = new Regex(Regexs.EmailRegexPattern, RegexOptions.IgnoreCase |
-        RegexOptions.Compiled | RegexOptions.CultureInvariant);
+    private static readonly Regex EmailRegex = new(Regexs.EmailRegexPattern, RegexOptions.IgnoreCase |
+                                                                             RegexOptions.Compiled |
+                                                                             RegexOptions.CultureInvariant);
+
+    private static readonly Regex NumberRegex = new(Regexs.PhoneNumberRegexPatter);
 
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; }
@@ -39,7 +43,7 @@ public class User : IIdentifiable, ICommon
             throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{email}.'");
         }
 
-        if (!Entities.Role.IsValid(role))
+        if (Entities.Role.TryValidateRole(role, out var output))
         {
             throw new AuthException(Codes.InvalidRole, $"Invalid role: '{role}'.");
         }
@@ -47,7 +51,7 @@ public class User : IIdentifiable, ICommon
         Id = id;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
-        Role = role.ToLowerInvariant();
+        Role = output;
         Email = email;
     }
 
@@ -58,20 +62,27 @@ public class User : IIdentifiable, ICommon
             throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{email}.'");
         }
 
-        if (!Entities.Role.IsValid(role))
+        if (Entities.Role.TryValidateRole(role, out var output))
         {
             throw new AuthException(Codes.InvalidRole, $"Invalid role: '{role}'.");
+        }
+
+        if (!PhoneNumberValidate(phoneNumber))
+        {
+            throw new AuthException(Codes.InvalidPhoneNumber, $"Invalid phone number '{phoneNumber}'.");
         }
 
         Id = id;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
-        Role = role.ToLowerInvariant();
+        Role = output;
         Email = email;
         FirstName = firstName;
         LastName = lastName;
         PhoneNumber = phoneNumber;
     }
+
+    public TokenRequest ToTokenRequest => new(Email, PhoneNumber, FirstName, LastName, Role);
 
 
     public void SetPassword(string password, IPasswordHasher<User> passwordHasher)
@@ -83,6 +94,9 @@ public class User : IIdentifiable, ICommon
 
         PasswordHash = passwordHasher.HashPassword(this, password);
     }
+
+    public static bool PhoneNumberValidate(string input)
+        => NumberRegex.IsMatch(input);
 
     public bool ValidatePassword(string password, IPasswordHasher<User> passwordHasher)
         => passwordHasher.VerifyHashedPassword(this, PasswordHash, password) != PasswordVerificationResult.Failed;

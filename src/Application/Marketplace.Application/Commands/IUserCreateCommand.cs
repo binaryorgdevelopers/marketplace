@@ -6,5 +6,5 @@ namespace Marketplace.Application.Commands;
 
 public interface IUserCreateCommand
 {
-    Task<Either<AuthResult, AuthException>> CreateUser(UserCreate user);
+    Task<Either<AuthResult, AuthException>> CreateUser(SignUp user);
 }

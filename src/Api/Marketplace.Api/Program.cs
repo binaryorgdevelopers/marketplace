@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.RegisterLambda();
+builder.Services.AddJwt(builder.Configuration);
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -27,6 +28,7 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
 app.UseErrorHandler();
 
 app.MapControllers();

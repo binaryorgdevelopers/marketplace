@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Queries" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\..\Backend\Marketplace.Domain\Marketplace.Domain\Marketplace.Domain.csproj" />
     </ItemGroup>
 
