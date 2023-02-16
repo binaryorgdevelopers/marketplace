@@ -21,19 +21,16 @@ public class User : IIdentifiable, ICommon
     public string PhoneNumber { get; set; }
     public string PasswordHash { get; private set; }
 
-    public string Email
+    public List<Shop> Shops { get; set; }
+
+    public User()
     {
-        get => Email;
-        set
-        {
-            if (!EmailRegex.IsMatch(value))
-            {
-                throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{value}.'");
-            }
-        }
     }
 
+    public string Email { get; set; }
+
     public int ShopId { get; set; }
+
 
     public User(Guid id, string email, string role)
     {
@@ -42,7 +39,7 @@ public class User : IIdentifiable, ICommon
             throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{email}.'");
         }
 
-        if (Entities.Role.IsValid(role))
+        if (!Entities.Role.IsValid(role))
         {
             throw new AuthException(Codes.InvalidRole, $"Invalid role: '{role}'.");
         }
@@ -53,6 +50,29 @@ public class User : IIdentifiable, ICommon
         Role = role.ToLowerInvariant();
         Email = email;
     }
+
+    public User(Guid id, string email, string role, string firstName, string lastName, string phoneNumber)
+    {
+        if (!EmailRegex.IsMatch(email))
+        {
+            throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{email}.'");
+        }
+
+        if (!Entities.Role.IsValid(role))
+        {
+            throw new AuthException(Codes.InvalidRole, $"Invalid role: '{role}'.");
+        }
+
+        Id = id;
+        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
+        Role = role.ToLowerInvariant();
+        Email = email;
+        FirstName = firstName;
+        LastName = lastName;
+        PhoneNumber = phoneNumber;
+    }
+
 
     public void SetPassword(string password, IPasswordHasher<User> passwordHasher)
     {

@@ -7,9 +7,12 @@ namespace Marketplace.Domain.Entities;
 public class Shop : IIdentifiable
 {
     public Guid Id { get; set; }
+    public Guid UserId { get; set; }
     public string Name { get; set; }
     public int Number { get; set; }
     public string Extras { get; set; }
+    
+    public User User { get; set; }
 
     public Shop(Guid id, string name, int number, string extras)
     {
