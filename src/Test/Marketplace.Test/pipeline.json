@@ -1,0 +1,405 @@
+﻿{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Transform" : "AWS::Serverless-2016-10-31",
+  "Description" : "This templates creates a three stage pipeline that will pull changes from a repository, builds the artifacts and deploys it to CloudFormation",
+  "Parameters" : {
+    "ArtifactBucket" : {
+      "Type" : "String",
+      "Description" : "S3 bucket name for storing artifacts",
+      "MinLength":1
+    },
+    "ServiceStackName" : {
+      "Type" : "String",
+      "Description" : "Name of the stack that is deployed in deploy stage of this pipeline",
+      "MinLength":1
+    },
+    "EnvironmentName" : {
+      "Type" : "String",
+      "Description" : "Name of the environment this stack belongs to. eg dev, stage, prod",
+      "MinLength":1
+    }
+  },
+  "Resources" : {
+    "PipelineRole":
+    {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument":{
+          "Statement": [
+            {
+              "Action": [
+                "sts:AssumeRole"
+              ],
+              "Effect": "Allow",
+              "Principal":{
+                "Service": "codepipeline.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "Policies":[
+          {
+            "PolicyDocument" : {
+              "Statement": [
+                {
+                  "Action": [
+                    "iam:PassRole"
+                  ],
+                  "Resource": "*",
+                  "Effect": "Allow",
+                  "Condition": {
+                    "StringEqualsIfExists": {
+                      "iam:PassedToService": [
+                        "cloudformation.amazonaws.com",
+                        "elasticbeanstalk.amazonaws.com",
+                        "ec2.amazonaws.com",
+                        "ecs-tasks.amazonaws.com"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "Action": [
+                    "codecommit:CancelUploadArchive",
+                    "codecommit:GetBranch",
+                    "codecommit:GetCommit",
+                    "codecommit:GetUploadArchiveStatus",
+                    "codecommit:UploadArchive"
+                  ],
+                  "Resource": "*",
+                  "Effect": "Allow"
+                },
+                {
+                  "Action": [
+                    "codedeploy:CreateDeployment",
+                    "codedeploy:GetApplication",
+                    "codedeploy:GetApplicationRevision",
+                    "codedeploy:GetDeployment",
+                    "codedeploy:GetDeploymentConfig",
+                    "codedeploy:RegisterApplicationRevision"
+                  ],
+                  "Resource": "*",
+                  "Effect": "Allow"
+                },
+                {
+                  "Action": [
+                    "elasticbeanstalk:*",
+                    "ec2:*",
+                    "elasticloadbalancing:*",
+                    "autoscaling:*",
+                    "cloudwatch:*",
+                    "s3:*",
+                    "sns:*",
+                    "cloudformation:*",
+                    "rds:*",
+                    "sqs:*",
+                    "ecs:*"
+                  ],
+                  "Resource": "*",
+                  "Effect": "Allow"
+                },
+                {
+                  "Action": [
+                    "lambda:InvokeFunction",
+                    "lambda:ListFunctions"
+                  ],
+                  "Resource": "*",
+                  "Effect": "Allow"
+                },
+                {
+                  "Action": [
+                    "opsworks:CreateDeployment",
+                    "opsworks:DescribeApps",
+                    "opsworks:DescribeCommands",
+                    "opsworks:DescribeDeployments",
+                    "opsworks:DescribeInstances",
+                    "opsworks:DescribeStacks",
+                    "opsworks:UpdateApp",
+                    "opsworks:UpdateStack"
+                  ],
+                  "Resource": "*",
+                  "Effect": "Allow"
+                },
+                {
+                  "Action": [
+                    "cloudformation:CreateStack",
+                    "cloudformation:DeleteStack",
+                    "cloudformation:DescribeStacks",
+                    "cloudformation:UpdateStack",
+                    "cloudformation:CreateChangeSet",
+                    "cloudformation:DeleteChangeSet",
+                    "cloudformation:DescribeChangeSet",
+                    "cloudformation:ExecuteChangeSet",
+                    "cloudformation:SetStackPolicy",
+                    "cloudformation:ValidateTemplate"
+                  ],
+                  "Resource": "*",
+                  "Effect": "Allow"
+                },
+                {
+                  "Action": [
+                    "codebuild:BatchGetBuilds",
+                    "codebuild:StartBuild"
+                  ],
+                  "Resource": "*",
+                  "Effect": "Allow"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "devicefarm:ListProjects",
+                    "devicefarm:ListDevicePools",
+                    "devicefarm:GetRun",
+                    "devicefarm:GetUpload",
+                    "devicefarm:CreateUpload",
+                    "devicefarm:ScheduleRun"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "servicecatalog:ListProvisioningArtifacts",
+                    "servicecatalog:CreateProvisioningArtifact",
+                    "servicecatalog:DescribeProvisioningArtifact",
+                    "servicecatalog:DeleteProvisioningArtifact",
+                    "servicecatalog:UpdateProduct"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cloudformation:ValidateTemplate"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ecr:DescribeImages"
+                  ],
+                  "Resource": "*"
+                }
+              ],
+              "Version": "2012-10-17"
+            },
+            "PolicyName" : { "Fn::Join" : [ "_", [ {"Ref":"AWS::StackName"},"Pipeline","Role","Policy" ] ] }
+          }
+        ],
+        "RoleName": { "Fn::Join" : [ "_", [ {"Ref":"AWS::StackName"},"Pipeline","Role" ] ] }
+      }
+    },
+    "BuildRole":
+    {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument":{
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "codebuild.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies":[
+          {
+            "PolicyDocument":{
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "*",
+                  "Resource": "*"
+                }
+              ]
+            },
+            "PolicyName":{ "Fn::Join" : [ "_", [ {"Ref":"AWS::StackName"},"Build","Role","Policy" ] ] }
+          }
+        ],
+        "RoleName": { "Fn::Join" : [ "_", [ {"Ref":"AWS::StackName"},"Build","Role" ] ] }
+      }
+    },
+    "DeployRole":
+    {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument":{
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudformation.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies":[
+          {
+            "PolicyDocument":{
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "*",
+                  "Resource": "*"
+                }
+              ]
+            },
+            "PolicyName":{ "Fn::Join" : [ "_", [ {"Ref":"AWS::StackName"},"Deploy","Role","Policy" ] ] }
+          }
+        ],
+        "RoleName": { "Fn::Join" : [ "_", [ {"Ref":"AWS::StackName"},"Deploy","Role" ] ] }
+      }
+    },
+    "BuildProject":{
+      "Type" : "AWS::CodeBuild::Project",
+      "Properties" : {
+        "Artifacts" : {
+          "Type":"CODEPIPELINE"
+        },
+        "Cache" : {
+          "Type" : "LOCAL",
+          "Modes" : ["LOCAL_DOCKER_LAYER_CACHE"]
+        },
+        "BadgeEnabled" : false,
+        "Description" : { "Fn::Join" : [ " ", [ {"Ref":"AWS::StackName"},"Build Project" ] ] },
+        "Environment" : {
+          "EnvironmentVariables":[
+            {
+              "Name" : "EnvironmentName",
+              "Type" : "PLAINTEXT",
+              "Value" : { "Ref" : "EnvironmentName" }
+            }
+          ],
+          "ComputeType" : "BUILD_GENERAL1_SMALL",
+          "Image" : "aws/codebuild/dot-net:core-2.1",
+          "PrivilegedMode" : true,
+          "Type" : "LINUX_CONTAINER"
+        },
+        "Source":{
+          "Type":"CODEPIPELINE"
+        },
+        "ServiceRole":{"Fn::GetAtt" : ["BuildRole", "Arn"] },
+        "Name" : { "Fn::Join" : [ "_", [ {"Ref":"AWS::StackName"},"Pipeline","Build","Project" ] ] }
+      }
+    },
+    "Pipeline":{
+      "Type" : "AWS::CodePipeline::Pipeline",
+      "Properties" : {
+        "ArtifactStore" : {
+          "Location" : {"Ref":"ArtifactBucket"},
+          "Type" : "S3"
+        },
+        "Name" : { "Fn::Join" : [ "_", [ {"Ref":"AWS::StackName"},"Pipeline" ] ] },
+        "RestartExecutionOnUpdate" : true,
+        "RoleArn" : {"Fn::GetAtt" : ["PipelineRole", "Arn"] },
+        "Stages" : [
+
+          {
+            "Actions" : [
+              {
+                "ActionTypeId" : {
+                  "Category" : "Source",
+                  "Owner" : "ThirdParty",
+                  "Provider" : "GitHub",
+                  "Version" : "1"
+                },
+                "Configuration": {
+                  "Owner": "MyOwner",
+                  "Repo": "MyRepo",
+                  "PollForSourceChanges": "false",
+                  "Branch": "dev",
+                  "OAuthToken": "*******1234"
+                },
+                "Name" : "Source",
+                "OutputArtifacts" : [
+                  {
+                    "Name" : "source-artifact"
+                  }
+                ],
+                "Region" : { "Ref" : "AWS::Region" },
+                "RunOrder" : 1
+              }
+            ],
+            "Blockers" : [ ],
+            "Name" : "FetchSource"
+          },
+          {
+            "Actions" : [
+              {
+                "ActionTypeId" : {
+                  "Category" : "Build",
+                  "Owner" : "AWS",
+                  "Provider" : "CodeBuild",
+                  "Version" : "1"
+                },
+                "Configuration":{
+                  "ProjectName":{ "Fn::Join" : [ "_", [ {"Ref":"AWS::StackName"},"Pipeline","Build","Project" ] ] }
+                },
+                "Name" : "Build",
+                "InputArtifacts" : [
+                  {
+                    "Name" : "source-artifact"
+                  }
+                ],
+                "OutputArtifacts" : [
+                  {
+                    "Name" : "build-artifact"
+                  }
+                ],
+                "Region" : { "Ref" : "AWS::Region" },
+                "RunOrder" : 1
+              }
+            ],
+            "Blockers" : [ ],
+            "Name" : "Build"
+          },
+          {
+            "Actions" : [
+              {
+                "ActionTypeId" : {
+                  "Category" : "Deploy",
+                  "Owner" : "AWS",
+                  "Provider" : "CloudFormation",
+                  "Version" : "1"
+                },
+                "Configuration": {
+                  "StackName": {"Ref":"ServiceStackName"},
+                  "ActionMode": "CREATE_UPDATE",
+                  "RoleArn": {"Fn::GetAtt" : ["DeployRole", "Arn"] },
+                  "TemplatePath":"build-artifact::outputSamTemplate.yml",
+                  "TemplateConfiguration": "build-artifact::template-params.json",
+                  "Capabilities":"CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND"
+                },
+                "Name" : "Deploy",
+                "InputArtifacts" : [
+                  {
+                    "Name" : "build-artifact"
+                  }
+                ],
+                "Region" : { "Ref" : "AWS::Region" },
+                "RunOrder" : 1
+              }
+            ],
+            "Blockers" : [ ],
+            "Name" : "Deploy"
+          }
+
+
+        ]
+      }
+    }
+
+  },
+  "Outputs" : {
+
+  }
+}
