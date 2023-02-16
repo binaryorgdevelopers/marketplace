@@ -1,10 +1,12 @@
 ﻿using Marketplace.Application.Common;
 using Marketplace.Application.Common.Interface.Authentication;
+using Marketplace.Application.Common.Messages;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Domain.Constants;
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Exceptions;
+using Marketplace.Domain.Models;
 using Marketplace.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 
@@ -24,7 +26,7 @@ public class UserCreateCommand : IUserCreateCommand
         _userRepository = userRepository;
     }
 
-    public async Task<Either<AuthResult, AuthException>> CreateUser(UserCreate user)
+    public async Task<Either<AuthResult, AuthException>> CreateUser(SignUp user)
     {
         var searchResult = await _userRepository.GetAsync(user.Email);
         if (searchResult is not null)
@@ -34,14 +36,17 @@ public class UserCreateCommand : IUserCreateCommand
         }
 
         User userTable = new User(Guid.NewGuid(), user.Email, user.Role, user.Firstname, user.Lastname,
-            user.PhoneNumber);
-        userTable.UserType = UserType.User;
+            user.PhoneNumber)
+        {
+            UserType = UserType.User
+        };
         userTable.SetPassword(user.Password, _passwordHasher);
         await _userRepository.AddAsync(userTable);
         var authResult =
             new AuthResult(
                 new SignedUp(userTable.FirstName, userTable.LastName, userTable.PhoneNumber, userTable.Email),
-                _jwtTokenGenerator.GenerateToken(user));
+                _jwtTokenGenerator.GenerateToken(new TokenRequest(user.Email, user.PhoneNumber, user.Firstname,
+                    user.Lastname,user.Role)));
         return new Either<AuthResult, AuthException>(authResult);
     }
 }

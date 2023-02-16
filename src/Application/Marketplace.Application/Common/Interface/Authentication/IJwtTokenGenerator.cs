@@ -1,8 +1,9 @@
-﻿using Marketplace.Application.Common.Messages.Commands;
+﻿using Marketplace.Application.Common.Messages;
+using Marketplace.Domain.Models;
 
 namespace Marketplace.Application.Common.Interface.Authentication;
 
 public interface IJwtTokenGenerator
 {
-    string GenerateToken(UserCreate user);
+    JsonWebToken GenerateToken(TokenRequest user);
 }
