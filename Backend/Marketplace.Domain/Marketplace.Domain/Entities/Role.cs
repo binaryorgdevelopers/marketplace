@@ -11,7 +11,7 @@ public class Role : IIdentifiable, ICommon
     {
         if (string.IsNullOrWhiteSpace(input)) role = User;
         else if (input.Equals(User, StringComparison.OrdinalIgnoreCase) ||
-                 input.Equals(User, StringComparison.OrdinalIgnoreCase))
+                 input.Equals(Admin, StringComparison.OrdinalIgnoreCase))
             role = input.ToLowerInvariant();
         else role = string.Empty;
         return role is User or Admin;

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
-using Marketplace.Application.Common.Interface.Database;
 using Marketplace.Domain.Abstractions;
+using Marketplace.Domain.Repositories;
 using Marketplace.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 

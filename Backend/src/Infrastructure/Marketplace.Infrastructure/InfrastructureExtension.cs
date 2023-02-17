@@ -1,11 +1,9 @@
-﻿using Marketplace.Application.Commands;
-using Marketplace.Application.Common;
-using Marketplace.Application.Common.Interface.Authentication;
-using Marketplace.Application.Common.Interface.Database;
+﻿using Marketplace.Application.Commands.Command;
+using Marketplace.Application.Commands.ICommand;
 using Marketplace.Application.Queries;
+using Marketplace.Application.Queries.Query;
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Repositories;
-using Marketplace.Infrastructure.Common.Authentication;
 using Marketplace.Infrastructure.Database;
 using Marketplace.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -18,7 +16,7 @@ namespace Marketplace.Infrastructure;
 public static class InfrastructureExtension
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
-        ConfigurationManager configuration)
+        ConfigurationManager configuration, bool IsDevEnv)
     {
         services.AddScoped<IUserCreateCommand, UserCreateCommand>();
         services.AddScoped<IUserSignInQuery, UserSignInQuery>();
@@ -27,14 +25,25 @@ public static class InfrastructureExtension
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-        services.AddDatabase();
+        services.AddDatabase(IsDevEnv, configuration);
 
         return services;
     }
 
-    private static IServiceCollection AddDatabase(this IServiceCollection services)
+    private static IServiceCollection AddDatabase(this IServiceCollection services, bool isDevEnv,
+        IConfiguration configuration)
     {
-        services.AddDbContext<DataContext>(options => { options.UseInMemoryDatabase("devEnv"); });
+        if (isDevEnv)
+        {
+            services.AddDbContext<DataContext>(options => { options.UseInMemoryDatabase("devEnv"); });
+        }
+        else
+        {
+            services.AddDbContext<DataContext>(options =>
+                options.UseNpgsql(configuration.GetValue<string>("Postgresql:ConnectionString"))
+            );
+        }
+
         return services;
     }
 }

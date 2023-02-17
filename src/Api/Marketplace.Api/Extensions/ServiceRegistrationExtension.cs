@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.Text;
 using Marketplace.Api.Middleware;
 using Marketplace.Api.Services;
 using Marketplace.Application.Common;
-using Marketplace.Application.Common.Interface.Authentication;
+using Marketplace.Domain.Repositories;
 using Marketplace.Infrastructure;
 using Marketplace.Infrastructure.Common.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Marketplace.Application.Common.Interface.Database;
+namespace Marketplace.Domain.Repositories;
 
 public interface IGenericRepository<TEntity>
 {

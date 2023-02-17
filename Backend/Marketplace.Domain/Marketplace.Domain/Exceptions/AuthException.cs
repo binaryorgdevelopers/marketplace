@@ -21,6 +21,7 @@ public class AuthException : Exception
 
     public AuthException(string code, string message, params object[] args) : this(null, code, message, args)
     {
+        Code = code;
     }
 
     public AuthException(Exception innerException, string message, params object[] args) : this(innerException,
@@ -31,5 +32,6 @@ public class AuthException : Exception
     private AuthException(Exception innerException, string code, string message, params object[] args) : base(
         string.Format(message, args), innerException)
     {
+        Code = code;
     }
 }

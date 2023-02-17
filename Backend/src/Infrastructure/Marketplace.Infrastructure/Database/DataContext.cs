@@ -1,6 +1,5 @@
 ﻿using Marketplace.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-
 namespace Marketplace.Infrastructure.Database;
 
 public class DataContext : DbContext
@@ -25,5 +24,10 @@ public class DataContext : DbContext
                 .HasForeignKey(x => x.UserId);
         });
         base.OnModelCreating(modelBuilder);
+    }
+
+    public DataContext()
+    {
+        
     }
 }
