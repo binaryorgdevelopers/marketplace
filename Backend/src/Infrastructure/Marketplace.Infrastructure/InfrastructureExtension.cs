@@ -22,7 +22,6 @@ public static class InfrastructureExtension
 
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
-        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         return services;

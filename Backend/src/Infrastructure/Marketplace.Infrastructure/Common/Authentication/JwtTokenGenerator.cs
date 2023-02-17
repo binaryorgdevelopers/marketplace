@@ -23,7 +23,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     public JsonWebToken GenerateToken(TokenRequest user)
     {
         var signingCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(Encoding.UTF8.GetBytes("FUCKING SECRET TOKEN")), 
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey)),
             SecurityAlgorithms.HmacSha512);
 
         var claims = new[]
@@ -37,12 +37,12 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
         var securityToken = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiryMinutes),
+            expires: DateTime.Now.AddHours(_jwtOptions.ExpiryMinutes),
             issuer: _jwtOptions.Issuer,
             audience: _jwtOptions.ValidAudience,
             signingCredentials: signingCredentials);
 
         return new JsonWebToken(new JwtSecurityTokenHandler().WriteToken(securityToken),
-            DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiryMinutes).Minute);
+            DateTime.Now.AddHours(_jwtOptions.ExpiryMinutes).ToShortTimeString());
     }
 }

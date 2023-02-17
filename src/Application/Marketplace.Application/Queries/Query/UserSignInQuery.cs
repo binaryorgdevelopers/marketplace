@@ -11,21 +11,21 @@ namespace Marketplace.Application.Queries.Query;
 
 public class UserSignInQuery : IUserSignInQuery
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IGenericRepository<User> _genericRepository;
     private readonly IJwtTokenGenerator _tokenGenerator;
     private readonly IPasswordHasher<User> _passwordHasher;
 
-    public UserSignInQuery(IUserRepository userRepository, IJwtTokenGenerator tokenGenerator,
-        IPasswordHasher<User> passwordHasher)
+    public UserSignInQuery(IJwtTokenGenerator tokenGenerator,
+        IPasswordHasher<User> passwordHasher, IGenericRepository<User> genericRepository)
     {
-        _userRepository = userRepository;
         _tokenGenerator = tokenGenerator;
         _passwordHasher = passwordHasher;
+        _genericRepository = genericRepository;
     }
 
     public async Task<Either<AuthResult, AuthException>> SignIn(SignIn signIn)
     {
-        var user = await _userRepository.GetAsync(signIn.Email);
+        var user = await _genericRepository.GetAsync(c => c.Email == signIn.Email);
         if (user is null)
         {
             return new Either<AuthResult, AuthException>(new AuthException(Codes.UserNotFound,
@@ -39,7 +39,7 @@ public class UserSignInQuery : IUserSignInQuery
                 "Invalid password"));
         }
 
-        SignedUp signedUp = new SignedUp(user.FirstName, user.LastName, user.PhoneNumber, user.Email);
+        var signedUp = new SignedUp(user.FirstName, user.LastName, user.PhoneNumber, user.Email);
 
         return new Either<AuthResult, AuthException>(new AuthResult(signedUp,
             _tokenGenerator.GenerateToken(user.ToTokenRequest)));
