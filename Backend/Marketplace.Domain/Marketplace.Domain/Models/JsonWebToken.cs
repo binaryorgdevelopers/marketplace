@@ -1,3 +1,3 @@
 ﻿namespace Marketplace.Domain.Models;
 
-public record JsonWebToken(string Token, int ExpiresIn);
+public record JsonWebToken(string Token, string ExpiresIn);
