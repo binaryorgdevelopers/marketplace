@@ -31,7 +31,7 @@ public class UserCreateCommand : IUserCreateCommand
         if (searchResult is not null)
         {
             return new Either<AuthResult, AuthException>(new AuthException(Codes.EmailInUse,
-                $"With ${nameof(user.PhoneNumber)}: '{user.PhoneNumber}' already exists"));
+                $"With ${nameof(user.Email)}: '{user.Email}' already exists"));
         }
 
         User userTable = new User(Guid.NewGuid(), user.Email, user.Role, user.Firstname, user.Lastname,

@@ -15,8 +15,7 @@ namespace Marketplace.Infrastructure;
 
 public static class InfrastructureExtension
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services,
-        ConfigurationManager configuration, bool IsDevEnv)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddScoped<IUserCreateCommand, UserCreateCommand>();
         services.AddScoped<IUserSignInQuery, UserSignInQuery>();
@@ -25,24 +24,23 @@ public static class InfrastructureExtension
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-        services.AddDatabase(IsDevEnv, configuration);
 
         return services;
     }
 
-    private static IServiceCollection AddDatabase(this IServiceCollection services, bool isDevEnv,
+    public static IServiceCollection AddDatabase(this IServiceCollection services, bool isDevEnv,
         IConfiguration configuration)
     {
-        if (isDevEnv)
-        {
-            services.AddDbContext<DataContext>(options => { options.UseInMemoryDatabase("devEnv"); });
-        }
-        else
-        {
-            services.AddDbContext<DataContext>(options =>
-                options.UseNpgsql(configuration.GetValue<string>("Postgresql:ConnectionString"))
-            );
-        }
+        // if (isDevEnv)
+        // {
+        //     services.AddDbContext<DataContext>(options => { options.UseInMemoryDatabase("devEnv"); });
+        // }
+        // else
+        // {
+        services.AddDbContext<DataContext>(options =>
+            options.UseNpgsql(configuration.GetValue<string>("Postgresql:ConnectionString"))
+        );
+        // }
 
         return services;
     }

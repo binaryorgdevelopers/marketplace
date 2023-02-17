@@ -1,15 +1,16 @@
 ﻿using Marketplace.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+
 namespace Marketplace.Infrastructure.Database;
 
 public class DataContext : DbContext
 {
-    public DataContext(DbContextOptions<DataContext> dbContextOptions) : base(dbContextOptions)
+    public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
     }
 
     public DbSet<User> Users { get; set; }
-    public DbSet<Blob>Blobs { get; set; }
+    public DbSet<Blob> Blobs { get; set; }
     public DbSet<Shop> Shops { get; set; }
     public DbSet<Role> Roles { get; set; }
 
@@ -28,6 +29,5 @@ public class DataContext : DbContext
 
     public DataContext()
     {
-        
     }
 }
