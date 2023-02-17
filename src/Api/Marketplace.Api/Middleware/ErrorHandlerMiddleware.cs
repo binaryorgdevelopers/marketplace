@@ -32,15 +32,12 @@ public class ErrorHandlerMiddleware
     private static Task HandleErrorAsync(HttpContext context, Exception exception)
     {
         var errorCode = "error";
-        var statusCode = HttpStatusCode.BadRequest;
-        var message = "There was an error.";
-        switch(exception)
+        const HttpStatusCode statusCode = HttpStatusCode.BadRequest;
+        errorCode = exception switch
         {
-            case AuthException e:
-                errorCode = e.Code;
-                message = e.Message;
-                break;
-        }
+            AuthException e => e.Code,
+            _ => errorCode
+        };
         var response = new { code = errorCode, message = exception.Message };
         var payload = JsonSerializer.Serialize(response);
         context.Response.ContentType = "application/json";

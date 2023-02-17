@@ -1,6 +1,5 @@
-﻿using Marketplace.Application.Common;
-using Marketplace.Application.Common.Interface.Authentication;
-using Marketplace.Application.Common.Messages;
+﻿using Marketplace.Application.Commands.ICommand;
+using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Domain.Constants;
@@ -10,7 +9,7 @@ using Marketplace.Domain.Models;
 using Marketplace.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 
-namespace Marketplace.Application.Commands;
+namespace Marketplace.Application.Commands.Command;
 
 public class UserCreateCommand : IUserCreateCommand
 {

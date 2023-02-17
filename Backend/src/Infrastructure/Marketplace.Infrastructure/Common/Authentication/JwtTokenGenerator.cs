@@ -2,9 +2,9 @@
 using System.Security.Claims;
 using System.Text;
 using Marketplace.Application.Common;
-using Marketplace.Application.Common.Interface.Authentication;
 using Marketplace.Application.Common.Messages;
 using Marketplace.Domain.Models;
+using Marketplace.Domain.Repositories;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;

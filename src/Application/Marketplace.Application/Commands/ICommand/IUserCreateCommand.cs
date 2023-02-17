@@ -2,7 +2,7 @@
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Domain.Exceptions;
 
-namespace Marketplace.Application.Commands;
+namespace Marketplace.Application.Commands.ICommand;
 
 public interface IUserCreateCommand
 {

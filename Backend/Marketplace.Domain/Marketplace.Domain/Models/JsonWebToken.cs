@@ -1,3 +1,3 @@
-﻿namespace Marketplace.Application.Common.Messages;
+﻿namespace Marketplace.Domain.Models;
 
 public record JsonWebToken(string Token, int ExpiresIn);

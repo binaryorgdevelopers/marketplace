@@ -62,7 +62,7 @@ public class User : IIdentifiable, ICommon
             throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{email}.'");
         }
 
-        if (Entities.Role.TryValidateRole(role, out var output))
+        if (!Entities.Role.TryValidateRole(role, out var output))
         {
             throw new AuthException(Codes.InvalidRole, $"Invalid role: '{role}'.");
         }

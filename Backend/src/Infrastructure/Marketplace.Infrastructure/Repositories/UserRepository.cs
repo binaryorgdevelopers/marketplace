@@ -1,5 +1,4 @@
-﻿using Marketplace.Application.Common.Interface.Database;
-using Marketplace.Domain.Entities;
+﻿using Marketplace.Domain.Entities;
 using Marketplace.Domain.Repositories;
 
 namespace Marketplace.Infrastructure.Repositories;
