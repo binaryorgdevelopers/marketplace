@@ -10,10 +10,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.RegisterLambda();
 builder.Services.AddJwt(builder.Configuration);
 
-builder.Services.AddInfrastructure(builder.Configuration,builder.Environment.IsDevelopment());
+builder.Services.AddInfrastructure();
 
 
 builder.Services.AddServices(builder.Configuration);
+builder.Services.AddDatabase(builder.Environment.IsDevelopment(), builder.Configuration);
 
 var app = builder.Build();
 
