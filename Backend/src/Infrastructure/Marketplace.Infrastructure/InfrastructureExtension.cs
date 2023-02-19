@@ -19,6 +19,7 @@ public static class InfrastructureExtension
     {
         services.AddScoped<IUserCreateCommand, UserCreateCommand>();
         services.AddScoped<IUserSignInQuery, UserSignInQuery>();
+        services.AddScoped<IUserUpdateCommand, UserUpdateCommand>();
 
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
@@ -39,7 +40,6 @@ public static class InfrastructureExtension
         services.AddDbContext<DataContext>(options =>
             options.UseNpgsql(configuration.GetValue<string>("Postgresql:ConnectionString"))
         );
-        // }
 
         return services;
     }

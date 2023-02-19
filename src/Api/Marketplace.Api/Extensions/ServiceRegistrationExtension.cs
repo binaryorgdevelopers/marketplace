@@ -1,7 +1,10 @@
 ﻿using System.Text;
+using FluentValidation;
 using Marketplace.Api.Middleware;
 using Marketplace.Api.Services;
+using Marketplace.Api.Validations;
 using Marketplace.Application.Common;
+using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Domain.Repositories;
 using Marketplace.Infrastructure;
 using Marketplace.Infrastructure.Common.Authentication;
@@ -65,6 +68,15 @@ public static class ServiceRegistrationExtension
             EndPoints = { configuration.GetValue<string>("Redis:host")! },
             Password = configuration.GetValue<string>("Redis:password")!
         });
+        return services;
+    }
+
+    public static IServiceCollection AddFluentValidation(this IServiceCollection services)
+    {
+
+        services.AddScoped<IValidator<SignIn>,SignInValidation>();
+        services.AddScoped<IValidator<SignUp>,SignUpValidation>();
+        services.AddScoped<IValidator<UpdateUser>,UpdateUserValidation>();
         return services;
     }
 }

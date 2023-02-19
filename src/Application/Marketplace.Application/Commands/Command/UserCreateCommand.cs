@@ -13,9 +13,9 @@ namespace Marketplace.Application.Commands.Command;
 
 public class UserCreateCommand : IUserCreateCommand
 {
+    private readonly IGenericRepository<User> _genericRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
-    private readonly IGenericRepository<User> _genericRepository;
 
     public UserCreateCommand(IPasswordHasher<User> passwordHasher,
         IJwtTokenGenerator jwtTokenGenerator, IGenericRepository<User> genericRepository)
@@ -27,14 +27,14 @@ public class UserCreateCommand : IUserCreateCommand
 
     public async Task<Either<AuthResult, AuthException>> CreateUser(SignUp user)
     {
-        var searchResult = await _genericRepository.GetAsync(c => c.Email == user.Email);
+        var searchResult = await _genericRepository.GetAsync(e => e.Email == user.Email);
         if (searchResult is not null)
         {
             return new Either<AuthResult, AuthException>(new AuthException(Codes.EmailInUse,
                 $"With ${nameof(user.Email)}: '{user.Email}' already exists"));
         }
 
-        var userTable = new User(Guid.NewGuid(), user.Email, user.Role, user.Firstname, user.Lastname,
+        User userTable = new User(Guid.NewGuid(), user.Email, user.Role, user.Firstname, user.Lastname,
             user.PhoneNumber)
         {
             UserType = UserType.User

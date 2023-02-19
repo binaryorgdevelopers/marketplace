@@ -25,7 +25,7 @@ public class UserSignInQuery : IUserSignInQuery
 
     public async Task<Either<AuthResult, AuthException>> SignIn(SignIn signIn)
     {
-        var user = await _genericRepository.GetAsync(c => c.Email == signIn.Email);
+        var user = await _genericRepository.GetAsync(e => e.Email == signIn.Email);
         if (user is null)
         {
             return new Either<AuthResult, AuthException>(new AuthException(Codes.UserNotFound,
@@ -39,7 +39,7 @@ public class UserSignInQuery : IUserSignInQuery
                 "Invalid password"));
         }
 
-        var signedUp = new SignedUp(user.FirstName, user.LastName, user.PhoneNumber, user.Email);
+        SignedUp signedUp = new SignedUp(user.FirstName, user.LastName, user.PhoneNumber, user.Email);
 
         return new Either<AuthResult, AuthException>(new AuthResult(signedUp,
             _tokenGenerator.GenerateToken(user.ToTokenRequest)));

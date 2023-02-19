@@ -24,6 +24,7 @@ public class User : IIdentifiable, ICommon
     public UserType UserType { get; set; }
     public string PhoneNumber { get; set; }
     public string PasswordHash { get; private set; }
+    public string Email { get; set; }
 
     public List<Shop> Shops { get; set; }
 
@@ -31,7 +32,6 @@ public class User : IIdentifiable, ICommon
     {
     }
 
-    public string Email { get; set; }
 
     public int ShopId { get; set; }
 
