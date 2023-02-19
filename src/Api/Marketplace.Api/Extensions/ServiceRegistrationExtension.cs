@@ -38,22 +38,30 @@ public static class ServiceRegistrationExtension
         services.AddSingleton(options);
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(cfg =>
-                cfg.TokenValidationParameters = new TokenValidationParameters
-                {
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey)),
-                    ValidIssuer = options.Issuer,
-                    ValidAudience = options.ValidAudience,
-                    ValidateAudience = options.ValidateAudience,
-                    ValidateLifetime = options.ValidateLifetime,
-                    ClockSkew = TimeSpan.Zero
-                }
-            );
+
+        services.AddAuthentication(opt =>
+        {
+            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(jwtOptions =>
+        {
+            jwtOptions.SaveToken = true;
+            jwtOptions.RequireHttpsMetadata = false;
+            jwtOptions.TokenValidationParameters = new TokenValidationParameters
+            {
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey)),
+                ValidIssuer = options.Issuer,
+                ValidAudience = options.ValidAudience,
+                ValidateAudience = options.ValidateAudience,
+                ValidateLifetime = false,
+                ClockSkew = TimeSpan.Zero
+            };
+        });
         return services;
     }
 
-    public static IServiceCollection AddRedis(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddRedis(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddStackExchangeRedisCache(x => x.ConfigurationOptions = new ConfigurationOptions
         {
