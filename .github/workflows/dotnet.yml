@@ -21,6 +21,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
+      working-directory: ./src/Test/Marketplace.Api
       run: dotnet restore
     - name: Build
       working-directory: ./src/Test/Marketplace.Api
