@@ -1,9 +1,10 @@
 ﻿using Marketplace.Application.Commands.Command;
 using Marketplace.Application.Commands.ICommand;
 using Marketplace.Application.Queries;
+using Marketplace.Application.Queries.IQuery;
 using Marketplace.Application.Queries.Query;
+using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Domain.Entities;
-using Marketplace.Domain.Repositories;
 using Marketplace.Infrastructure.Database;
 using Marketplace.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,8 @@ public static class InfrastructureExtension
         services.AddScoped<IUserCreateCommand, UserCreateCommand>();
         services.AddScoped<IUserSignInQuery, UserSignInQuery>();
         services.AddScoped<IUserUpdateCommand, UserUpdateCommand>();
+        services.AddScoped<IShopCreateCommand, ShopCreateCommand>();
+        services.AddScoped<IUserReadQuery, UserReadQuery>();
 
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
@@ -31,14 +34,10 @@ public static class InfrastructureExtension
     public static IServiceCollection AddDatabase(this IServiceCollection services, bool isDevEnv,
         IConfiguration configuration)
     {
-        // if (isDevEnv)
-        // {
-        //     services.AddDbContext<DataContext>(options => { options.UseInMemoryDatabase("devEnv"); });
-        // }
-        // else
-        // {
+        const string postgres = "Postgresql:ConnectionString";
+        const string postgresDev = "PostgresqlDev:ConnectionString";
         services.AddDbContext<DataContext>(options =>
-            options.UseNpgsql(configuration.GetValue<string>("Postgresql:ConnectionString"))
+            options.UseNpgsql(configuration.GetValue<string>(isDevEnv ? postgresDev : postgres))
         );
 
         return services;

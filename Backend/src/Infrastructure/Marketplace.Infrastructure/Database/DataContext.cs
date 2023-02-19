@@ -19,7 +19,7 @@ public class DataContext : DbContext
     public DbSet<Shop> Shops { get; set; }
     public DbSet<Role> Roles { get; set; }
 
-
+     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>(c =>
@@ -27,7 +27,7 @@ public class DataContext : DbContext
             c
                 .HasMany(x => x.Shops)
                 .WithOne(x => x.User)
-                .HasForeignKey(x => x.UserId);
+                .HasForeignKey(x => x.UserId); 
         });
         base.OnModelCreating(modelBuilder);
     }

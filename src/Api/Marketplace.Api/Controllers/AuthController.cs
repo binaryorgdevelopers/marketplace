@@ -30,6 +30,6 @@ public class AuthController : ControllerBase
     public async Task<ActionResult>? SignIn(SignIn signIn)
     {
         var result = await _userSignInQuery.SignIn(signIn);
-        return result.Match < ActionResult>(Ok, BadRequest);
+        return result.Match<ActionResult>(Ok, BadRequest);
     }
 }

@@ -5,7 +5,7 @@ using Marketplace.Api.Services;
 using Marketplace.Api.Validations;
 using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
-using Marketplace.Domain.Repositories;
+using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Infrastructure;
 using Marketplace.Infrastructure.Common.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

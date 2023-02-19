@@ -1,10 +1,10 @@
 ﻿using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
+using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Domain.Constants;
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Exceptions;
-using Marketplace.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 
 namespace Marketplace.Application.Queries.Query;
@@ -39,9 +39,9 @@ public class UserSignInQuery : IUserSignInQuery
                 "Invalid password"));
         }
 
-        SignedUp signedUp = new SignedUp(user.FirstName, user.LastName, user.PhoneNumber, user.Email);
+        SignedUp signedUp = new SignedUp(user.Id,user.FirstName, user.LastName, user.PhoneNumber, user.Email);
 
         return new Either<AuthResult, AuthException>(new AuthResult(signedUp,
-            _tokenGenerator.GenerateToken(user.ToTokenRequest)));
+            _tokenGenerator.GenerateToken(user.ToTokenRequest())));
     }
 }

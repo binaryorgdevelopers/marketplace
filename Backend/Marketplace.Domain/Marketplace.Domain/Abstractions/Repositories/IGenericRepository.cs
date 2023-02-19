@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
+using Marketplace.Domain.Entities;
 
-namespace Marketplace.Domain.Repositories;
+namespace Marketplace.Domain.Abstractions.Repositories;
 
 public interface IGenericRepository<TEntity>
 {
@@ -11,4 +12,5 @@ public interface IGenericRepository<TEntity>
     void Update(TEntity entity);
     Task DeleteAsync(Guid id);
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate);
+    IEnumerable<TEntity> GetAll<TProperty>(Expression<Func<TEntity, TProperty>> predicate);
 }

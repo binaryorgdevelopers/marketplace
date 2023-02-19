@@ -1,4 +1,5 @@
-﻿using Marketplace.Domain.Abstractions;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Marketplace.Domain.Abstractions;
 using Marketplace.Domain.Constants;
 using Marketplace.Domain.Exceptions;
 
@@ -11,8 +12,14 @@ public class Shop : IIdentifiable
     public string Name { get; set; }
     public int Number { get; set; }
     public string Extras { get; set; }
-    
+
+    [ForeignKey(nameof(UserId))]
+
     public User User { get; set; }
+
+    public Shop()
+    {
+    }
 
     public Shop(Guid id, string name, int number, string extras)
     {
@@ -27,12 +34,13 @@ public class Shop : IIdentifiable
         Extras = extras;
     }
 
-    public Shop(string name, int number, string extras)
+    public Shop(string name, int number, string extras, Guid userId)
     {
         Id = Guid.NewGuid();
         Name = name;
         Number = number;
         Extras = extras;
+        UserId = userId;
     }
 
     public Shop(Guid? id, string name, int number)

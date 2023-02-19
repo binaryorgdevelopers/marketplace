@@ -2,11 +2,11 @@
 using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
+using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Domain.Constants;
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Exceptions;
 using Marketplace.Domain.Models;
-using Marketplace.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 
 namespace Marketplace.Application.Commands.Command;
@@ -43,7 +43,7 @@ public class UserCreateCommand : IUserCreateCommand
         await _genericRepository.AddAsync(userTable);
         var authResult =
             new AuthResult(
-                new SignedUp(userTable.FirstName, userTable.LastName, userTable.PhoneNumber, userTable.Email),
+                new SignedUp(userTable.Id,userTable.FirstName, userTable.LastName, userTable.PhoneNumber, userTable.Email),
                 _jwtTokenGenerator.GenerateToken(new TokenRequest(user.Email, user.PhoneNumber, user.Firstname,
                     user.Lastname, user.Role)));
         return new Either<AuthResult, AuthException>(authResult);
