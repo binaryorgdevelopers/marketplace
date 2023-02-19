@@ -13,21 +13,21 @@ namespace Marketplace.Application.Commands.Command;
 
 public class UserCreateCommand : IUserCreateCommand
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IGenericRepository<User> _genericRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
     public UserCreateCommand(IPasswordHasher<User> passwordHasher,
-        IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+        IJwtTokenGenerator jwtTokenGenerator, IGenericRepository<User> genericRepository)
     {
         _passwordHasher = passwordHasher;
         _jwtTokenGenerator = jwtTokenGenerator;
-        _userRepository = userRepository;
+        _genericRepository = genericRepository;
     }
 
     public async Task<Either<AuthResult, AuthException>> CreateUser(SignUp user)
     {
-        var searchResult = await _userRepository.GetAsync(user.Email);
+        var searchResult = await _genericRepository.GetAsync(e => e.Email == user.Email);
         if (searchResult is not null)
         {
             return new Either<AuthResult, AuthException>(new AuthException(Codes.EmailInUse,
@@ -40,12 +40,12 @@ public class UserCreateCommand : IUserCreateCommand
             UserType = UserType.User
         };
         userTable.SetPassword(user.Password, _passwordHasher);
-        await _userRepository.AddAsync(userTable);
+        await _genericRepository.AddAsync(userTable);
         var authResult =
             new AuthResult(
                 new SignedUp(userTable.FirstName, userTable.LastName, userTable.PhoneNumber, userTable.Email),
                 _jwtTokenGenerator.GenerateToken(new TokenRequest(user.Email, user.PhoneNumber, user.Firstname,
-                    user.Lastname,user.Role)));
+                    user.Lastname, user.Role)));
         return new Either<AuthResult, AuthException>(authResult);
     }
 }

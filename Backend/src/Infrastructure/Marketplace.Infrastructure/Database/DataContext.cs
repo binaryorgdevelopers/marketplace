@@ -1,4 +1,5 @@
 ﻿using Marketplace.Domain.Entities;
+using Marketplace.Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Infrastructure.Database;
@@ -6,6 +7,10 @@ namespace Marketplace.Infrastructure.Database;
 public class DataContext : DbContext
 {
     public DataContext(DbContextOptions<DataContext> options) : base(options)
+    {
+    }
+
+    public DataContext()
     {
     }
 
@@ -27,7 +32,29 @@ public class DataContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    public DataContext()
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
+        var entries = ChangeTracker
+            .Entries()
+            .Where(e => e is { Entity: User, State: EntityState.Modified });
+        foreach (var entity in entries)
+        {
+            ((User)entity.Entity).UpdatedAt = DateTime.Now.SetKindUtc();
+        }
+
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    public override int SaveChanges()
+    {
+        var entries = ChangeTracker
+            .Entries()
+            .Where(e => e is { Entity: User, State: EntityState.Modified });
+        foreach (var entity in entries)
+        {
+            ((User)entity.Entity).UpdatedAt = DateTime.Now.SetKindUtc();
+        }
+
+        return base.SaveChanges();
     }
 }
