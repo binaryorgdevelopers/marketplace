@@ -23,6 +23,8 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
+      working-directory: ./src/Test/Marketplace.Api
       run: dotnet build --no-restore
     - name: Test
+      working-directory: ./src/Test/Marketplace.Test
       run: dotnet test --no-build --verbosity normal
