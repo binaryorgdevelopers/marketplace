@@ -20,11 +20,17 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies
+    - name: Restore Presentation Dependencies
       working-directory: ./src/Api/Marketplace.Api
       run: dotnet restore
+    - name: Restore Application Dependencies
+      working-directory: ./src/Application/Marketplace.Application
+      run: dotnet restore
+    - name: Restore Infrastructure Dependencies
+      working-directory: ./Backend/src/Infrastructure/Marketplace.Infrastructure
+      run: dotnet restore
     - name: Build
-      working-directory: ./src/Test/Marketplace.Api
+      working-directory: ./src/Api/Marketplace.Api
       run: dotnet build --no-restore
     - name: Test
       working-directory: ./src/Test/Marketplace.Test
