@@ -82,7 +82,7 @@ public class User : IIdentifiable, ICommon
         PhoneNumber = phoneNumber;
     }
 
-    public TokenRequest ToTokenRequest => new(Email, PhoneNumber, FirstName, LastName, Role);
+    public TokenRequest ToTokenRequest() => new(Email, PhoneNumber, FirstName, LastName, Role);
 
 
     public void SetPassword(string password, IPasswordHasher<User> passwordHasher)

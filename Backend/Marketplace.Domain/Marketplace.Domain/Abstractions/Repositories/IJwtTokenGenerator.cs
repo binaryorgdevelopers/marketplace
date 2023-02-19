@@ -1,6 +1,6 @@
 ﻿using Marketplace.Domain.Models;
 
-namespace Marketplace.Domain.Repositories;
+namespace Marketplace.Domain.Abstractions.Repositories;
 
 public interface IJwtTokenGenerator
 {
