@@ -1,4 +1,5 @@
 ﻿using Marketplace.Domain.Abstractions;
+using static System.Enum;
 
 namespace Marketplace.Domain.Entities;
 
@@ -7,14 +8,13 @@ public class Role : IIdentifiable, ICommon
     public const string User = "user";
     public const string Admin = "admin";
 
-    public static bool TryValidateRole(string input, out string role)
+    public static bool TryValidateRole(string input, out RoleEnum role)
     {
-        if (string.IsNullOrWhiteSpace(input)) role = User;
-        else if (input.Equals(User, StringComparison.OrdinalIgnoreCase) ||
-                 input.Equals(Admin, StringComparison.OrdinalIgnoreCase))
-            role = input.ToLowerInvariant();
-        else role = string.Empty;
-        return role is User or Admin;
+        TryParse<RoleEnum>(input, out var parsedEnum);
+        var isExist = IsDefined(typeof(RoleEnum), input);
+        if (!isExist && input is User or Admin) role = parsedEnum;
+        else role = RoleEnum.User;
+        return role is RoleEnum;
     }
 
     public Guid Id { get; set; }
@@ -23,4 +23,10 @@ public class Role : IIdentifiable, ICommon
     public string Name { get; set; }
     public string Permissions { get; set; }
     public string Description { get; set; }
+}
+
+public enum RoleEnum
+{
+    Admin,
+    User
 }

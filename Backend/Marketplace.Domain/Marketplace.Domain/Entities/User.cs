@@ -18,7 +18,7 @@ public class User : IIdentifiable, ICommon
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public string Role { get; set; }
+    public RoleEnum Role { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public UserType UserType { get; set; }
@@ -82,7 +82,8 @@ public class User : IIdentifiable, ICommon
         PhoneNumber = phoneNumber;
     }
 
-    public TokenRequest ToTokenRequest() => new(Email, PhoneNumber, FirstName, LastName, Role);
+    public TokenRequest ToTokenRequest() =>
+        new(Email, PhoneNumber, FirstName, LastName, Enum.GetName(typeof(RoleEnum), Role));
 
 
     public void SetPassword(string password, IPasswordHasher<User> passwordHasher)

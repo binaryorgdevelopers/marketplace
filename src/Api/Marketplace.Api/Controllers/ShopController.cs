@@ -1,5 +1,7 @@
 ﻿using Marketplace.Application.Commands.ICommand;
 using Marketplace.Application.Common.Messages.Commands;
+using Marketplace.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Api.Controllers;
@@ -15,6 +17,7 @@ public class ShopController : ControllerBase
         _shopCreateCommand = shopCreateCommand;
     }
 
+    [Authorize(Roles = Role.Admin)]
     [HttpPost("add")]
     public async Task<ActionResult> CreateShop(ShopCreate shopCreate)
     {

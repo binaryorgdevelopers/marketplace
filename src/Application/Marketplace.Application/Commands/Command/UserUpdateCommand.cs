@@ -32,7 +32,8 @@ public class UserUpdateCommand : IUserUpdateCommand
         user.SetPassword(updateUser.Password, _passwordHasher);
         _repository.Update(user);
 
-        var userUpdated = new UserUpdated(user.Id, user.CreatedAt, user.UpdatedAt, user.Role, user.FirstName,
+        var userUpdated = new UserUpdated(user.Id, user.CreatedAt, user.UpdatedAt, nameof(user.Role),
+            user.FirstName,
             user.PhoneNumber, user.Email);
 
         return new Either<UserUpdated, AuthException>(userUpdated);

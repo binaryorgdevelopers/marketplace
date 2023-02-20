@@ -92,6 +92,6 @@ public class UserTests
     public void ItShouldSetDefaultRoleIfEmpty()
     {
         var user = new User(Guid.Empty,"khamidovdilshodbek@gmail.com","");
-        Assert.Equal("user",user.Role);
+        Assert.Equal("user",Enum.GetName(typeof(RoleEnum),user.Role));
     }
 }
