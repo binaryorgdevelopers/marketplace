@@ -23,7 +23,7 @@ public class UserReadQuery : IUserReadQuery
                 c.Id,
                 c.CreatedAt,
                 c.UpdatedAt,
-                c.Role,
+                Enum.GetName(typeof(RoleEnum), c.Role),
                 c.FirstName,
                 c.LastName,
                 c.PhoneNumber,

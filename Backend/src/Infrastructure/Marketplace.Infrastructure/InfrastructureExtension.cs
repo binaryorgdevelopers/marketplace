@@ -35,7 +35,7 @@ public static class InfrastructureExtension
         IConfiguration configuration)
     {
         const string postgres = "Postgresql:ConnectionString";
-        const string postgresDev = "PostgresqlDev:ConnectionString";
+        const string postgresDev = "Postgresql:ConnectionString";
         services.AddDbContext<DataContext>(options =>
             options.UseNpgsql(configuration.GetValue<string>(isDevEnv ? postgresDev : postgres))
         );

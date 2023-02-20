@@ -1,12 +1,14 @@
 ﻿using Marketplace.Application.Commands.ICommand;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Queries.IQuery;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Api.Controllers;
 
 [ApiController]
 [Route("api/user")]
+[Authorize]
 public class UserController : Controller
 {
     private readonly IUserUpdateCommand _userUpdateCommand;
