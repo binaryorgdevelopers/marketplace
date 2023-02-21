@@ -2,15 +2,16 @@
 using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Application.Queries.IQuery;
 using Marketplace.Domain.Abstractions.Repositories;
+using Marketplace.Domain.Constants;
 using Marketplace.Domain.Entities;
 
 namespace Marketplace.Application.Queries.Query;
 
 public class UserReadQuery : IUserReadQuery
 {
-    private readonly IGenericRepository<User> _genericRepository;
+    private readonly IGenericRepository<User?> _genericRepository;
 
-    public UserReadQuery(IGenericRepository<User> genericRepository)
+    public UserReadQuery(IGenericRepository<User?> genericRepository)
     {
         _genericRepository = genericRepository;
     }
@@ -23,7 +24,7 @@ public class UserReadQuery : IUserReadQuery
                 c.Id,
                 c.CreatedAt,
                 c.UpdatedAt,
-                Enum.GetName(typeof(RoleEnum), c.Role),
+                Enum.GetName(typeof(Roles), c.Role),
                 c.FirstName,
                 c.LastName,
                 c.PhoneNumber,
@@ -31,4 +32,6 @@ public class UserReadQuery : IUserReadQuery
                 c.Shops));
         return new Either<IEnumerable<UserRead>, Exception>(userRead);
     }
+
+    public User? GetUserById(Guid? Id) => _genericRepository.Get(c => c.Id == Id);
 }

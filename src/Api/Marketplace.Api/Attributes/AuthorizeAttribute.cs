@@ -1,4 +1,6 @@
-﻿using Marketplace.Domain.Entities;
+﻿using Marketplace.Application.Common.Messages.Messages;
+using Marketplace.Domain.Constants;
+using Marketplace.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -6,13 +8,13 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace Marketplace.Api.Attributes;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class AuthorizeAttribute : Attribute
+public class AddRolesAttribute : Attribute, IAuthorizationFilter
 {
-    private readonly IList<RoleEnum> _roles;
+    private readonly IList<Roles> _roles;
 
-    public AuthorizeAttribute(params RoleEnum[] roles)
+    public AddRolesAttribute(params Roles[] roles)
     {
-        _roles = roles ?? Array.Empty<RoleEnum>();
+        _roles = roles ?? Array.Empty<Roles>();
     }
 
     public void OnAuthorization(AuthorizationFilterContext context)
@@ -20,12 +22,11 @@ public class AuthorizeAttribute : Attribute
         var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
         if (allowAnonymous) return;
 
-        var user = (User)context.HttpContext.Items["users"];
-        if (user == null || (_roles.Any() && _roles.Contains(user.Role)))
+        var user = (User)context.HttpContext.Items["User"];
+        if (user == null || (_roles.Any() && !_roles.Contains(user.Role)))
         {
-            context.Result = new JsonResult(new { message = "Unauthorized" })
+            context.Result = new JsonResult(new { message = "Not Allowed" })
                 { StatusCode = StatusCodes.Status401Unauthorized };
         }
     }
 }
-

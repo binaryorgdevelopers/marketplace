@@ -39,9 +39,10 @@ public class UserSignInQuery : IUserSignInQuery
                 "Invalid password"));
         }
 
-        SignedUp signedUp = new SignedUp(user.Id,user.FirstName, user.LastName, user.PhoneNumber, user.Email);
+        Authorized authorized =
+            new Authorized(user.Id, user.FirstName, user.LastName, user.PhoneNumber, user.Email, user.Role);
 
-        return new Either<AuthResult, AuthException>(new AuthResult(signedUp,
+        return new Either<AuthResult, AuthException>(new AuthResult(authorized,
             _tokenGenerator.GenerateToken(user.ToTokenRequest())));
     }
 }

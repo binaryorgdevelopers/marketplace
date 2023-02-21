@@ -43,9 +43,15 @@ public class UserCreateCommand : IUserCreateCommand
         await _genericRepository.AddAsync(userTable);
         var authResult =
             new AuthResult(
-                new SignedUp(userTable.Id,userTable.FirstName, userTable.LastName, userTable.PhoneNumber, userTable.Email),
-                _jwtTokenGenerator.GenerateToken(new TokenRequest(user.Email, user.PhoneNumber, user.Firstname,
-                    user.Lastname, user.Role)));
+                new Authorized(
+                    userTable.Id,
+                    userTable.FirstName,
+                    userTable.LastName,
+                    userTable.PhoneNumber,
+                    userTable.Email,
+                    userTable.Role),
+                _jwtTokenGenerator.GenerateToken(new TokenRequest(userTable.Id,userTable.Email, userTable.PhoneNumber, userTable.FirstName,
+                    userTable.LastName, user.Role)));
         return new Either<AuthResult, AuthException>(authResult);
     }
 }
