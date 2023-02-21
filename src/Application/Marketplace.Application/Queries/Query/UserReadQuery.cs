@@ -19,18 +19,20 @@ public class UserReadQuery : IUserReadQuery
     public Either<IEnumerable<UserRead>, Exception> AllUsers()
     {
         var users = _genericRepository.GetAll(c => c.Shops);
-        IEnumerable<UserRead> userRead = users.Select(c
-            => new UserRead(
-                c.Id,
-                c.CreatedAt,
-                c.UpdatedAt,
-                Enum.GetName(typeof(Roles), c.Role),
-                c.FirstName,
-                c.LastName,
-                c.PhoneNumber,
-                c.Email,
-                c.Shops));
-        return new Either<IEnumerable<UserRead>, Exception>(userRead);
+        // IEnumerable<UserRead> userRead = users.Select(c
+        //     => new UserRead(
+        //         c.Id,
+        //         c.CreatedAt,
+        //         c.UpdatedAt,
+        //         c.Role.RoleToString(),
+        //         c.FirstName,
+        //         c.LastName,
+        //         c.PhoneNumber,
+        //         c.Email,
+        //         c.Shops));
+        var user2 = _genericRepository.GetWithInclude(c => c.Shops,
+            c => new UserRead(c.Id, c.CreatedAt, c.UpdatedAt, c.Role.RoleToString(), c.FirstName, c.LastName, c.PhoneNumber, c.Email,c.Shops));
+        return new Either<IEnumerable<UserRead>, Exception>(user2);
     }
 
     public User? GetUserById(Guid? Id) => _genericRepository.Get(c => c.Id == Id);

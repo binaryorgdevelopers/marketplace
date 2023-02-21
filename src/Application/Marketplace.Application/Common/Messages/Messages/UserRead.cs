@@ -4,7 +4,8 @@ namespace Marketplace.Application.Common.Messages.Messages;
 
 public class UserRead
 {
-    public UserRead(Guid id, DateTime createdAt, DateTime updatedAt, string role, string firstName, string lastName, string phoneNumber, string email, IEnumerable<Shop> shops)
+    public UserRead(Guid id, DateTime createdAt, DateTime updatedAt, string role, string firstName, string lastName,
+        string phoneNumber, string email, IEnumerable<Shop> shops)
     {
         Id = id;
         CreatedAt = createdAt;
@@ -15,6 +16,19 @@ public class UserRead
         PhoneNumber = phoneNumber;
         Email = email;
         Shops = shops;
+    }
+
+    public UserRead(Guid id, DateTime createdAt, DateTime updatedAt, string role, string firstName, string lastName,
+        string phoneNumber, string email)
+    {
+        Id = id;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+        Role = role;
+        FirstName = firstName;
+        LastName = lastName;
+        PhoneNumber = phoneNumber;
+        Email = email;
     }
 
     public Guid Id { get; set; }
