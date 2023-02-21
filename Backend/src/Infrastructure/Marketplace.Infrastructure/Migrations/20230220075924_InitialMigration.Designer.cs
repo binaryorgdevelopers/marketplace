@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Marketplace.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230217121605_InitialMigration")]
+    [Migration("20230220075924_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -135,9 +135,8 @@ namespace Marketplace.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<int>("ShopId")
                         .HasColumnType("integer");
