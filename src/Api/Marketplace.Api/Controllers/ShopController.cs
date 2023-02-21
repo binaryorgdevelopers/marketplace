@@ -1,5 +1,7 @@
-﻿using Marketplace.Application.Commands.ICommand;
+﻿using Marketplace.Api.Attributes;
+using Marketplace.Application.Commands.ICommand;
 using Marketplace.Application.Common.Messages.Commands;
+using Marketplace.Domain.Constants;
 using Marketplace.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +19,7 @@ public class ShopController : ControllerBase
         _shopCreateCommand = shopCreateCommand;
     }
 
-    [Authorize(Roles = Role.Admin)]
+    [AddRoles(Roles.Admin)]
     [HttpPost("add")]
     public async Task<ActionResult> CreateShop(ShopCreate shopCreate)
     {

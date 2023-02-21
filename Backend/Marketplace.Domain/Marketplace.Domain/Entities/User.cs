@@ -18,7 +18,7 @@ public class User : IIdentifiable, ICommon
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public RoleEnum Role { get; set; }
+    public Roles Role { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public UserType UserType { get; set; }
@@ -43,11 +43,7 @@ public class User : IIdentifiable, ICommon
             throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{email}.'");
         }
 
-        if (Entities.Role.TryValidateRole(role, out var output))
-        {
-            throw new AuthException(Codes.InvalidRole, $"Invalid role: '{role}'.");
-        }
-
+        Entities.Role.TryValidateRole(role, out var output);
         Id = id;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
@@ -62,15 +58,13 @@ public class User : IIdentifiable, ICommon
             throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{email}.'");
         }
 
-        if (!Entities.Role.TryValidateRole(role, out var output))
-        {
-            throw new AuthException(Codes.InvalidRole, $"Invalid role: '{role}'.");
-        }
 
         if (!PhoneNumberValidate(phoneNumber))
         {
             throw new AuthException(Codes.InvalidPhoneNumber, $"Invalid phone number '{phoneNumber}'.");
         }
+
+        Entities.Role.TryValidateRole(role, out var output);
 
         Id = id;
         CreatedAt = DateTime.UtcNow;
@@ -83,7 +77,7 @@ public class User : IIdentifiable, ICommon
     }
 
     public TokenRequest ToTokenRequest() =>
-        new(Email, PhoneNumber, FirstName, LastName, Enum.GetName(typeof(RoleEnum), Role));
+        new(Id,Email, PhoneNumber, FirstName, LastName, Enum.GetName(typeof(Roles), Role));
 
 
     public void SetPassword(string password, IPasswordHasher<User> passwordHasher)

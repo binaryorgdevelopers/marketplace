@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Marketplace.Domain.Abstractions;
 using Marketplace.Domain.Abstractions.Repositories;
-using Marketplace.Domain.Entities;
 using Marketplace.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,13 +21,20 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         => await GetAsync(e => e.Id == id);
 
     public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate)
-        => await _dataContext.Set<TEntity>().FirstOrDefaultAsync(predicate);
+        => await _dataContext
+            .Set<TEntity>()
+            .FirstOrDefaultAsync(predicate);
 
     public async Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
     {
         await Task.CompletedTask;
-        return _dataContext.Set<TEntity>().Where(predicate).AsQueryable();
+        return _dataContext.Set<TEntity>()
+            .Where(predicate)
+            .AsQueryable();
     }
+
+    public TEntity? Get(Expression<Func<TEntity, bool>> predicate)
+        => _dataContext.Set<TEntity>().FirstOrDefault(predicate);
 
     public async Task AddAsync(TEntity entity)
     {
@@ -43,13 +49,16 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     }
 
     public async Task DeleteAsync(Guid id)
-        => _dataContext.Set<TEntity>().Remove(await GetAsync(id));
+        => _dataContext
+            .Set<TEntity>()
+            .Remove(await GetAsync(id));
 
     public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
         => _dataContext.Set<TEntity>().AnyAsync(predicate);
 
     public IEnumerable<TEntity> GetAll<TProperty>(Expression<Func<TEntity, TProperty>> predicate)
-        => _dataContext.Set<TEntity>()
+        => _dataContext
+            .Set<TEntity>()
             .AsSplitQuery()
             .Include(predicate);
 }

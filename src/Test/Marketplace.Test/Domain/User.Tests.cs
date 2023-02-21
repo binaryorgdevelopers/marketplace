@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using Marketplace.Domain.Constants;
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Exceptions;
 using Microsoft.AspNetCore.Identity;
@@ -92,6 +93,6 @@ public class UserTests
     public void ItShouldSetDefaultRoleIfEmpty()
     {
         var user = new User(Guid.Empty,"khamidovdilshodbek@gmail.com","");
-        Assert.Equal("user",Enum.GetName(typeof(RoleEnum),user.Role));
+        Assert.Equal("user",Enum.GetName(typeof(Roles),user.Role));
     }
 }
