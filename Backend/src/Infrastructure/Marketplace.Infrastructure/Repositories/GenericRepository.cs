@@ -51,7 +51,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     public async Task DeleteAsync(Guid id)
         => _dataContext
             .Set<TEntity>()
-            .Remove(await GetAsync(id));
+            .Remove((await GetAsync(id))!);
 
     public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
         => _dataContext.Set<TEntity>().AnyAsync(predicate);

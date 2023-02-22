@@ -27,6 +27,7 @@ public class User : IIdentifiable, ICommon
     public string Email { get; set; }
 
     public List<Shop> Shops { get; set; }
+    public List<Blob> Files { get; set; }
 
     public User()
     {
