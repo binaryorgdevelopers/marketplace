@@ -10,7 +10,6 @@ namespace Marketplace.Api.Controllers;
 
 [ApiController]
 [Route("api/user")]
-[Authorize]
 public class UserController : Controller
 {
     private readonly IUserUpdateCommand _userUpdateCommand;

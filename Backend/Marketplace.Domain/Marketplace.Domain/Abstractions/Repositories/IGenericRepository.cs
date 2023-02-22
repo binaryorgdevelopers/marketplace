@@ -14,4 +14,7 @@ public interface IGenericRepository<TEntity>
     Task DeleteAsync(Guid id);
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate);
     IEnumerable<TEntity> GetAll<TProperty>(Expression<Func<TEntity, TProperty>> predicate);
+
+    IEnumerable<TSelect> GetWithInclude<TProperty, TSelect>(Expression<Func<TEntity, TProperty>> include,
+        Expression<Func<TEntity, TSelect>> select);
 }
