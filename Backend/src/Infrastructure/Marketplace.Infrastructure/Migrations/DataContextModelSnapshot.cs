@@ -39,41 +39,22 @@ namespace Marketplace.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Blobs");
-                });
-
-            modelBuilder.Entity("Marketplace.Domain.Entities.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("ShopId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Permissions")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.HasIndex("ShopId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Blob", (string)null);
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Shop", b =>
@@ -85,6 +66,9 @@ namespace Marketplace.Infrastructure.Migrations
                     b.Property<string>("Extras")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid>("FileId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -100,7 +84,7 @@ namespace Marketplace.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Shops");
+                    b.ToTable("Shops", (string)null);
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Entities.User", b =>
@@ -146,7 +130,26 @@ namespace Marketplace.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("Marketplace.Domain.Entities.Blob", b =>
+                {
+                    b.HasOne("Marketplace.Domain.Entities.Shop", "Shop")
+                        .WithMany("Files")
+                        .HasForeignKey("ShopId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Marketplace.Domain.Entities.User", "User")
+                        .WithMany("Files")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Shop");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Shop", b =>
@@ -160,8 +163,15 @@ namespace Marketplace.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Marketplace.Domain.Entities.Shop", b =>
+                {
+                    b.Navigation("Files");
+                });
+
             modelBuilder.Entity("Marketplace.Domain.Entities.User", b =>
                 {
+                    b.Navigation("Files");
+
                     b.Navigation("Shops");
                 });
 #pragma warning restore 612, 618
