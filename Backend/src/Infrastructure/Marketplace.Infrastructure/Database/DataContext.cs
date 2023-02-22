@@ -23,7 +23,7 @@ public class DataContext : DbContext
     {
         modelBuilder.Entity<User>(builder =>
         {
-            builder.ToTable("Users").HasKey(u => u.Id);
+            // builder.ToTable("Users").HasKey(u => u.Id);
             builder
                 .HasMany(x => x.Shops)
                 .WithOne(x => x.User)

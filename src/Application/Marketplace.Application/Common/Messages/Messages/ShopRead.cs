@@ -4,5 +4,5 @@ public record ShopRead(
     Guid Id,
     string Name,
     int Number,
-    string Extras
-);
+    string Extras,
+    IEnumerable<BlobRead> Files);

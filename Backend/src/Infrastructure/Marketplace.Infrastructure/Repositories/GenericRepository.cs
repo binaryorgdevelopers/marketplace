@@ -62,11 +62,12 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
             .AsSplitQuery()
             .Include(predicate);
 
-    public IEnumerable<TSelect> GetWithInclude<TProperty, TSelect>(Expression<Func<TEntity, TProperty>> include,
+    public async Task<IEnumerable<TSelect>> GetWithInclude<TProperty, TSelect>(
+        Expression<Func<TEntity, TProperty>> include,
         Expression<Func<TEntity, TSelect>> select)
-        => _dataContext
+        => await _dataContext
             .Set<TEntity>()
-            .AsSplitQuery()
             .Include(include)
-            .Select(select);
+            .AsSplitQuery()
+            .Select(select).ToListAsync();
 }

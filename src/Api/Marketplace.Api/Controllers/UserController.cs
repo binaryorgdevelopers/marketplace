@@ -31,6 +31,6 @@ public class UserController : Controller
 
     [AddRoles(Roles.Admin)]
     [HttpGet("users")]
-    public ActionResult AllUsers() =>
-        _userReadQuery.AllUsers().Match<ActionResult>(Ok, UnprocessableEntity);
+    public async Task<ActionResult> AllUsers() =>
+        (await _userReadQuery.AllUsers()).Match<ActionResult>(Ok, UnprocessableEntity);
 }
