@@ -12,10 +12,12 @@ public class Shop : IIdentifiable
     public string Name { get; set; }
     public int Number { get; set; }
     public string Extras { get; set; }
+    
+    public Guid FileId { get; set; }
 
-    [ForeignKey(nameof(UserId))]
 
     public User User { get; set; }
+    public List<Blob> Files { get; set; }
 
     public Shop()
     {

@@ -21,13 +21,47 @@ public class DataContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>(c =>
+        modelBuilder.Entity<User>(builder =>
         {
-            c
+            builder.ToTable("Users").HasKey(u => u.Id);
+            builder
                 .HasMany(x => x.Shops)
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId);
+
+            builder
+                .HasMany(c => c.Files)
+                .WithOne(c => c.User)
+                .HasForeignKey(c => c.UserId);
         });
+        
+        modelBuilder.Entity<Shop>(builder =>
+        {
+            builder.ToTable("Shops").HasKey(c => c.Id);
+            builder
+                .HasOne(c => c.User)
+                .WithMany(c => c.Shops)
+                .HasForeignKey(c => c.UserId);
+
+            builder
+                .HasMany(c => c.Files)
+                .WithOne(c => c.Shop)
+                .HasForeignKey(c => c.ShopId);
+        });
+
+        modelBuilder.Entity<Blob>(builder =>
+        {
+            builder.ToTable("Blob").HasKey(c => c.Id);
+
+            builder
+                .HasOne(c => c.User)
+                .WithMany(c => c.Files);
+
+            builder
+                .HasOne(c => c.Shop)
+                .WithMany(c => c.Files);
+        });
+
         base.OnModelCreating(modelBuilder);
     }
 
