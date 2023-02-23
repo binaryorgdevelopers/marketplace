@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Infrastructure.Common;
+﻿namespace Marketplace.Application.Common.Extensions;
 
 public static class DateTimeExtension
 {

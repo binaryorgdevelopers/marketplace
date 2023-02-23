@@ -6,5 +6,5 @@ namespace Marketplace.Application.Queries;
 
 public interface IUserSignInQuery
 {
-    Task<Either<AuthResult, AuthException>> SignIn(SignIn signIn);
+    Task<Either<AuthResult, AuthException>> SignIn(SignInCommand signInCommand);
 }

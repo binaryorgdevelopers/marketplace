@@ -3,7 +3,7 @@ using Marketplace.Application.Common.Messages.Commands;
 
 namespace Marketplace.Api.Validations;
 
-public class SignInValidation : AbstractValidator<SignIn>
+public class SignInValidation : AbstractValidator<SignInCommand>
 {
     public SignInValidation()
     {

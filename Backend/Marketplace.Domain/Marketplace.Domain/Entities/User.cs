@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Marketplace.Domain.Abstractions;
+﻿using Marketplace.Domain.Abstractions;
 using Marketplace.Domain.Constants;
 using Marketplace.Domain.Exceptions;
 using Marketplace.Domain.Models;
@@ -7,26 +6,22 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Marketplace.Domain.Entities;
 
-public class User : IIdentifiable, ICommon
+public class User : IIdentifiable, ICommon, IProtectable, IPrivacyProvider<User>
 {
-    private static readonly Regex EmailRegex = new(Regexs.EmailRegexPattern, RegexOptions.IgnoreCase |
-                                                                             RegexOptions.Compiled |
-                                                                             RegexOptions.CultureInvariant);
-
-    private static readonly Regex NumberRegex = new(Regexs.PhoneNumberRegexPatter);
-
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+    public DateTime LastSession { get; set; }
+    
     public Roles Role { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public UserType UserType { get; set; }
+
     public string PhoneNumber { get; set; }
     public string PasswordHash { get; private set; }
     public string Email { get; set; }
 
-    public List<Shop> Shops { get; set; }
+
     public List<Blob> Files { get; set; }
 
     public User()
@@ -39,7 +34,7 @@ public class User : IIdentifiable, ICommon
 
     public User(Guid id, string email, string role)
     {
-        if (!EmailRegex.IsMatch(email))
+        if (!Regexs.EmailRegex.IsMatch(email))
         {
             throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{email}.'");
         }
@@ -54,7 +49,7 @@ public class User : IIdentifiable, ICommon
 
     public User(Guid id, string email, string role, string firstName, string lastName, string phoneNumber)
     {
-        if (!EmailRegex.IsMatch(email))
+        if (!Regexs.EmailRegex.IsMatch(email))
         {
             throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{email}.'");
         }
@@ -78,7 +73,7 @@ public class User : IIdentifiable, ICommon
     }
 
     public TokenRequest ToTokenRequest() =>
-        new(Id,Email, PhoneNumber, FirstName, LastName, Enum.GetName(typeof(Roles), Role));
+        new(Id, Email, PhoneNumber, FirstName, LastName, Role.ToString());
 
 
     public void SetPassword(string password, IPasswordHasher<User> passwordHasher)
@@ -91,8 +86,8 @@ public class User : IIdentifiable, ICommon
         PasswordHash = passwordHasher.HashPassword(this, password);
     }
 
-    public static bool PhoneNumberValidate(string input)
-        => NumberRegex.IsMatch(input);
+    public bool PhoneNumberValidate(string input)
+        => Regexs.NumberRegex.IsMatch(input);
 
     public bool ValidatePassword(string password, IPasswordHasher<User> passwordHasher)
         => passwordHasher.VerifyHashedPassword(this, PasswordHash, password) != PasswordVerificationResult.Failed;

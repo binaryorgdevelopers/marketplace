@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using Marketplace.Domain.Entities;
 
 namespace Marketplace.Domain.Abstractions.Repositories;
 

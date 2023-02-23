@@ -1,23 +1,7 @@
-﻿using Marketplace.Domain.Entities;
-
-namespace Marketplace.Application.Common.Messages.Messages;
+﻿namespace Marketplace.Application.Common.Messages.Messages;
 
 public class UserRead
 {
-    public UserRead(Guid id, DateTime createdAt, DateTime updatedAt, string role, string firstName, string lastName,
-        string phoneNumber, string email, IEnumerable<Shop> shops)
-    {
-        Id = id;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        Role = role;
-        FirstName = firstName;
-        LastName = lastName;
-        PhoneNumber = phoneNumber;
-        Email = email;
-        Shops = shops;
-    }
-
     public UserRead(Guid id, DateTime createdAt, DateTime updatedAt, string role, string firstName, string lastName,
         string phoneNumber, string email)
     {
@@ -40,5 +24,4 @@ public class UserRead
     public string PhoneNumber { get; set; }
     public string Email { get; set; }
 
-    public IEnumerable<Shop> Shops { get; set; }
 }

@@ -1,7 +1,6 @@
 ﻿using Marketplace.Domain.Constants;
-using Marketplace.Domain.Entities;
 
-namespace Marketplace.Application.Common;
+namespace Marketplace.Application.Common.Extensions;
 
 public static class EnumExtensions
 {
