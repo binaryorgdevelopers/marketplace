@@ -23,16 +23,16 @@ public class UserSignInQuery : IUserSignInQuery
         _genericRepository = genericRepository;
     }
 
-    public async Task<Either<AuthResult, AuthException>> SignIn(SignIn signIn)
+    public async Task<Either<AuthResult, AuthException>> SignIn(SignInCommand signInCommand)
     {
-        var user = await _genericRepository.GetAsync(e => e.Email == signIn.Email);
+        var user = await _genericRepository.GetAsync(e => e.Email == signInCommand.Email);
         if (user is null)
         {
             return new Either<AuthResult, AuthException>(new AuthException(Codes.UserNotFound,
-                $"User with email :'{signIn.Email}' not found"));
+                $"User with email :'{signInCommand.Email}' not found"));
         }
 
-        var validationResult = user.ValidatePassword(signIn.Password, _passwordHasher);
+        var validationResult = user.ValidatePassword(signInCommand.Password, _passwordHasher);
         if (!validationResult)
         {
             return new Either<AuthResult, AuthException>(new AuthException(Codes.InvalidCredential,

@@ -1,4 +1,5 @@
 ﻿using Marketplace.Application.Commands.ICommand;
+using Marketplace.Application.Commands.ICommand.Authentication;
 using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
@@ -9,7 +10,7 @@ using Marketplace.Domain.Exceptions;
 using Marketplace.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Marketplace.Application.Commands.Command;
+namespace Marketplace.Application.Commands.Command.Authentication;
 
 public class UserCreateCommand : IUserCreateCommand
 {
@@ -35,10 +36,7 @@ public class UserCreateCommand : IUserCreateCommand
         }
 
         User userTable = new User(Guid.NewGuid(), user.Email, user.Role, user.Firstname, user.Lastname,
-            user.PhoneNumber)
-        {
-            UserType = UserType.User
-        };
+            user.PhoneNumber);
         userTable.SetPassword(user.Password, _passwordHasher);
         await _genericRepository.AddAsync(userTable);
         var authResult =

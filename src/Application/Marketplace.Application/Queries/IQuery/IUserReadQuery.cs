@@ -6,6 +6,6 @@ namespace Marketplace.Application.Queries.IQuery;
 
 public interface IUserReadQuery
 {
-    Task<Either<IEnumerable<UserRead>, Exception>> AllUsers();
+    Either<IEnumerable<UserRead>, Exception> AllUsers();
     User? GetUserById(Guid? Id);
 }

@@ -101,7 +101,7 @@ public static class ServiceRegistrationExtension
 
     public static IServiceCollection AddFluentValidation(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<SignIn>, SignInValidation>();
+        services.AddScoped<IValidator<SignInCommand>, SignInValidation>();
         services.AddScoped<IValidator<SignUp>, SignUpValidation>(); 
         services.AddScoped<IValidator<UpdateUser>, UpdateUserValidation>();
         return services; 

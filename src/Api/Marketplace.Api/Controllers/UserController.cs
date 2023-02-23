@@ -3,7 +3,6 @@ using Marketplace.Application.Commands.ICommand;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Queries.IQuery;
 using Marketplace.Domain.Constants;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Api.Controllers;
@@ -24,13 +23,11 @@ public class UserController : Controller
     [AddRoles(Roles.Admin, Roles.User)]
     [HttpPut("update")]
     public async ValueTask<ActionResult> UpdateUser(UpdateUser updateUser)
-    {
-        var result = await _userUpdateCommand.UpdateUser(updateUser);
-        return result.Match<ActionResult>(Ok, BadRequest);
-    }
+        => (await _userUpdateCommand.UpdateUser(updateUser)).Match<ActionResult>(Ok, BadRequest);
 
     [AddRoles(Roles.Admin)]
     [HttpGet("users")]
-    public async Task<ActionResult> AllUsers() =>
-        (await _userReadQuery.AllUsers()).Match<ActionResult>(Ok, UnprocessableEntity);
+    public ActionResult AllUsers() =>
+        _userReadQuery.AllUsers()
+            .Match<ActionResult>(Ok, UnprocessableEntity);
 }

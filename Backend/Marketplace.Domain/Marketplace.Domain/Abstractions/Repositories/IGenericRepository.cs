@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using Marketplace.Domain.Entities;
 
 namespace Marketplace.Domain.Abstractions.Repositories;
 
@@ -15,6 +14,6 @@ public interface IGenericRepository<TEntity>
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate);
     IEnumerable<TEntity> GetAll<TProperty>(Expression<Func<TEntity, TProperty>> predicate);
 
-    Task<IEnumerable<TSelect>> GetWithInclude<TProperty, TSelect>(Expression<Func<TEntity, TProperty>> include,
+    IEnumerable<TSelect> GetWithInclude<TProperty, TSelect>(Expression<Func<TEntity, TProperty>> include,
         Expression<Func<TEntity, TSelect>> select);
 }

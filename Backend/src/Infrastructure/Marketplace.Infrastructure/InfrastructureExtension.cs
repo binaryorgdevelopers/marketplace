@@ -1,5 +1,7 @@
 ﻿using Marketplace.Application.Commands.Command;
+using Marketplace.Application.Commands.Command.Authentication;
 using Marketplace.Application.Commands.ICommand;
+using Marketplace.Application.Commands.ICommand.Authentication;
 using Marketplace.Application.Queries;
 using Marketplace.Application.Queries.IQuery;
 using Marketplace.Application.Queries.Query;
@@ -20,11 +22,19 @@ public static class InfrastructureExtension
     {
         services.AddScoped<IUserCreateCommand, UserCreateCommand>();
         services.AddScoped<IUserSignInQuery, UserSignInQuery>();
+
         services.AddScoped<IUserUpdateCommand, UserUpdateCommand>();
-        services.AddScoped<IShopCreateCommand, ShopCreateCommand>();
         services.AddScoped<IUserReadQuery, UserReadQuery>();
 
+        services.AddScoped<ICustomerCreateCommand, CustomerCreateCommand>();
+        services.AddScoped<ICustomerReadQuery, CustomerReadQuery>();
+
+        services.AddScoped<ISellerCreateCommand, SellerCreateCommand>();
+        services.AddScoped<ISellerReadQuery, SellerReadQuery>();
+
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+        services.AddScoped<IPasswordHasher<Seller>, PasswordHasher<Seller>>();
+        services.AddScoped<IPasswordHasher<Customer>, PasswordHasher<Customer>>();
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 

@@ -3,20 +3,6 @@
 public class UserRead
 {
     public UserRead(Guid id, DateTime createdAt, DateTime updatedAt, string role, string firstName, string lastName,
-        string phoneNumber, string email, IEnumerable<ShopRead> shops)
-    {
-        Id = id;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        Role = role;
-        FirstName = firstName;
-        LastName = lastName;
-        PhoneNumber = phoneNumber;
-        Email = email;
-        Shops = shops;
-    }
-
-    public UserRead(Guid id, DateTime createdAt, DateTime updatedAt, string role, string firstName, string lastName,
         string phoneNumber, string email)
     {
         Id = id;
@@ -38,5 +24,4 @@ public class UserRead
     public string PhoneNumber { get; set; }
     public string Email { get; set; }
 
-    public IEnumerable<ShopRead> Shops { get; set; }
 }
