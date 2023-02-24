@@ -11,9 +11,9 @@ public class Category : IIdentifiable, ICommon
 
     public string Title { get; set; }
     public int ProductAmount { get; set; }
-    public Category Parent { get; set; }
-    
-    public IList<Product>Products { get; set; }
+    // public Category Parent { get; set; }
+
+    public IEnumerable<Product> Products { get; set; }
 
     public Category(string title)
     {
@@ -23,13 +23,12 @@ public class Category : IIdentifiable, ICommon
 
     public Category()
     {
-        
     }
 
     public Category(string title, Category parent)
     {
         Title = title;
-        Parent = parent;
+        // Parent = parent;
         this.ProductAmount += 1;
     }
 }

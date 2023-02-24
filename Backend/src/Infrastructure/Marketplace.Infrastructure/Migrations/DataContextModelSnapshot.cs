@@ -22,6 +22,54 @@ namespace Marketplace.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Marketplace.Domain.Entities.Badge", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BackgroundColor")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("LastSession")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TextColor")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Badge");
+                });
+
             modelBuilder.Entity("Marketplace.Domain.Entities.Blob", b =>
                 {
                     b.Property<Guid>("Id")
@@ -77,9 +125,6 @@ namespace Marketplace.Infrastructure.Migrations
                     b.Property<DateTime>("LastSession")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("ParentId")
-                        .HasColumnType("uuid");
-
                     b.Property<int>("ProductAmount")
                         .HasColumnType("integer");
 
@@ -94,8 +139,6 @@ namespace Marketplace.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
 
                     b.HasIndex("SellerId");
 
@@ -120,6 +163,46 @@ namespace Marketplace.Infrastructure.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Characteristics", (string)null);
+                });
+
+            modelBuilder.Entity("Marketplace.Domain.Entities.Clients", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("LastSession")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Color", b =>
@@ -201,11 +284,6 @@ namespace Marketplace.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Attributes")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Badges")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("CategoryId")
@@ -213,9 +291,6 @@ namespace Marketplace.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("CreatedById")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -227,8 +302,7 @@ namespace Marketplace.Infrastructure.Migrations
                     b.Property<Guid>("SellerId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Synonims")
-                        .IsRequired()
+                    b.Property<string>("Synonyms")
                         .HasColumnType("text");
 
                     b.Property<string>("Title")
@@ -241,8 +315,6 @@ namespace Marketplace.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("CreatedById");
 
                     b.HasIndex("SellerId");
 
@@ -412,6 +484,15 @@ namespace Marketplace.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Marketplace.Domain.Entities.Badge", b =>
+                {
+                    b.HasOne("Marketplace.Domain.Entities.Product", "Product")
+                        .WithMany("Badges")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Marketplace.Domain.Entities.Blob", b =>
                 {
                     b.HasOne("Marketplace.Domain.Entities.Product", "Product")
@@ -441,17 +522,9 @@ namespace Marketplace.Infrastructure.Migrations
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Category", b =>
                 {
-                    b.HasOne("Marketplace.Domain.Entities.Category", "Parent")
-                        .WithMany()
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Marketplace.Domain.Entities.Seller", null)
                         .WithMany("Categories")
                         .HasForeignKey("SellerId");
-
-                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Characteristics", b =>
@@ -484,12 +557,6 @@ namespace Marketplace.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Marketplace.Domain.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Marketplace.Domain.Entities.Seller", "Seller")
                         .WithMany("Products")
                         .HasForeignKey("SellerId")
@@ -497,8 +564,6 @@ namespace Marketplace.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-
-                    b.Navigation("CreatedBy");
 
                     b.Navigation("Seller");
                 });
@@ -526,6 +591,8 @@ namespace Marketplace.Infrastructure.Migrations
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Product", b =>
                 {
+                    b.Navigation("Badges");
+
                     b.Navigation("Characteristics");
 
                     b.Navigation("Photos");

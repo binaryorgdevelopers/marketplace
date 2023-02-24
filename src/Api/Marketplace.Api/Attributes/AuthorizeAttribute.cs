@@ -1,6 +1,5 @@
-﻿using Marketplace.Application.Common.Messages.Messages;
-using Marketplace.Domain.Constants;
-using Marketplace.Domain.Entities;
+﻿using Marketplace.Domain.Entities;
+using Marketplace.Domain.Models.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -22,7 +21,7 @@ public class AddRolesAttribute : Attribute, IAuthorizationFilter
         var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
         if (allowAnonymous) return;
 
-        var user = (User)context.HttpContext.Items["User"];
+        var user = (Clients)context.HttpContext.Items["Client"];
         if (user == null || (_roles.Any() && !_roles.Contains(user.Role)))
         {
             context.Result = new JsonResult(new { message = "Not Allowed" })

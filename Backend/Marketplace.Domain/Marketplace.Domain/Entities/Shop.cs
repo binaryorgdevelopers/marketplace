@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Marketplace.Domain.Abstractions;
-using Marketplace.Domain.Constants;
 using Marketplace.Domain.Exceptions;
+using Marketplace.Domain.Models.Constants;
 
 namespace Marketplace.Domain.Entities;
 

@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-using Marketplace.Domain.Constants;
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Exceptions;
+using Marketplace.Domain.Models.Constants;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 

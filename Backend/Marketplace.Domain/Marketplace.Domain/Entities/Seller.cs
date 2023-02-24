@@ -1,6 +1,6 @@
 ﻿using Marketplace.Domain.Abstractions;
-using Marketplace.Domain.Constants;
 using Marketplace.Domain.Models;
+using Marketplace.Domain.Models.Constants;
 using Microsoft.AspNetCore.Identity;
 
 namespace Marketplace.Domain.Entities;

@@ -4,10 +4,10 @@ using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Domain.Abstractions.Repositories;
-using Marketplace.Domain.Constants;
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Exceptions;
 using Marketplace.Domain.Models;
+using Marketplace.Domain.Models.Constants;
 using Microsoft.AspNetCore.Identity;
 
 namespace Marketplace.Application.Commands.Command.Authentication;
