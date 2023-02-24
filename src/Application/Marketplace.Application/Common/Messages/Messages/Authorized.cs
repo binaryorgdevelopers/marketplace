@@ -1,4 +1,5 @@
-﻿using Marketplace.Domain.Constants;
+﻿using Marketplace.Domain.Models.Constants;
+
 // ReSharper disable All
 
 namespace Marketplace.Application.Common.Messages.Messages;

@@ -1,5 +1,5 @@
 using Marketplace.Api.Attributes;
-using Marketplace.Domain.Constants;
+using Marketplace.Domain.Models.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
@@ -22,7 +22,7 @@ public class WeatherForecastController : ControllerBase
         _logger = logger;
     }
 
-    [AddRoles(Roles.Admin)]
+    [AddRoles(Roles.Admin, Roles.Customer)]
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {

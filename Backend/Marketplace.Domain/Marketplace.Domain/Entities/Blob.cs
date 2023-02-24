@@ -1,6 +1,6 @@
 ﻿using Marketplace.Domain.Abstractions;
-using Marketplace.Domain.Constants;
 using Marketplace.Domain.Exceptions;
+using Marketplace.Domain.Models.Constants;
 
 namespace Marketplace.Domain.Entities;
 
@@ -28,9 +28,8 @@ public class Blob : IIdentifiable, ICommon
     {
         
     }
-    public Blob(Guid id, string title, string extras)
+    public Blob( string title, string extras)
     {
-        Id = id;
         if (string.IsNullOrWhiteSpace(title))
         {
             throw new AuthException(Codes.InvalidCredential, $"Field can't be empty: '{nameof(title)}'");

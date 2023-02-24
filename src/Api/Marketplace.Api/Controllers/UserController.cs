@@ -2,7 +2,8 @@
 using Marketplace.Application.Commands.ICommand;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Queries.IQuery;
-using Marketplace.Domain.Constants;
+using Marketplace.Application.Queries.IQuery.Auth;
+using Marketplace.Domain.Models.Constants;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Api.Controllers;

@@ -12,7 +12,10 @@ public interface IGenericRepository<TEntity>
     void Update(TEntity entity);
     Task DeleteAsync(Guid id);
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate);
-    IEnumerable<TEntity> GetAll<TProperty>(Expression<Func<TEntity, TProperty>> predicate);
+    IQueryable<TEntity> GetAll();
+    Task<IEnumerable<TEntity>> GetAllAsync();
+    Task SaveChangesAsync();
+    Task AddWithoutSaveAsync(TEntity entity);
 
     IEnumerable<TSelect> GetWithInclude<TProperty, TSelect>(Expression<Func<TEntity, TProperty>> include,
         Expression<Func<TEntity, TSelect>> select);

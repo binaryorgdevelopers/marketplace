@@ -1,4 +1,4 @@
-﻿using Marketplace.Domain.Constants;
+﻿using Marketplace.Domain.Models.Constants;
 using static System.Enum;
 
 namespace Marketplace.Domain.Entities;

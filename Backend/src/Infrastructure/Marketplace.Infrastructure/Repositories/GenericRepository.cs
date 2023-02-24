@@ -56,16 +56,18 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
         => _dataContext.Set<TEntity>().AnyAsync(predicate);
 
-    public IEnumerable<TEntity> GetAll<TProperty>(Expression<Func<TEntity, TProperty>> predicate)
-        => _dataContext
-            .Set<TEntity>()
-            .AsSplitQuery()
-            .Include(predicate);
+    public IQueryable<TEntity> GetAll()
+        => _dataContext.Set<TEntity>();
 
-    public  IEnumerable<TSelect> GetWithInclude<TProperty, TSelect>(
+    public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dataContext.Set<TEntity>().ToListAsync();
+    public async Task SaveChangesAsync() => await _dataContext.SaveChangesAsync();
+
+    public async Task AddWithoutSaveAsync(TEntity entity) => await _dataContext.AddAsync(entity);
+
+    public IEnumerable<TSelect> GetWithInclude<TProperty, TSelect>(
         Expression<Func<TEntity, TProperty>> include,
         Expression<Func<TEntity, TSelect>> select)
-        =>  _dataContext
+        => _dataContext
             .Set<TEntity>()
             .Include(include)
             .AsSplitQuery()

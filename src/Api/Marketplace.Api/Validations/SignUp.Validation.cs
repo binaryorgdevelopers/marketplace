@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Marketplace.Application.Common.Messages.Commands;
-using Marketplace.Domain.Constants;
+using Marketplace.Domain.Models.Constants;
 
 namespace Marketplace.Api.Validations;
 

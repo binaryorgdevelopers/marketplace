@@ -10,9 +10,7 @@ builder.Services.AddControllers()
     {
         options.ImplicitlyValidateRootCollectionElements = true;
         options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-    }).AddNewtonsoftJson(options =>
-        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-    );
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -20,7 +18,7 @@ builder.Services.RegisterLambda();
 builder.Services.AddJwt(builder.Configuration);
 
 builder.Services.AddInfrastructure();
-
+builder.Services.AddSwagger();
 
 builder.Services.AddServices(builder.Configuration);
 builder.Services.AddDatabase(builder.Environment.IsDevelopment(), builder.Configuration);
@@ -37,6 +35,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseResponseCaching();
 
 app.UseCustomMiddlewares();
 

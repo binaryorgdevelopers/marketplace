@@ -1,5 +1,5 @@
 ﻿using Marketplace.Domain.Abstractions;
-using Marketplace.Domain.Constants;
+using Marketplace.Domain.Models.Constants;
 
 namespace Marketplace.Domain.Entities;
 

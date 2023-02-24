@@ -10,4 +10,9 @@
       <ProjectReference Include="..\..\..\Backend\Marketplace.Domain\Marketplace.Domain\Marketplace.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Queries\IQuery\Product" />
+      <Folder Include="Queries\Query\Product" />
+    </ItemGroup>
+
 </Project>
