@@ -4,7 +4,6 @@ namespace Marketplace.Domain.Abstractions.Repositories;
 
 public interface IGenericRepository<TEntity>
 {
-    Task<TEntity?> GetAsync(Guid id);
     Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate);
     Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
     TEntity? Get(Expression<Func<TEntity, bool>> predicate);
@@ -19,4 +18,9 @@ public interface IGenericRepository<TEntity>
 
     IEnumerable<TSelect> GetWithInclude<TProperty, TSelect>(Expression<Func<TEntity, TProperty>> include,
         Expression<Func<TEntity, TSelect>> select);
+
+    TSelect? GetSingleWithInclude<TProperty, TSelect>(
+        Expression<Func<TEntity, TProperty>> include,
+        Expression<Func<TEntity, TSelect>> select,
+        Expression<Func<TSelect?, bool>> predicate);
 }

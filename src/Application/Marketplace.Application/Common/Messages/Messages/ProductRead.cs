@@ -2,9 +2,9 @@
 
 public record ProductRead(
     Guid Id,
-    string[] Attributes,
+    string[]? Attributes,
     IEnumerable<BadgeRead> Badges,
-    string Synonyms,
+    string? Synonyms,
     string Title,
     string Description,
     CategoryRead Category,

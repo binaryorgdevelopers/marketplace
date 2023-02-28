@@ -1,4 +1,5 @@
-﻿using Marketplace.Domain.Abstractions;
+﻿using System.Text.Json.Serialization;
+using Marketplace.Domain.Abstractions;
 
 namespace Marketplace.Domain.Entities;
 
@@ -10,14 +11,14 @@ public class Product : IIdentifiable, ICommon
     public DateTime LastSession { get; set; }
 
     public string[]? Attributes { get; set; }
-    public IEnumerable<Badge> Badges { get; set; }
     public string? Synonyms { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public Category Category { get; set; }
     public Seller Seller { get; set; }
-    public IEnumerable<Blob> Photos { get; set; }
-    public IEnumerable<Characteristics> Characteristics { get; set; }
+    [JsonIgnore] public IEnumerable<Badge> Badges { get; set; }
+    [JsonIgnore] public IEnumerable<Blob> Photos { get; set; }
+    [JsonIgnore] public IEnumerable<Characteristics> Characteristics { get; set; }
 
     public Guid SellerId { get; set; }
     public Guid CategoryId { get; set; }
@@ -26,9 +27,9 @@ public class Product : IIdentifiable, ICommon
     {
     }
 
-    public Product( IEnumerable<Badge> badges, string title,
+    public Product(IEnumerable<Badge> badges, string title,
         string description, Guid categoryId, Guid sellerId, IEnumerable<Blob> photos,
-        IEnumerable<Characteristics> characteristics)
+        IEnumerable<Characteristics> characteristics, Seller seller, Category category)
     {
         Id = Guid.NewGuid();
         // Attributes = attributes ?? Array.Empty<string>();
@@ -39,5 +40,7 @@ public class Product : IIdentifiable, ICommon
         SellerId = sellerId;
         Photos = photos;
         this.Characteristics = characteristics;
+        Seller = seller;
+        Category = category;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Marketplace.Domain.Abstractions;
+﻿using System.Text.Json.Serialization;
+using Marketplace.Domain.Abstractions;
 
 namespace Marketplace.Domain.Entities;
 
@@ -10,15 +11,16 @@ public class Category : IIdentifiable, ICommon
     public DateTime LastSession { get; set; }
 
     public string Title { get; set; }
-    public int ProductAmount { get; set; }
-    // public Category Parent { get; set; }
 
-    public IEnumerable<Product> Products { get; set; }
+    public int ProductAmount { get; set; }
+
+    // public Category Parent { get; set; }
+    [JsonIgnore] public IEnumerable<Product> Products { get; set; }
 
     public Category(string title)
     {
         Title = title;
-        this.ProductAmount += 1;
+        ProductAmount += 1;
     }
 
     public Category()

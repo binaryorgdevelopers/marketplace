@@ -6,13 +6,12 @@ using Marketplace.Application.Commands.ICommand;
 using Marketplace.Application.Commands.ICommand.Authentication;
 using Marketplace.Application.Commands.ICommand.CategoryCommand;
 using Marketplace.Application.Commands.ICommand.Product;
-using Marketplace.Application.Queries;
-using Marketplace.Application.Queries.IQuery;
 using Marketplace.Application.Queries.IQuery.Auth;
 using Marketplace.Application.Queries.IQuery.CategoryQueries;
-using Marketplace.Application.Queries.Query;
+using Marketplace.Application.Queries.IQuery.Product;
 using Marketplace.Application.Queries.Query.Auth;
 using Marketplace.Application.Queries.Query.CategoryQueries;
+using Marketplace.Application.Queries.Query.Product;
 using Marketplace.Domain.Abstractions;
 using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Domain.Abstractions.Services;
@@ -49,6 +48,8 @@ public static class InfrastructureExtension
         services.AddScoped<ICategoryCreateCommand, CategoryCreateCommand>();
         services.AddScoped<ICategoryReadQuery, CategoryReadQuery>();
 
+        services.AddScoped<IProductReadQuery, ProductReadQuery>();
+
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddScoped<IPasswordHasher<Seller>, PasswordHasher<Seller>>();
         services.AddScoped<IPasswordHasher<Customer>, PasswordHasher<Customer>>();
@@ -65,7 +66,7 @@ public static class InfrastructureExtension
         IConfiguration configuration)
     {
         const string postgres = "Postgresql:ConnectionString";
-        const string postgresDev = "PostgresqlDev:ConnectionString";
+        const string postgresDev = "Postgresql:ConnectionString";
         services.AddDbContext<DataContext>(options =>
             options.UseNpgsql(configuration.GetValue<string>(isDevEnv ? postgresDev : postgres))
         );
