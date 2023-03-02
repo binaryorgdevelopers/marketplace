@@ -5,5 +5,7 @@ namespace Marketplace.Application.Queries.IQuery.CategoryQueries;
 
 public interface ICategoryReadQuery
 {
-    Either<IEnumerable<CategoryRead>, Exception> AllCategories();
+    IEnumerable<CategoryRead> AllCategories();
+    IEnumerable<CategoryRead>CategoryWithoutProduct();
+    CategoryRead? CategoryById(Guid Id);
 }

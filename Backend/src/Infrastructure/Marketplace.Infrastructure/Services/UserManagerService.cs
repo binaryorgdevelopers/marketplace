@@ -27,16 +27,16 @@ public class UserManagerService : BackgroundService
         var mergeCommand = scope.ServiceProvider.GetRequiredService<IClientMergeCommand>();
         do
         {
-            // try
-            // {
-            //     // await mergeCommand.Merge();
-            //     _logger.LogInformation($"Merge finished at {DateTime.Now.ToString(CultureInfo.InvariantCulture)}");
-            // }
-            // catch (Exception e)
-            // {
-            //     _logger.LogInformation($"Merge failed:'{e.Message}'");
-            //     throw;
-            // }
+            try
+            {
+                await mergeCommand.Merge();
+                _logger.LogInformation($"Merge finished at {DateTime.Now.ToString(CultureInfo.InvariantCulture)}");
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation($"Merge failed:'{e.Message}'");
+                throw;
+            }
 
             await Task.Delay(3600000, stoppingToken);
         } while (!stoppingToken.IsCancellationRequested);
