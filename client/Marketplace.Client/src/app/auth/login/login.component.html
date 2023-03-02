@@ -1,0 +1,48 @@
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="login100-pic" data-tilt data-tilt-max="30" data-tilt-speed="300" data-tilt-perspective="1000"
+           data-tilt-scale="1.1">
+        <img src="assets/img/img-01.png" alt="IMG">
+      </div>
+
+      <form class="login100-form validate-form" [formGroup]="userLoginForm">
+        <h1 class="login100-form-title">
+                        <span class="title">
+
+                        </span>
+          <span class="title2">
+                             Login
+                        </span>
+
+        </h1>
+
+
+        <div class="wrap-input100">
+          <input class="input100" type="text" name="login" placeholder="Login" formControlName="username">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span>
+        </div>
+
+        <div class="wrap-input100 ">
+          <input class="input100" type="password" name="pass" placeholder="Password"
+                 formControlName="password">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+        </div>
+
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn" (click)="signIn()">
+            Login
+          </button>
+        </div>
+
+
+      </form>
+    </div>
+  </div>
+</div>
