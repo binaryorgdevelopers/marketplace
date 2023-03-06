@@ -7,7 +7,7 @@ export class Route{
   static  SUPERADMIN = 'super-admin'; // main-admin
   static  SELLERADMIN = 'seller-admin';
   static  CUSTOMERADMIN = 'customer-admin' // client-admin
-  static CREATE = 'create';
-  static UPDATE = 'update';
-  static DELETE = 'delete';
+  static  CREATE = 'create';
+  static  UPDATE = 'update';
+  static  DELETE = 'delete';
 }
