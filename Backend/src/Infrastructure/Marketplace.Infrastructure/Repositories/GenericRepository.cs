@@ -7,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Infrastructure.Repositories;
 
+/// <summary>
+/// Provides methods for generic entity repository base to manipulate data
+/// </summary>
+/// <typeparam name="TEntity">Entity type</typeparam>
 public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     where TEntity : class, IIdentifiable, new()
 {
@@ -17,19 +21,11 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         _dataContext = dataContext;
     }
 
-
     public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate)
         => await _dataContext
             .Set<TEntity>()
             .FirstOrDefaultAsync(predicate);
 
-    public async Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
-    {
-        await Task.CompletedTask;
-        return _dataContext.Set<TEntity>()
-            .Where(predicate)
-            .AsQueryable();
-    }
 
     public TEntity? Get(Expression<Func<TEntity, bool>> predicate)
         => _dataContext.Set<TEntity>().FirstOrDefault(predicate);
@@ -54,10 +50,8 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
         => _dataContext.Set<TEntity>().AnyAsync(predicate);
 
-    public IQueryable<TEntity> GetAll()
-        => _dataContext.Set<TEntity>();
-
     public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dataContext.Set<TEntity>().ToListAsync();
+   
     public async Task SaveChangesAsync() => await _dataContext.SaveChangesAsync();
 
     public async Task AddWithoutSaveAsync(TEntity entity) => await _dataContext.AddAsync(entity);
@@ -82,11 +76,14 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
             .FirstOrDefault(predicate.Compile());
 
 
-    // public TEntity IncludeMultiple<TProperty>(Func<TEntity, bool> predicate,
-    //     params Expression<Func<TEntity, TProperty>>[] includes)
-    //     where TProperty : class
-    // {
-    //     return includes.Aggregate(_dataContext.Set<TEntity>(),
-    //         (current, func) => current.Include(func).FirstOrDefault(predicate));
-    // }
+    public IQueryable<TEntity> IncludeMultiple<TProperty>(
+        params Expression<Func<TEntity, TProperty>>[] includes)
+        where TProperty : class
+    {
+        var queryable = _dataContext.Set<TEntity>().AsQueryable();
+        var result = includes
+            .Aggregate(queryable, (current, func) =>
+                current.Include(func));
+        return result;
+    }
 }

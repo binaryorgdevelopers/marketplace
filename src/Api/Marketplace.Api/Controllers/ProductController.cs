@@ -1,6 +1,6 @@
-﻿using Marketplace.Application.Commands.ICommand.Product;
-using Marketplace.Application.Common.Messages.Commands;
-using Marketplace.Application.Queries.IQuery.Product;
+﻿using Marketplace.Application.Common.Messages.Commands;
+using Marketplace.Application.Queries.Query.Product;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Api.Controllers;
@@ -9,22 +9,25 @@ namespace Marketplace.Api.Controllers;
 [Route("api/v1/product")]
 public class ProductController : ControllerBase
 {
-    private readonly IProductCreateCommand _productCreateCommand;
-    private readonly IProductReadQuery _productReadQuery;
+    private readonly ISender _sender;
 
-    public ProductController(IProductCreateCommand productCreateCommand, IProductReadQuery productReadQuery)
+    public ProductController(ISender sender)
     {
-        _productCreateCommand = productCreateCommand;
-        _productReadQuery = productReadQuery;
+        _sender = sender;
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult> CreateProduct([FromForm] ProductCreate productCreate)
+    public async Task<ActionResult> CreateProduct([FromForm] ProductCreateCommand productCreateCommand)
     {
-        var request = await _productCreateCommand.ProductCreate(productCreate);
-        return request.Match<ActionResult>(Ok, BadRequest);
+        var result=await _sender.Send(productCreateCommand);
+        return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult> ProductById(Guid id) => Ok(_productReadQuery.ProductById(id));
+    public async Task<ActionResult> ProductById(Guid id)
+    {
+        ProductByIdQuery query = new ProductByIdQuery(id);
+        var result = await _sender.Send(query);
+        return Ok(result);
+    }
 }

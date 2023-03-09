@@ -1,3 +1,5 @@
-﻿namespace Marketplace.Application.Common.Messages.Commands;
+﻿using Marketplace.Application.Abstractions.Messaging;
 
-public record SignInCommand(string Email, string Password);
+namespace Marketplace.Application.Common.Messages.Commands;
+
+public record SellerSignInCommand(string Email, string Password) : ICommand<AuthResult>;

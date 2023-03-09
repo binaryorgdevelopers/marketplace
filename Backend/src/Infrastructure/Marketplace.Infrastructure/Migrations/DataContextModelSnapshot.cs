@@ -125,6 +125,10 @@ namespace Marketplace.Infrastructure.Migrations
                     b.Property<DateTime>("LastSession")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid?>("ParentId")
+                        .IsRequired()
+                        .HasColumnType("uuid");
+
                     b.Property<int>("ProductAmount")
                         .HasColumnType("integer");
 
@@ -140,9 +144,11 @@ namespace Marketplace.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParentId");
+
                     b.HasIndex("SellerId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Characteristics", b =>
@@ -193,9 +199,8 @@ namespace Marketplace.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -274,7 +279,7 @@ namespace Marketplace.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Product", b =>
@@ -318,7 +323,7 @@ namespace Marketplace.Infrastructure.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Seller", b =>
@@ -522,9 +527,17 @@ namespace Marketplace.Infrastructure.Migrations
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Category", b =>
                 {
+                    b.HasOne("Marketplace.Domain.Entities.Category", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Marketplace.Domain.Entities.Seller", null)
                         .WithMany("Categories")
                         .HasForeignKey("SellerId");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Characteristics", b =>
@@ -581,6 +594,8 @@ namespace Marketplace.Infrastructure.Migrations
 
             modelBuilder.Entity("Marketplace.Domain.Entities.Category", b =>
                 {
+                    b.Navigation("Children");
+
                     b.Navigation("Products");
                 });
 

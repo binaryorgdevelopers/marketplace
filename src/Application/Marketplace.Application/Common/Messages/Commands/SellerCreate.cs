@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Marketplace.Application.Abstractions.Messaging;
+using Microsoft.AspNetCore.Http;
 
 namespace Marketplace.Application.Common.Messages.Commands;
 
@@ -14,4 +15,4 @@ public record SellerCreate(
     string Info,
     IFormFile Avatar,
     IFormFile Banner
-);
+) : ICommand<AuthResult>;
