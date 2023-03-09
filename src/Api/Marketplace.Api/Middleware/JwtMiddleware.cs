@@ -1,5 +1,6 @@
-﻿using Marketplace.Application.Commands.ICommand;
+﻿using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Domain.Abstractions.Repositories;
+using MediatR;
 
 namespace Marketplace.Api.Middleware;
 
@@ -12,14 +13,14 @@ public class JwtMiddleware
         _next = next;
     }
 
-    public async Task Invoke(HttpContext context, IJwtTokenGenerator tokenGenerator,
-        IClientMergeCommand clientMergeCommand)
+    public async Task Invoke(HttpContext context, IJwtTokenGenerator tokenGenerator, ISender sender)
     {
         var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
         var userId = tokenGenerator.ValidateJwtToken(token);
+        var client = (await sender.Send(new ClientByIdQuery(userId))).Value;
         if (userId != null)
         {
-            context.Items["Client"] = clientMergeCommand.GetClientsById(userId);
+            context.Items["Client"] = client;
         }
 
         await _next(context);

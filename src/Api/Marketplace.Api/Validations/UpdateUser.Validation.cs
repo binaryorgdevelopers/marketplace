@@ -3,7 +3,7 @@ using Marketplace.Application.Common.Messages.Commands;
 
 namespace Marketplace.Api.Validations;
 
-public class UpdateUserValidation:AbstractValidator<UpdateUser>
+public class UpdateUserValidation:AbstractValidator<UpdateUserCommand>
 {
     public UpdateUserValidation()
     {

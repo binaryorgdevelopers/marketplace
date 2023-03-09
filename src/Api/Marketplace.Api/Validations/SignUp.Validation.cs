@@ -4,7 +4,7 @@ using Marketplace.Domain.Models.Constants;
 
 namespace Marketplace.Api.Validations;
 
-public class SignUpValidation : AbstractValidator<SignUp>
+public class SignUpValidation : AbstractValidator<UserCreateCommand>
 {
     public SignUpValidation()
     {

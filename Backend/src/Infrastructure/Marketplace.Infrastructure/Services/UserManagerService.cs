@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
-using Marketplace.Application.Commands.ICommand;
+using Marketplace.Application.Common.Messages.Commands;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -8,10 +9,9 @@ namespace Marketplace.Infrastructure.Services;
 
 public class UserManagerService : BackgroundService
 {
-    private int _executionCount = 0;
     private readonly ILogger<UserManagerService> _logger;
     private readonly IServiceProvider _serviceProvider;
-    private Timer? _timer = null;
+    private readonly Timer? _timer = null;
 
     public UserManagerService(ILogger<UserManagerService> logger,
         IServiceProvider serviceProvider)
@@ -24,20 +24,11 @@ public class UserManagerService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         using var scope = _serviceProvider.CreateScope();
-        var mergeCommand = scope.ServiceProvider.GetRequiredService<IClientMergeCommand>();
+        var sender = scope.ServiceProvider.GetRequiredService<ISender>();
         do
         {
-            try
-            {
-                await mergeCommand.Merge();
-                _logger.LogInformation($"Merge finished at {DateTime.Now.ToString(CultureInfo.InvariantCulture)}");
-            }
-            catch (Exception e)
-            {
-                _logger.LogInformation($"Merge failed:'{e.Message}'");
-                throw;
-            }
-
+            await sender.Send(new ClientMergeCommand(), stoppingToken);
+            
             await Task.Delay(3600000, stoppingToken);
         } while (!stoppingToken.IsCancellationRequested);
     }
@@ -48,7 +39,6 @@ public class UserManagerService : BackgroundService
     //
     //     _logger.LogInformation($"Background Service is working. Count :{count}");
     // }
-
 
     // public override Task StartAsync(CancellationToken cancellationToken)
     // {

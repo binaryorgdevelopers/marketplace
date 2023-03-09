@@ -4,7 +4,7 @@
 
 namespace Marketplace.Application.Common.Messages.Messages;
 
-public record Authorized
+public record Authorized 
 {
     public Authorized(Guid id, string firstname, string lastname, string phoneNumber, string email, Roles role)
     {

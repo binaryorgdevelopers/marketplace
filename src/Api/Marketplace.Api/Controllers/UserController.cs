@@ -1,9 +1,7 @@
 ﻿using Marketplace.Api.Attributes;
-using Marketplace.Application.Commands.ICommand;
 using Marketplace.Application.Common.Messages.Commands;
-using Marketplace.Application.Queries.IQuery;
-using Marketplace.Application.Queries.IQuery.Auth;
 using Marketplace.Domain.Models.Constants;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Api.Controllers;
@@ -12,23 +10,18 @@ namespace Marketplace.Api.Controllers;
 [Route("api/user")]
 public class UserController : Controller
 {
-    private readonly IUserUpdateCommand _userUpdateCommand;
-    private readonly IUserReadQuery _userReadQuery;
+    private readonly ISender _sender;
 
-    public UserController(IUserUpdateCommand userUpdateCommand, IUserReadQuery userReadQuery)
+    public UserController(ISender sender)
     {
-        _userUpdateCommand = userUpdateCommand;
-        _userReadQuery = userReadQuery;
+        _sender = sender;
     }
 
     [AddRoles(Roles.Admin, Roles.User)]
     [HttpPut("update")]
-    public async ValueTask<ActionResult> UpdateUser(UpdateUser updateUser)
-        => (await _userUpdateCommand.UpdateUser(updateUser)).Match<ActionResult>(Ok, BadRequest);
-
-    [AddRoles(Roles.Admin)]
-    [HttpGet("users")]
-    public ActionResult AllUsers() =>
-        _userReadQuery.AllUsers()
-            .Match<ActionResult>(Ok, UnprocessableEntity);
+    public async ValueTask<ActionResult> UpdateUser(UpdateUserCommand updateUserCommand)
+    {
+        var result = await _sender.Send(updateUserCommand);
+        return Ok(result);
+    }
 }

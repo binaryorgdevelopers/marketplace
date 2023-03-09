@@ -11,26 +11,26 @@ public class Category : IIdentifiable, ICommon
     public DateTime LastSession { get; set; }
 
     public string Title { get; set; }
-
     public int ProductAmount { get; set; }
 
-    // public Category Parent { get; set; }
+    public Guid? ParentId { get; set; }
+    public Category Parent { get; set; }
+    public ICollection<Category> Children { get; set; }
+
     [JsonIgnore] public IEnumerable<Product> Products { get; set; }
 
     public Category(string title)
     {
         Title = title;
-        ProductAmount += 1;
     }
 
     public Category()
     {
     }
 
-    public Category(string title, Category parent)
+    public Category(string title, Category parent = null)
     {
         Title = title;
-        // Parent = parent;
-        this.ProductAmount += 1;
+        Parent = parent;
     }
 }

@@ -6,4 +6,4 @@ public record BadgeCreate(
     string BackgroundColor,
     string Description,
     string? Link
-);
+) ;
