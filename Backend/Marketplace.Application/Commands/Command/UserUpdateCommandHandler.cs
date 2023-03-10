@@ -22,24 +22,6 @@ public class UserUpdateCommand : ICommandHandler<UpdateUserCommand>
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<Either<UserUpdated, AuthException>> UpdateUser(UpdateUserCommand updateUserCommand)
-    {
-        var user = await _repository.GetAsync(c => c.Email == updateUserCommand.Email);
-
-        if (user is null)
-            return new Either<UserUpdated, AuthException>(new AuthException(Codes.InvalidCredential,
-                $"User with Email :'{updateUserCommand.Email}'not found."));
-
-        user.SetPassword(updateUserCommand.Password, _passwordHasher);
-        _repository.Update(user);
-
-        var userUpdated = new UserUpdated(user.Id, user.CreatedAt, user.UpdatedAt, nameof(user.Role),
-            user.FirstName,
-            user.PhoneNumber, user.Email);
-
-        return new Either<UserUpdated, AuthException>(userUpdated);
-    }
-
     public async Task<Result> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _repository.GetAsync(c => c.Email == request.Email);
