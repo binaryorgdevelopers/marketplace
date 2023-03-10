@@ -115,7 +115,7 @@ namespace Marketplace.Infrastructure.Migrations
                     LastSession = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     ProductAmount = table.Column<int>(type: "integer", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uuid", nullable: true),
                     SellerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
