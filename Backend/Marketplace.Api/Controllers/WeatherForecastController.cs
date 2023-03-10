@@ -1,8 +1,4 @@
-using Marketplace.Api.Attributes;
-using Marketplace.Domain.Models.Constants;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
 
 namespace Marketplace.Api.Controllers;
 

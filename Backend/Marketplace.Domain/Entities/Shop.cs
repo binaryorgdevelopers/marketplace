@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Marketplace.Domain.Abstractions;
+﻿using Marketplace.Domain.Abstractions;
 using Marketplace.Domain.Exceptions;
 using Marketplace.Domain.Models.Constants;
 

@@ -1,11 +1,9 @@
 ﻿using System.Net.NetworkInformation;
-using System.Text;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using Marketplace.Domain.Abstractions;
 using Marketplace.Domain.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 
 namespace Marketplace.Infrastructure.Services;
 

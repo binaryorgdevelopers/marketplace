@@ -1,7 +1,5 @@
 ﻿using System.Text;
-using FluentValidation;
 using Marketplace.Api.Middleware;
-using Marketplace.Api.Validations;
 using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Domain.Abstractions.Repositories;
@@ -13,7 +11,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using StackExchange.Redis;
-using Role = Marketplace.Domain.Entities.Role;
 
 namespace Marketplace.Api.Extensions;
 

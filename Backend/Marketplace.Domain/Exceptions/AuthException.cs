@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace Marketplace.Domain.Exceptions;
+﻿namespace Marketplace.Domain.Exceptions;
 
 public class AuthException : Exception
 {

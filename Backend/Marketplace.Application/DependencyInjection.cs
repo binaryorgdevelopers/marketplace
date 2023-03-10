@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Commands.Command.Authentication;
-using Marketplace.Application.Common.Messages.Commands;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Marketplace.Application;
