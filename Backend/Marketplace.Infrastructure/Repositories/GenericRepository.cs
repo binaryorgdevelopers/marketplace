@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Mapster;
 using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Domain.Abstractions;
 using Marketplace.Domain.Abstractions.Repositories;
@@ -65,14 +66,13 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
             .AsSplitQuery()
             .Select(select);
 
-    public TSelect? GetSingleWithInclude<TProperty, TSelect>(
-        Expression<Func<TEntity, TProperty>> include,
-        Expression<Func<TEntity, TSelect>> select,
+    public TSelect? GetSingleWithInclude<TSelect>(
+        string include,
         Expression<Func<TSelect?, bool>> predicate) =>
         _dataContext.Set<TEntity>()
-            .Include(include)
-            .Select(select)
-            .AsEnumerable()
+            .Include("include")
+            .AsQueryable()
+            .ProjectToType<TSelect>()
             .FirstOrDefault(predicate.Compile());
 
 

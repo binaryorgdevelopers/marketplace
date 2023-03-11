@@ -35,6 +35,6 @@ public class CategoryCreateCommandHandler : ICommandHandler<CategoryCreateComman
         await _categoryRepository.AddAsync(category);
         
         return Result.Success(
-            new CategoryRead(category.Id, category.Title, category.ProductAmount, Array.Empty<ProductRead>()));
+            new CategoryDto(category.Id, category.Title, category.ProductAmount, Array.Empty<ProductDto>()));
     }
 }

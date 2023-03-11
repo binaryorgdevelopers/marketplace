@@ -68,9 +68,8 @@ public interface IGenericRepository<TEntity>
     IEnumerable<TSelect> GetWithInclude<TProperty, TSelect>(Expression<Func<TEntity, TProperty>> include,
         Expression<Func<TEntity, TSelect>> select);
 
-    TSelect? GetSingleWithInclude<TProperty, TSelect>(
-        Expression<Func<TEntity, TProperty>> include,
-        Expression<Func<TEntity, TSelect>> select,
+    TSelect? GetSingleWithInclude<TSelect>(
+        string include,
         Expression<Func<TSelect?, bool>> predicate);
 
     IQueryable<TEntity> IncludeMultiple<TProperty>(
