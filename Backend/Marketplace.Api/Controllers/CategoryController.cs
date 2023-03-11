@@ -1,7 +1,10 @@
 ﻿using Marketplace.Api.Attributes;
+using Marketplace.Api.Extensions;
 using Marketplace.Application.Common.Messages.Commands;
+using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Application.Queries.Query.Category;
 using Marketplace.Domain.Models.Constants;
+using Marketplace.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,5 +44,13 @@ public class CategoryController : ControllerBase
     {
         var result = await _sender.Send(categoryCreateCommand);
         return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> CategoryByName([FromQuery] string name)
+    {
+        return await Result.Create(new CategoryByNameQuery(name))
+            .Bind(command => _sender.Send(command))
+            .Match(Ok, BadRequest);
     }
 }

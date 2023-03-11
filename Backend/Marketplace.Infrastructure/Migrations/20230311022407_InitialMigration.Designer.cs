@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Marketplace.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230309204833_InitialMigration")]
+    [Migration("20230311022407_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -129,7 +129,6 @@ namespace Marketplace.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("ParentId")
-                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.Property<int>("ProductAmount")

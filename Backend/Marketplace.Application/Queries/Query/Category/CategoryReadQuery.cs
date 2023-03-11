@@ -5,7 +5,7 @@ using Marketplace.Domain.Shared;
 
 namespace Marketplace.Application.Queries.Query.Category;
 
-public partial class CategoryReadQueryHandler : ICommandHandler<CategoryReadQuery>
+public class CategoryReadQueryHandler : ICommandHandler<CategoryReadQuery>
 {
     private readonly IGenericRepository<Domain.Entities.Category> _categoryRepository;
 
@@ -44,4 +44,5 @@ public partial class CategoryReadQueryHandler : ICommandHandler<CategoryReadQuer
     //     return (categories);
     // }
 }
+
 public record CategoryReadQuery : ICommand;
