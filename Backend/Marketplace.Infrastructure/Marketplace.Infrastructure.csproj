@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Marketplace\Backend\Marketplace.Application\Marketplace.Application.csproj" />
         <PackageReference Include="Google.Cloud.Storage.V1" Version="4.4.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
             <PrivateAssets>all</PrivateAssets>
@@ -21,6 +22,11 @@
     <ItemGroup>
       <ProjectReference Include="..\Marketplace.Application\Marketplace.Application.csproj" />
       <ProjectReference Include="..\Marketplace.Domain\Marketplace.Domain.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Marketplace.Application">
+        <HintPath>..\Marketplace.Api\bin\Debug\net6.0\Marketplace.Application.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

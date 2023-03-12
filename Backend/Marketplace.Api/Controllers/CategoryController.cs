@@ -1,6 +1,7 @@
 ﻿using Marketplace.Api.Attributes;
 using Marketplace.Api.Extensions;
 using Marketplace.Application.Common.Messages.Commands;
+using Marketplace.Application.Queries.Query.Categories;
 using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Application.Queries.Query.Category;
 using Marketplace.Domain.Models.Constants;
@@ -46,6 +47,12 @@ public class CategoryController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("filter")]
+    public async Task<IActionResult> CategoryByName(FilterCommand filter) =>
+        await Result.Create(new CategoryFilterQuery(filter.Field, filter.Value))
+            .Bind(command => _sender.Send(command))
+            .Match(Ok, BadRequest);
+}
     [HttpGet]
     public async Task<IActionResult> CategoryByName([FromQuery] string name)
     {

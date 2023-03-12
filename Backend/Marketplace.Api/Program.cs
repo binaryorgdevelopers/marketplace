@@ -4,10 +4,9 @@ using Marketplace.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
 
 builder
+    .AddCustomControllers()
     .RegisterLambda()
     .RegisterMediatR()
     .AddJwt()
@@ -19,6 +18,7 @@ builder
     .AddSwaggerGen()
     .AddDatabase(builder.Environment.IsDevelopment(), builder.Configuration);
 
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 

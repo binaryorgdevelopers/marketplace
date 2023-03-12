@@ -50,39 +50,18 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         => _dataContext.Set<TEntity>().AnyAsync(predicate);
 
     public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dataContext.Set<TEntity>().ToListAsync();
-   
+
     public async Task SaveChangesAsync() => await _dataContext.SaveChangesAsync();
 
     public async Task AddWithoutSaveAsync(TEntity entity) => await _dataContext.AddAsync(entity);
 
-    public IEnumerable<TSelect> GetWithInclude<TProperty, TSelect>(
-        Expression<Func<TEntity, TProperty>> include,
-        Expression<Func<TEntity, TSelect>> select)
-        => _dataContext
-            .Set<TEntity>()
-            .Include(include)
-            .AsSplitQuery()
-            .Select(select);
+    public TSelect? GetWithSelect<TInclude, TSelect>(Expression<Func<TEntity, TInclude>>[] includes,
+        Func<TSelect, bool> predicate,
+        Expression<Func<TEntity, TSelect>> select) where TSelect : new()
 
-    public TSelect? GetSingleWithInclude<TProperty, TSelect>(
-        Expression<Func<TEntity, TProperty>> include,
-        Expression<Func<TEntity, TSelect>> select,
-        Expression<Func<TSelect?, bool>> predicate) =>
-        _dataContext.Set<TEntity>()
-            .Include(include)
-            .Select(select)
-            .AsEnumerable()
-            .FirstOrDefault(predicate.Compile());
-
-
-    public IQueryable<TEntity> IncludeMultiple<TProperty>(
-        params Expression<Func<TEntity, TProperty>>[] includes)
-        where TProperty : class
     {
-        var queryable = _dataContext.Set<TEntity>().AsQueryable();
-        var result = includes
-            .Aggregate(queryable, (current, func) =>
-                current.Include(func));
-        return result;
+        var entity = _dataContext.Set<TEntity>().AsQueryable();
+        var included = includes.Aggregate(entity, (query, path) => query.Include(path));
+        return included.Select(select).FirstOrDefault(predicate);
     }
 }

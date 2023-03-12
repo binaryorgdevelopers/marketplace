@@ -28,4 +28,9 @@ public class Badge : IIdentifiable, ICommon
         BackgroundColor = backgroundColor;
         Description = description;
     }
+
+    public Badge()
+    {
+        
+    }
 }

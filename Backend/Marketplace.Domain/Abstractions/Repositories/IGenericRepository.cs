@@ -60,20 +60,13 @@ public interface IGenericRepository<TEntity>
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="include">Predicate for Include</param>
+    /// <param name="includes">Predicate for Include</param>
     /// <param name="select">Custom mapping data</param>
-    /// <typeparam name="TProperty">Item to be added with Include</typeparam>
+    /// <param name="predicate">Predicate for filtering</param>
+    /// <typeparam name="TInclude">Item to be added with Include</typeparam>
     /// <typeparam name="TSelect">Entity for Selecting custom mapped data</typeparam>
     /// <returns></returns>
-    IEnumerable<TSelect> GetWithInclude<TProperty, TSelect>(Expression<Func<TEntity, TProperty>> include,
-        Expression<Func<TEntity, TSelect>> select);
-
-    TSelect? GetSingleWithInclude<TProperty, TSelect>(
-        Expression<Func<TEntity, TProperty>> include,
-        Expression<Func<TEntity, TSelect>> select,
-        Expression<Func<TSelect?, bool>> predicate);
-
-    IQueryable<TEntity> IncludeMultiple<TProperty>(
-        params Expression<Func<TEntity, TProperty>>[] includes)
-        where TProperty : class;
+    TSelect? GetWithSelect<TInclude, TSelect>(Expression<Func<TEntity, TInclude>>[] includes,
+        Func<TSelect, bool> predicate,
+        Expression<Func<TEntity, TSelect>> select) where TSelect : new();
 }

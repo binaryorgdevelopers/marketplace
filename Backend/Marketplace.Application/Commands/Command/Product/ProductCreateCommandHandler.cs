@@ -35,7 +35,7 @@ public class ProductCreateCommandHandler : ICommandHandler<ProductCreateCommand>
         {
             blob.Add(new Blob("await _uploaderService.Upload(b.file, null)", b.Extras));
         }
-        
+
 
         var category = await _categoryRepository.GetAsync(c => c.Id == request.CategoryId);
         var seller = await _sellerRepository.GetAsync(c => c.Id == request.SellerId);
@@ -50,22 +50,20 @@ public class ProductCreateCommandHandler : ICommandHandler<ProductCreateCommand>
             request.Characteristics.Select(c => c.MapToChars()), seller!, category!);
         await _productRepository.AddAsync(product);
 
-        IEnumerable<BadgeRead> badges = product.Badges.Select(c =>
-            new BadgeRead(c.Id, c.Text, c.TextColor, c.BackgroundColor, c.Description, c.Type));
-        CategoryRead categoryRead = new CategoryRead(product.Category.Id, product.Category.Title,
-            product.Category.ProductAmount, ArraySegment<ProductRead>.Empty);
-        SellerRead sellerRead = new SellerRead(product.Seller.Id, product.Seller.Title, product.Seller.Description,
+        IEnumerable<BadgeDto> badges = product.Badges.Select(c =>
+            new BadgeDto(c.Id, c.Text, c.TextColor, c.BackgroundColor, c.Description, c.Type));
+        CategoryDto categoryDto = new CategoryDto(product.Category.Id, product.Category.Title,
+            product.Category.ProductAmount, ArraySegment<ProductDto>.Empty,null);
+        SellerDto sellerDto = new SellerDto(product.Seller.Id, product.Seller.Title, product.Seller.Description,
             product.Seller.Info,
             product.Seller.Username, product.Seller.FirstName, product.Seller.LastName, product.Seller.Banner,
             product.Seller.Avatar, product.Seller.Link);
-        IEnumerable<BlobRead> photos = product.Photos.Select(c => new BlobRead(c.Id, c.Title, c.Extras));
+        IEnumerable<BlobDto> photos = product.Photos.Select(c => new BlobDto(c.Id, c.Title, c.Extras));
         IEnumerable<CharacteristicsRead> characteristics = product.Characteristics.Select(c =>
             new CharacteristicsRead(c.Id, c.Title, c.Values.Select(x => new ColorRead(x.Id, x.Title, x.Value))));
 
 
-        return Result.Success(new ProductRead(product.Id, product.Attributes,
-            badges, product.Synonyms, product.Title, product.Description, categoryRead, sellerRead, photos,
-            characteristics));
+        return Result.Success(ProductDto.FromEntity(product));
     }
 
     #endregion
