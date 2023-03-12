@@ -45,5 +45,5 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Test
-      working-directory: ./Backend/Marketplace.Test
+      working-directory:  ./Backend/Marketplace.Test
       run: dotnet test --configuration Release
