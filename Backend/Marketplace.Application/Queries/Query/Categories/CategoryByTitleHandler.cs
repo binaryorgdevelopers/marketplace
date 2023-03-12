@@ -3,7 +3,6 @@ using Marketplace.Application.Abstractions.Messaging;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Domain.Abstractions.Repositories;
-using Marketplace.Domain.Entities;
 using Marketplace.Domain.Models.Constants;
 using Marketplace.Domain.Shared;
 
@@ -11,9 +10,9 @@ namespace Marketplace.Application.Queries.Query.Categories;
 
 public class CategoryByTitleHandler : ICommandHandler<CategoryFilterQuery, CategoryDto>
 {
-    private readonly IGenericRepository<Category> _categoryRepository;
+    private readonly IGenericRepository<Domain.Entities.Category> _categoryRepository;
 
-    public CategoryByTitleHandler(IGenericRepository<Category> categoryRepository)
+    public CategoryByTitleHandler(IGenericRepository<Domain.Entities.Category> categoryRepository)
     {
         _categoryRepository = categoryRepository;
     }
@@ -25,7 +24,7 @@ public class CategoryByTitleHandler : ICommandHandler<CategoryFilterQuery, Categ
             c => c.Parent
         };
         var category = _categoryRepository
-            .GetWithSelect<Category, CategoryDto>(includes,
+            .GetWithSelect<Domain.Entities.Category, CategoryDto>(includes,
                 c => c.Title == request.value,
                 c => CategoryDto.FromEntity(c));
         
