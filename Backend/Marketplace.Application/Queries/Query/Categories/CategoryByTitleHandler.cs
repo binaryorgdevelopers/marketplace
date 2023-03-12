@@ -3,6 +3,7 @@ using Marketplace.Application.Abstractions.Messaging;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Domain.Abstractions.Repositories;
+using Marketplace.Domain.Entities;
 using Marketplace.Domain.Models.Constants;
 using Marketplace.Domain.Shared;
 
@@ -24,7 +25,7 @@ public class CategoryByTitleHandler : ICommandHandler<CategoryFilterQuery, Categ
             c => c.Parent
         };
         var category = _categoryRepository
-            .GetWithSelect<Domain.Entities.Category, CategoryDto>(includes,
+            .GetWithSelect<Category, CategoryDto>(includes,
                 c => c.Title == request.value,
                 c => CategoryDto.FromEntity(c));
         
