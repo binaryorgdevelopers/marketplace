@@ -6,7 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Domain", "Marketplace.Domain\Marketplace.Domain.csproj", "{CBF29EBF-A7BE-4C4F-90A9-4DB93958EF0E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Application", "Marketplace.Application\Marketplace.Application.csproj", "{856441BC-5E2C-4045-B429-8606D8980275}"
-EndProject  
+EndProject
 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Infrastructure", "Marketplace.Infrastructure\Marketplace.Infrastructure.csproj", "{D3827FA0-2EEE-4BF3-B7B8-FC9853F0C272}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Api", "Marketplace.Api\Marketplace.Api.csproj", "{66851837-50F1-4921-A479-567513E479C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Test", "Marketplace.Test\Marketplace.Test.csproj", "{868EDA92-7440-46E9-B0CD-7092858BA4C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{A2E950A0-BF11-4066-858C-0A7111B88BA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,5 +52,9 @@ Global
 		{868EDA92-7440-46E9-B0CD-7092858BA4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{868EDA92-7440-46E9-B0CD-7092858BA4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{868EDA92-7440-46E9-B0CD-7092858BA4C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E950A0-BF11-4066-858C-0A7111B88BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E950A0-BF11-4066-858C-0A7111B88BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E950A0-BF11-4066-858C-0A7111B88BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E950A0-BF11-4066-858C-0A7111B88BA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

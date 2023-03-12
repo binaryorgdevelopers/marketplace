@@ -5,24 +5,28 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
     <ItemGroup>
       <ProjectReference Include="..\..\..\Marketplace\Backend\Marketplace.Application\Marketplace.Application.csproj" />
-<!--      <ProjectReference Include="..\Marketplace.Domain\Marketplace.Domain.csproj" />-->
+        <PackageReference Include="Google.Cloud.Storage.V1" Version="4.4.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+        <PackageReference Include="StackExchange.Redis" Version="2.6.90" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.26.1" />
     </ItemGroup>
-
     <ItemGroup>
-      <PackageReference Include="Google.Cloud.Storage.V1" Version="4.4.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.3" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
-      <PackageReference Include="StackExchange.Redis" Version="2.6.90" />
-      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.26.1" />
+      <ProjectReference Include="..\Marketplace.Application\Marketplace.Application.csproj" />
+      <ProjectReference Include="..\Marketplace.Domain\Marketplace.Domain.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Marketplace.Application">
+        <HintPath>..\Marketplace.Api\bin\Debug\net6.0\Marketplace.Application.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

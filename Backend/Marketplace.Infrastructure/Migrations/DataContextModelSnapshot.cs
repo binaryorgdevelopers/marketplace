@@ -126,7 +126,6 @@ namespace Marketplace.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("ParentId")
-                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.Property<int>("ProductAmount")

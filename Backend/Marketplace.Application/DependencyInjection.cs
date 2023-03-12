@@ -2,6 +2,8 @@
 using FluentValidation;
 using Mapster;
 using Marketplace.Application.Common;
+using FluentValidation;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Marketplace.Application;

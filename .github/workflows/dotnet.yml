@@ -1,0 +1,37 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "backend" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore Presentation Dependencies
+      working-directory: ./Backend/Marketplace.Api
+      run: dotnet restore
+    - name: Restore Application Dependencies
+      working-directory:  ./Backend/Marketplace.Application
+      run: dotnet restore
+    - name: Restore Infrastructure Dependencies
+      working-directory:  ./Backend/Marketplace.Infrastructure
+      run: dotnet restore
+    - name: Build
+      working-directory:  ./Backend/Marketplace.Api
+      run: dotnet build --no-restore
+    - name: Test
+      working-directory:  ./Backend/Marketplace.Test
+      run: dotnet test --no-build --verbosity normal
