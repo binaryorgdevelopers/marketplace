@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Marketplace.Application.Common.Messages.Commands;
+﻿using Marketplace.Application.Common.Messages.Commands;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

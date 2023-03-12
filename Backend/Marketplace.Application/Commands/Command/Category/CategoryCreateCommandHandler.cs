@@ -22,7 +22,7 @@ public class CategoryCreateCommandHandler : ICommandHandler<CategoryCreateComman
         if (foundC is not null)
         {
             return Result.Failure(new Error(Codes.CategoryAlreadyExists,
-                $"Category with title:'{request.Title} is already exist'"));
+                $"Category with Title:'{request.Title} is already exist'"));
         }
 
         var parent = await _categoryRepository.GetAsync(c => c.Id == request.ParentId);
@@ -31,10 +31,9 @@ public class CategoryCreateCommandHandler : ICommandHandler<CategoryCreateComman
         var category = parent is null
             ? new Domain.Entities.Category(request.Title)
             : new Domain.Entities.Category(request.Title, parent);
-        
+
         await _categoryRepository.AddAsync(category);
-        
-        return Result.Success(
-            new CategoryDto(category.Id, category.Title, category.ProductAmount, Array.Empty<ProductDto>()));
+
+        return Result.Success(CategoryDto.FromEntity(category));
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System.Text;
-using FluentValidation;
 using Marketplace.Api.Middleware;
-using Marketplace.Api.Validations;
 using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Domain.Abstractions.Repositories;
@@ -11,9 +9,9 @@ using Marketplace.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Serilog;
 using StackExchange.Redis;
-using Role = Marketplace.Domain.Entities.Role;
 
 namespace Marketplace.Api.Extensions;
 
@@ -36,6 +34,17 @@ public static class WebApplicationExtensions
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Result).Assembly));
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CustomerCreateCommand).Assembly));
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddCustomControllers(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddControllers()
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
         return builder;
     }

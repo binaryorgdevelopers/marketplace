@@ -1,8 +1,10 @@
-﻿namespace Marketplace.Application.Common.Messages.Messages;
+﻿using Marketplace.Domain.Entities;
 
-public class UserRead
+namespace Marketplace.Application.Common.Messages.Messages;
+
+public class UserDto : BaseDto<UserDto, User>
 {
-    public UserRead(Guid id, DateTime createdAt, DateTime updatedAt, string role, string firstName, string lastName,
+    public UserDto(Guid id, DateTime createdAt, DateTime updatedAt, string role, string firstName, string lastName,
         string phoneNumber, string email)
     {
         Id = id;
@@ -15,6 +17,10 @@ public class UserRead
         Email = email;
     }
 
+    public UserDto()
+    {
+        
+    }
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
@@ -23,5 +29,4 @@ public class UserRead
     public string LastName { get; set; }
     public string PhoneNumber { get; set; }
     public string Email { get; set; }
-
 }

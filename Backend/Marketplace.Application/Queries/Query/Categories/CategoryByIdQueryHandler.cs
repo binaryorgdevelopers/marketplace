@@ -1,9 +1,8 @@
 ﻿using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Domain.Shared;
 
-namespace Marketplace.Application.Queries.Query.Category;
+namespace Marketplace.Application.Queries.Query.Categories;
 
 public class CategoryByIdQueryHandler : ICommandHandler<CategoryByIdQuery>
 {
@@ -16,8 +15,8 @@ public class CategoryByIdQueryHandler : ICommandHandler<CategoryByIdQuery>
 
     public async Task<Result> Handle(CategoryByIdQuery request, CancellationToken cancellationToken)
     {
-        var category = _categoryRepository.GetSingleWithInclude<CategoryDto>("Products", c => c.Id == request.Id);
-        return Result.Success(category);
+        // var category = _categoryRepository.GetSingleWithInclude<CategoryDto>("Products", c => c.Id == request.Id);
+        return Result.Success("category");
     }
 }
 

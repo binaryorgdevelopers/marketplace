@@ -14,8 +14,8 @@ public class Category : IIdentifiable, ICommon
     public int ProductAmount { get; set; }
 
     public Guid? ParentId { get; set; }
-    public Category Parent { get; set; }
-    public ICollection<Category> Children { get; set; }
+    public Category? Parent { get; set; }
+    public ICollection<Category>? Children { get; set; }
 
     [JsonIgnore] public IEnumerable<Product> Products { get; set; }
 

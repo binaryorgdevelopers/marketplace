@@ -1,5 +1,4 @@
 ﻿using Marketplace.Api.Extensions;
-using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Domain.Shared;
 using MediatR;

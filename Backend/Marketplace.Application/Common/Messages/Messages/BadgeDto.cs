@@ -14,6 +14,11 @@ public class BadgeDto : BaseDto<BadgeDto, Badge>
         Type = type;
     }
 
+    public BadgeDto()
+    {
+        
+    }
+
     public Guid I { get; set; }
     public string Tex { get; set; }
     public string TextColo { get; set; }

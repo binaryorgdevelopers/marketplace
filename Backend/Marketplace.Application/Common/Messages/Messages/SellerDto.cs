@@ -19,6 +19,11 @@ public class SellerDto : BaseDto<SellerDto, Seller>
         Link = link;
     }
 
+    public SellerDto()
+    {
+        
+    }
+
     public Guid Id { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }

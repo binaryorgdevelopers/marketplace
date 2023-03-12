@@ -14,4 +14,9 @@ public class CharacteristicsRead : BaseDto<CharacteristicsRead, Characteristics>
     public Guid Id { get; set; }
     public string Title { get; set; }
     public IEnumerable<ColorRead> Values { get; set; }
+
+    public CharacteristicsRead()
+    {
+        
+    }
 }

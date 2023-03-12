@@ -22,7 +22,7 @@ public class ProductReadQueryHandler : ICommandHandler<ProductReadQuery>
             new BadgeDto(c.Id, c.Text, c.TextColor, c.BackgroundColor, c.Description, c.Type));
 
         CategoryDto categories = new CategoryDto(product.Category.Id, product.Category.Title,
-            product.Category.ProductAmount, ArraySegment<ProductDto>.Empty);
+            product.Category.ProductAmount, ArraySegment<ProductDto>.Empty,null);
         SellerDto sellerDto = new SellerDto(product.Seller.Id, product.Seller.Title, product.Seller.Description,
             product.Seller.Info,
             product.Seller.Username, product.Seller.FirstName, product.Seller.LastName, product.Seller.Banner,

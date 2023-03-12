@@ -14,6 +14,11 @@ public class CustomerRead
         Active = active;
     }
 
+    public CustomerRead()
+    {
+        
+    }
+
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Locale { get; set; }

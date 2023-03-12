@@ -18,6 +18,10 @@ public class ProductDto : BaseDto<ProductDto, Product>
         Characteristics = characteristics;
     }
 
+    public ProductDto()
+    {
+        
+    }
     public Guid Id { get; set; }
     public string[]? Attributes { get; set; }
     public IEnumerable<BadgeDto> Badges { get; set; }

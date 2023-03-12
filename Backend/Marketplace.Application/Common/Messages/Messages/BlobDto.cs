@@ -14,4 +14,9 @@ public class BlobDto : BaseDto<BlobDto, Blob>
         FileName = fileName;
         Extras = extras;
     }
+
+    public BlobDto()
+    {
+        
+    }
 }
