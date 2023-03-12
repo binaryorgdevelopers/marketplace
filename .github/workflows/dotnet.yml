@@ -32,6 +32,9 @@ jobs:
     - name: Build
       working-directory:  ./Backend/Marketplace.Api
       run: dotnet build --no-restore
+    - name: Build Test 
+      working-directory:  ./Backend/Marketplace.Test
+      run: dotnet build --no-restore
   test:
     needs: build
     runs-on: ubuntu-latest
@@ -45,4 +48,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Test
-      run: dotnet test --configuration Release
+      run: dotnet test --no-build --verbosity normal --no-restore
