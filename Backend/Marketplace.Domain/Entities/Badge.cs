@@ -4,6 +4,7 @@ namespace Marketplace.Domain.Entities;
 
 public class Badge : IIdentifiable, ICommon
 {
+    private readonly Guid _productId;
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
@@ -20,7 +21,7 @@ public class Badge : IIdentifiable, ICommon
     public Product? Product { get; set; }
 
 
-    public Badge(string text, string textColor, string backgroundColor, string description)
+    private Badge(string text, string textColor, string backgroundColor, string description)
     {
         Id = Guid.NewGuid();
         Text = text;
@@ -31,6 +32,17 @@ public class Badge : IIdentifiable, ICommon
 
     public Badge()
     {
-        
     }
+
+    private Badge(string text, string textColor, string backgroundColor, string description, Guid productId)
+    {
+        _productId = productId;
+        Text = text;
+        TextColor = textColor;
+        BackgroundColor = backgroundColor;
+        Description = description;
+    }
+
+    public static Badge Create(string text, string textColor, string backgroundColor, string description) =>
+        new(text, textColor, backgroundColor, description);
 }

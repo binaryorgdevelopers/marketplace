@@ -1,11 +1,10 @@
 ﻿using Marketplace.Domain.Abstractions;
-using Marketplace.Domain.Models.Constants;
 
 namespace Marketplace.Domain.Entities;
 
 public class Color : IIdentifiable
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
     public string Title { get; set; }
     public string Value { get; set; }
 
@@ -18,14 +17,14 @@ public class Color : IIdentifiable
 
     public Color()
     {
-        
     }
+
     public Characteristics Characteristics { get; set; }
     public Guid CharId { get; set; }
 
     public Color(string title, string value)
     {
-        if (string.IsNullOrWhiteSpace(title)) throw new Exception(Messages.CantNull(string.Empty));
-        if (string.IsNullOrWhiteSpace(value)) throw new Exception(Messages.CantNull(string.Empty));
+        Title = title;
+        Value = value;
     }
 }

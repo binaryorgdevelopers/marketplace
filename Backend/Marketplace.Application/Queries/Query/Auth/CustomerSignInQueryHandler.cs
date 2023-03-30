@@ -1,10 +1,10 @@
 ﻿using Marketplace.Application.Abstractions.Messaging;
 using Marketplace.Application.Common;
-using Marketplace.Application.Common.Extensions;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Domain.Entities;
+using Marketplace.Domain.Extensions;
 using Marketplace.Domain.Models.Constants;
 using Marketplace.Domain.Shared;
 using Microsoft.AspNetCore.Identity;

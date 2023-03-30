@@ -16,11 +16,6 @@ internal class BlobMap : IEntityTypeConfiguration<Blob>
             .HasForeignKey(c => c.UserId);
 
         builder
-            .HasOne(c => c.Shop)
-            .WithMany(c => c.Files)
-            .HasForeignKey(c => c.ShopId);
-
-        builder
             .HasOne<Product>(c => c.Product)
             .WithMany(c => c.Photos)
             .HasForeignKey(c => c.ProductId);

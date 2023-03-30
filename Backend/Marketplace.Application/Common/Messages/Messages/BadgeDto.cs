@@ -4,25 +4,24 @@ namespace Marketplace.Application.Common.Messages.Messages;
 
 public class BadgeDto : BaseDto<BadgeDto, Badge>
 {
-    public BadgeDto(Guid i, string tex, string textColo, string backgroundColo, string description, string type)
+    public BadgeDto(Guid id, string text, string textColor, string backgroundColor, string description, string type)
     {
-        I = i;
-        Tex = tex;
-        TextColo = textColo;
-        BackgroundColo = backgroundColo;
+        Id = id;
+        Text = text;
+        TextColor = textColor;
+        BackgroundColor = backgroundColor;
         Description = description;
         Type = type;
     }
 
     public BadgeDto()
     {
-        
     }
 
-    public Guid I { get; set; }
-    public string Tex { get; set; }
-    public string TextColo { get; set; }
-    public string BackgroundColo { get; set; }
+    public Guid Id { get; set; }
+    public string Text { get; set; }
+    public string TextColor { get; set; }
+    public string BackgroundColor { get; set; }
     public string Description { get; set; }
     public string Type { get; set; }
 }

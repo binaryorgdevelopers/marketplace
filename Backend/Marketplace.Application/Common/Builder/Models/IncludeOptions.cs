@@ -1,10 +1,12 @@
-﻿namespace Marketplace.Application.Common.Builder.Models;
+﻿using Marketplace.Domain.Abstractions;
+
+namespace Marketplace.Application.Common.Builder.Models;
 
 /// <summary>
 /// Represents including options
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-public class IncludeOptions<TEntity> where TEntity : class, IEntity
+public class IncludeOptions<TEntity> where TEntity : class, IIdentifiable
 {
     public IncludeOptions()
     {

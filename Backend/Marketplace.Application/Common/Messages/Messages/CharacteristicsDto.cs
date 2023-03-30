@@ -2,9 +2,9 @@
 
 namespace Marketplace.Application.Common.Messages.Messages;
 
-public class CharacteristicsRead : BaseDto<CharacteristicsRead, Characteristics>
+public class CharacteristicsDto : BaseDto<CharacteristicsDto, Characteristics>
 {
-    public CharacteristicsRead(Guid id, string title, IEnumerable<ColorRead> values)
+    public CharacteristicsDto(Guid id, string title, IEnumerable<ColorRead> values)
     {
         Id = id;
         Title = title;
@@ -15,7 +15,7 @@ public class CharacteristicsRead : BaseDto<CharacteristicsRead, Characteristics>
     public string Title { get; set; }
     public IEnumerable<ColorRead> Values { get; set; }
 
-    public CharacteristicsRead()
+    public CharacteristicsDto()
     {
         
     }

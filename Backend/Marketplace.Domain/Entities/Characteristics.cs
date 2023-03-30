@@ -4,28 +4,37 @@ namespace Marketplace.Domain.Entities;
 
 public class Characteristics : IIdentifiable
 {
-    public Guid Id { get; set; } 
+    public Guid Id { get; set; }
     public string Title { get; set; }
-    public IEnumerable<Color> Values { get; set; }
-    
+    public ICollection<Color> Values { get; set; }
+
     public Product Product { get; set; }
     public Guid ProductId { get; set; }
 
-    public Characteristics(IEnumerable<Color> values, string title)
+    public Characteristics(ICollection<Color> values, string title)
     {
-        Id=Guid.NewGuid();
         Values = values;
         Title = title;
     }
 
     public Characteristics()
     {
-        
     }
-    public Characteristics(Guid id, string title, IEnumerable<Color> colors)
+
+    private Characteristics(Guid id, string title, ICollection<Color> colors)
     {
         Id = id;
         Title = title;
         Values = colors;
     }
+
+    private Characteristics(string title, ICollection<Color> values, Guid productId)
+    {
+        Title = title;
+        Values = values;
+        ProductId = productId;
+    }
+
+    public static Characteristics Create(string title, ICollection<Color> values, Guid productId) =>
+        new(title, values, productId);
 }

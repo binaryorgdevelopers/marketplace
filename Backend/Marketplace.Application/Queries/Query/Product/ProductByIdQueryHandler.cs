@@ -1,6 +1,7 @@
 ﻿using Marketplace.Application.Abstractions.Messaging;
 using Marketplace.Application.Common.Messages.Messages;
 using Marketplace.Domain.Abstractions.Repositories;
+using Marketplace.Domain.Models.Constants;
 using Marketplace.Domain.Shared;
 
 namespace Marketplace.Application.Queries.Query.Product;
@@ -16,24 +17,18 @@ public class ProductByIdQueryHandler : ICommandHandler<ProductByIdQuery>
 
     public async Task<Result> Handle(ProductByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetAsync(c => c.Id == request.Id);
-        IEnumerable<BadgeDto> badges = product.Badges.Select(c =>
-            new BadgeDto(c.Id, c.Text, c.TextColor, c.BackgroundColor, c.Description, c.Type));
+        var product = _productRepository.GetWithSelect<ProductDto>(
+            c => c.Id == request.Id,
+            c => ProductDto.FromEntity(c),
+            i => i.Characteristics,
+            i => i.Category,
+            i => i.Badges,
+            i => i.Photos);
 
-        CategoryDto categories = new CategoryDto(product.Category.Id, product.Category.Title,
-            product.Category.ProductAmount, ArraySegment<ProductDto>.Empty,null);
-        SellerDto sellerDto = new SellerDto(product.Seller.Id, product.Seller.Title, product.Seller.Description,
-            product.Seller.Info,
-            product.Seller.Username, product.Seller.FirstName, product.Seller.LastName, product.Seller.Banner,
-            product.Seller.Avatar, product.Seller.Link);
-        IEnumerable<BlobDto> photos = product.Photos.Select(c => new BlobDto(c.Id, c.Title, c.Extras));
-        IEnumerable<CharacteristicsRead> characteristics = product.Characteristics.Select(c =>
-            new CharacteristicsRead(c.Id, c.Title, c.Values.Select(x => new ColorRead(x.Id, x.Title, x.Value))));
-
-        return Result.Success(ProductDto.FromEntity(product));
+        return product is null
+            ? Result.Failure(new Error(Codes.InvalidCredential, $"Product with Id:'{request.Id} not found'"))
+            : Result.Success(product);
     }
 }
 
 public sealed record ProductByIdQuery(Guid Id) : ICommand;
-
-// https://t.me/shamsinurijodi

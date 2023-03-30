@@ -37,8 +37,8 @@ public class SellerCreateCommandHandler : ICommandHandler<SellerCreate, AuthResu
         Seller seller = new Seller(Guid.NewGuid(), request.PhoneNumber, request.Email, request.Title,
             request.Description, request.Info, request.Username, request.FirstName,
             request.LastName, null,
-            "await _cloudUploaderService.Upload(request.Banner, request.Banner.FileName)",
-            "await _cloudUploaderService.Upload(request.Avatar, request.Avatar.FileName)");
+            await _cloudUploaderService.Upload(request.Banner, request.Banner.FileName),
+            await _cloudUploaderService.Upload(request.Avatar, request.Avatar.FileName));
         seller.SetPassword(request.Password, _passwordHasher);
         await _genericRepository.AddAsync(seller);
         return Result.Success(new AuthResult(new Authorized(seller.Id, seller.FirstName,

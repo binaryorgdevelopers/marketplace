@@ -257,34 +257,87 @@
     },
     "promotion": null
   },
-"customer":{
-  "firstName": "",
-  "accountId": 738533,
-  "phoneNumber": "998997541642",
-  "user_name": "998997541642",
-  "scope": [
-    "read",
-    "write"
+  "customer": {
+    "firstName": "",
+    "accountId": 738533,
+    "phoneNumber": "998997541642",
+    "user_name": "998997541642",
+    "scope": [
+      "read",
+      "write"
+    ],
+    "customerId": 721774,
+    "active": true,
+    "exp": 1601454,
+    "locale": "ru",
+    "authorities": [
+      "ROLE_CUSTOMER",
+      "PHONE_VERIFIED"
+    ],
+    "client_id": "b2c-front",
+    "email": null,
+    "lastName": ""
+  },
+  "timestamp": [
+    2023,
+    2,
+    23,
+    0,
+    1,
+    31,
+    837773000
   ],
-  "customerId": 721774,
-  "active": true,
-  "exp": 1601454,
-  "locale": "ru",
-  "authorities": [
-    "ROLE_CUSTOMER",
-    "PHONE_VERIFIED"
-  ],
-  "client_id": "b2c-front",
-  "email": null,
-  "lastName": ""
-},
-"timestamp": [
-2023,
-2,
-23,
-0,
-1,
-31,
-837773000
-]
+  "da": [
+    {
+      "title": "Диагональ дисплея",
+      "value": "13.6"
+    },
+    {
+      "title": "Цвет",
+      "value": "Midnight"
+    },
+    {
+      "title": "Оперативная",
+      "value": "16"
+    },
+    {
+      "title": "Тип дисплея",
+      "value": "Liquid Retina"
+    },
+    {
+      "title": "Процессор",
+      "value": "Apple M2"
+    },
+    {
+      "title": "Процессор",
+      "value": "Apple M2"
+    },
+    {
+      "title": "Веб-камера",
+      "value": "HD-камера FaceTime 1080p"
+    },
+    {
+      "title": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "title": "Количество ядер процессора",
+      "value": "8 ядер"
+    },
+    {
+      "title": "Общий объем накопителей",
+      "value": "1000 ГБ SSD"
+    },
+    {
+      "title": "Общий объем накопителей",
+      "value": "256GB SSD"
+    }
+  ]
 }
+
+
+
+
+
+
+

@@ -1,0 +1,2 @@
+﻿namespace Marketplace.Domain.Abstractions;
+

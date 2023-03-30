@@ -31,7 +31,7 @@ public partial class CategoryReadQueryHandler : ICommandHandler<CategoryReadQuer
         //                         x.Seller.Link),
         //                     x.Photos.Select(a => new BlobDto(a.Id, a.Title, a.Extras)),
         //                     x.Characteristics.Select(s =>
-        //                         new CharacteristicsRead(s.Id, s.Title,
+        //                         new CharacteristicsDto(s.Id, s.Title,
         //                             s.Values.Select(v => new ColorRead(v.Id, v.Title, v.Value))))))));
 
         return await Task.FromResult(Result.Success("categories"));

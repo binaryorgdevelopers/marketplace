@@ -1,6 +1,11 @@
 ﻿namespace Marketplace.Domain.Abstractions;
-
+/// <summary>
+/// Common Interface for Database Entities 
+/// </summary>
 public interface IIdentifiable
 {
-    public Guid Id { get; set; }
+    /// <summary>
+    /// Gets or sets Primary Key 
+    /// </summary>
+    Guid Id { get; set; }
 }

@@ -1,5 +1,5 @@
-﻿using Marketplace.Application.Common.Extensions;
-using Marketplace.Domain.Entities;
+﻿using Marketplace.Domain.Entities;
+using Marketplace.Domain.Extensions;
 using Marketplace.Infrastructure.Database.EntityMaps;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,14 +35,22 @@ public class DataContext : DbContext
             .ApplyConfiguration(new UserMap());
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
         var entries = ChangeTracker
             .Entries()
-            .Where(e => e is { Entity: User, State: EntityState.Modified });
-        foreach (var entity in entries)
+            .Where(e => e.State is EntityState.Added or EntityState.Modified);
+
+
+        foreach (var entry in entries)
         {
-            ((User)entity.Entity).UpdatedAt = DateTime.Now.SetKindUtc();
+            var createdAt = entry.Entity.GetType().GetProperty("CreatedAt");
+            if (createdAt is not null && createdAt.PropertyType == typeof(DateTime))
+            {
+                var createdAtValue = (DateTime)(createdAt.GetValue(entry.Entity) ?? DateTime.Now);
+                createdAt.SetValue(entry.Entity, createdAtValue.SetKindUtc());
+            }
+            // ((User)entry.Entity).UpdatedAt = DateTime.Now.SetKindUtc();
         }
 
         return base.SaveChangesAsync(cancellationToken);

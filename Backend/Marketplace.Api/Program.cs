@@ -13,10 +13,10 @@ builder
     .AddCustomSwagger()
     .AddCustomLogging()
     .AddRedis().Services
-    .AddInfrastructure()
+    .AddInfrastructure(builder.Configuration)
     .AddApplication()
     .AddSwaggerGen()
-    .AddDatabase(builder.Environment.IsDevelopment(), builder.Configuration);
+    .AddDatabase(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 

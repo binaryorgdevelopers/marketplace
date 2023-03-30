@@ -9,7 +9,7 @@ public class CategoryDto : BaseDto<CategoryDto, Category>
         Id = id;
         Title = title;
         ProductAmount = productAmount;
-        Products = products;
+        // Products = products;
     }
 
     public CategoryDto(Guid id, string title, int productAmount, IEnumerable<ProductDto> products, CategoryDto? parent)
@@ -17,14 +17,14 @@ public class CategoryDto : BaseDto<CategoryDto, Category>
         Id = id;
         Title = title;
         ProductAmount = productAmount;
-        Products = products;
+        // Products = products;
         Parent = parent;
     }
 
     public Guid Id { get; set; }
     public string Title { get; set; }
     public int ProductAmount { get; set; }
-    public IEnumerable<ProductDto> Products { get; set; }
+    // public IEnumerable<ProductDto> Products { get; set; }
     public CategoryDto? Parent { get; set; }
     // public Guid? ParentId { get; set; }
 

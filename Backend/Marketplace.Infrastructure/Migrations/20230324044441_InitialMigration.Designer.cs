@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Marketplace.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230311022407_InitialMigration")]
+    [Migration("20230324044441_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -83,7 +83,6 @@ namespace Marketplace.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Extras")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("LastSession")
@@ -531,9 +530,7 @@ namespace Marketplace.Infrastructure.Migrations
                 {
                     b.HasOne("Marketplace.Domain.Entities.Category", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("Marketplace.Domain.Entities.Seller", null)
                         .WithMany("Categories")

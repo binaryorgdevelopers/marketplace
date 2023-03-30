@@ -11,24 +11,22 @@ public class Blob : IIdentifiable, ICommon
     public DateTime UpdatedAt { get; set; }
     public DateTime LastSession { get; set; }
     public string Title { get; private set; }
-    public string Extras { get; private set; }
-    
-    
+    public string? Extras { get; private set; }
+
+
     //FK s
-    public User User { get; set; }
-    public Shop Shop { get; set; }
+    public User? User { get; set; }
     public Product Product { get; set; }
-    
-    public Guid UserId { get; set; }
-    public Guid ShopId { get; set; }
+
+    public Guid? UserId { get; set; }
     public Guid ProductId { get; set; }
 
 
     public Blob()
     {
-        
     }
-    public Blob( string title, string extras)
+
+    private Blob(string title, string? extras)
     {
         if (string.IsNullOrWhiteSpace(title))
         {
@@ -38,4 +36,18 @@ public class Blob : IIdentifiable, ICommon
         Title = title;
         Extras = extras;
     }
+
+    private Blob(string title, string? extras, Guid productId)
+    {
+        Title = title;
+        Extras = extras;
+        ProductId = productId;
+    }
+
+
+    public static Blob Create(string title, string? extras) =>
+        new(title, extras);
+
+    public static Blob Create(string title, string? extras, Guid productId) =>
+        new(title, extras, productId);
 }

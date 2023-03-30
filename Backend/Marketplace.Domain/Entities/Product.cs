@@ -1,14 +1,15 @@
 ﻿using System.Text.Json.Serialization;
 using Marketplace.Domain.Abstractions;
+using Marketplace.Domain.Extensions;
 
 namespace Marketplace.Domain.Entities;
 
 public class Product : IIdentifiable, ICommon
 {
     public Guid Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public DateTime LastSession { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now.SetKindUtc();
+    public DateTime UpdatedAt { get; set; } = DateTime.Now.SetKindUtc();
+    public DateTime LastSession { get; set; } = DateTime.Now.SetKindUtc();
 
     public string[]? Attributes { get; set; }
     public string? Synonyms { get; set; }
@@ -16,9 +17,9 @@ public class Product : IIdentifiable, ICommon
     public string Description { get; set; }
     public Category Category { get; set; }
     public Seller Seller { get; set; }
-    [JsonIgnore] public IEnumerable<Badge> Badges { get; set; }
-    [JsonIgnore] public IEnumerable<Blob> Photos { get; set; }
-    [JsonIgnore] public IEnumerable<Characteristics> Characteristics { get; set; }
+    [JsonIgnore] public ICollection<Badge> Badges { get; set; }
+    [JsonIgnore] public ICollection<Blob> Photos { get; set; }
+    [JsonIgnore] public ICollection<Characteristics> Characteristics { get; set; }
 
     public Guid SellerId { get; set; }
     public Guid CategoryId { get; set; }
@@ -32,15 +33,31 @@ public class Product : IIdentifiable, ICommon
         IEnumerable<Characteristics> characteristics, Seller seller, Category category)
     {
         Id = Guid.NewGuid();
-        // Attributes = attributes ?? Array.Empty<string>();
-        Badges = badges;
+        Badges = badges.ToList();
         Title = title;
         Description = description;
         CategoryId = categoryId;
         SellerId = sellerId;
-        Photos = photos;
-        this.Characteristics = characteristics;
+        Photos = photos.ToList();
+        Characteristics = characteristics.ToList();
         Seller = seller;
         Category = category;
     }
+
+    private Product(IEnumerable<Badge> badges, string title, string description, Guid categoryId,
+        Guid sellerId,
+        IEnumerable<Blob> photos, IEnumerable<Characteristics> characteristics)
+    {
+        Badges = badges.ToList();
+        Title = title;
+        Description = description;
+        CategoryId = categoryId;
+        SellerId = sellerId;
+        Photos = photos.ToList();
+        Characteristics = characteristics.ToList();
+    }
+
+    public static Product Create(string title, string description, Guid categoryId, Guid sellerId,
+        IEnumerable<Blob> photos, IEnumerable<Characteristics> characteristics, IEnumerable<Badge> badges)
+        => new(badges, title, description, categoryId, sellerId, photos, characteristics);
 }

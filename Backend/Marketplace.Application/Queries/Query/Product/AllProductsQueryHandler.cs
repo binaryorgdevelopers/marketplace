@@ -28,8 +28,8 @@ public class ProductReadQueryHandler : ICommandHandler<ProductReadQuery>
             product.Seller.Username, product.Seller.FirstName, product.Seller.LastName, product.Seller.Banner,
             product.Seller.Avatar, product.Seller.Link);
         IEnumerable<BlobDto> photos = product.Photos.Select(c => new BlobDto(c.Id, c.Title, c.Extras));
-        IEnumerable<CharacteristicsRead> characteristics = product.Characteristics.Select(c =>
-            new CharacteristicsRead(c.Id, c.Title, c.Values.Select(x => new ColorRead(x.Id, x.Title, x.Value))));
+        IEnumerable<CharacteristicsDto> characteristics = product.Characteristics.Select(c =>
+            new CharacteristicsDto(c.Id, c.Title, c.Values.Select(x => new ColorRead(x.Id, x.Title, x.Value))));
 
         ProductDto productDto = new ProductDto(product.Id, product.Attributes, badges, product.Synonyms,
             product.Title, product.Description, categories, sellerDto, photos, characteristics);

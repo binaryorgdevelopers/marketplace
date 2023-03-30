@@ -1,4 +1,5 @@
 ﻿using Marketplace.Application.Abstractions.Messaging;
+using Marketplace.Application.Common.Messages.Messages;
 
 namespace Marketplace.Application.Common.Messages.Commands;
 
@@ -9,4 +10,4 @@ public record ProductCreateCommand(
     string Description,
     IEnumerable<CharacteristicsCreate> Characteristics,
     IEnumerable<BadgeCreate> Badges,
-    IEnumerable<BlobCreate> Photos) : ICommand;
+    IEnumerable<BlobCreate> Photos) : ICommand<ProductDto>;
