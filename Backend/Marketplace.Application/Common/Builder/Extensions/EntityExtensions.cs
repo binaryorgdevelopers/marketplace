@@ -1,5 +1,4 @@
-﻿using Marketplace.Application.Common.Builder.Models;
-using Marketplace.Domain.Abstractions;
+﻿using Marketplace.Domain.Abstractions;
 using Marketplace.Domain.Extensions;
 
 namespace Marketplace.Application.Common.Builder.Extensions;

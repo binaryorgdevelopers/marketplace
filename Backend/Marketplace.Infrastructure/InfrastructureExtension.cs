@@ -21,6 +21,7 @@ public static class InfrastructureExtension
         services
             .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
             .AddCloudStorage(configuration)
+            .AddKafka(configuration)
             .AddScoped<IPasswordHasher<User>, PasswordHasher<User>>()
             .AddScoped<IPasswordHasher<Seller>, PasswordHasher<Seller>>()
             .AddScoped<IPasswordHasher<Customer>, PasswordHasher<Customer>>()
@@ -50,4 +51,17 @@ public static class InfrastructureExtension
         services.AddScoped<ICloudUploaderService, CloudUploaderService>();
         return services;
     }
+
+    private static IServiceCollection AddKafka(this IServiceCollection services, IConfiguration configuration)
+    {
+        var options = configuration.GetSection("KafkaConfiguration");
+        services.Configure<KafkaConfiguration>(options);
+        services.AddHostedService<KafkaProducerService>();
+        return services;
+    }
+}
+
+public class KafkaConfiguration
+{
+    public string Host { get; set; }
 }

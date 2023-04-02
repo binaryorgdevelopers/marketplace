@@ -8,13 +8,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Confluent.Kafka" Version="2.0.2" />
+        <PackageReference Include="kafka-sharp" Version="1.4.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Extensions" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Marketplace.Common\Marketplace.Common.csproj" />
     </ItemGroup>
 
 </Project>

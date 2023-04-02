@@ -2,7 +2,7 @@
 using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Domain.Shared;
 
-namespace Marketplace.Application.Queries.Query.CategoryQueries;
+namespace Marketplace.Application.Queries.Query.Categories;
 
 public partial class CategoryReadQueryHandler : ICommandHandler<CategoryReadQuery>
 {
