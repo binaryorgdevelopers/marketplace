@@ -1,6 +1,6 @@
 ﻿using Marketplace.Application.Abstractions.Messaging;
 using Marketplace.Application.Common.Messages.Commands;
-using Marketplace.Application.Common.Messages.Messages;
+using Marketplace.Application.Common.Messages.Events;
 using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Models.Constants;

@@ -4,7 +4,7 @@ using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Domain.Abstractions.Services;
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Models;
-using Marketplace.Infrastructure.Database;
+using Marketplace.Infrastructure.Persistence;
 using Marketplace.Infrastructure.Repositories;
 using Marketplace.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;

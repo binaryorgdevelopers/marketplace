@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Common.Messages.Messages;
+﻿using Marketplace.Application.Common.Messages.Events;
 using Marketplace.Domain.Models;
 
 namespace Marketplace.Application.Common;

@@ -1,7 +1,7 @@
 ﻿using Marketplace.Application.Abstractions.Messaging;
 using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
-using Marketplace.Application.Common.Messages.Messages;
+using Marketplace.Application.Common.Messages.Events;
 using Marketplace.Domain.Abstractions.Repositories;
 using Marketplace.Domain.Abstractions.Services;
 using Marketplace.Domain.Entities;

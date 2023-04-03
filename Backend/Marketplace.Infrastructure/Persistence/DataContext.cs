@@ -1,9 +1,9 @@
 ﻿using Marketplace.Domain.Entities;
 using Marketplace.Domain.Extensions;
-using Marketplace.Infrastructure.Database.EntityMaps;
+using Marketplace.Infrastructure.Persistence.EntityMaps;
 using Microsoft.EntityFrameworkCore;
 
-namespace Marketplace.Infrastructure.Database;
+namespace Marketplace.Infrastructure.Persistence;
 
 public class DataContext : DbContext
 {

@@ -2,7 +2,7 @@
 
 // ReSharper disable All
 
-namespace Marketplace.Application.Common.Messages.Messages;
+namespace Marketplace.Application.Common.Messages.Events;
 
 public record Authorized 
 {

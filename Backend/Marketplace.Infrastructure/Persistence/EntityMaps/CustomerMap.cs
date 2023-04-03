@@ -3,7 +3,7 @@ using Marketplace.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Marketplace.Infrastructure.Database.EntityMaps;
+namespace Marketplace.Infrastructure.Persistence.EntityMaps;
 
 internal class CustomerMap : IEntityTypeConfiguration<Customer>
 {

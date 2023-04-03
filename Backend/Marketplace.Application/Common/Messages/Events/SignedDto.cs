@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Application.Common.Messages.Messages;
+﻿namespace Marketplace.Application.Common.Messages.Events;
 
 public class SignedDto
 {

@@ -14,8 +14,10 @@ public class Product : IIdentifiable, ICommon
     public string[]? Attributes { get; set; }
     public string? Synonyms { get; set; }
     public string Title { get; set; }
+    
     public decimal Price { get; set; }
     public int Count { get; set; }
+    
     public string Description { get; set; }
     public Category Category { get; set; }
     public Seller Seller { get; set; }
