@@ -1,5 +1,4 @@
-﻿
-using Discount.disc;
+﻿using Discount.gRPC.Protos;
 
 namespace Basket.Services;
 
@@ -12,9 +11,11 @@ public class DiscountGrpcService
         _discountProtoService = discountProtoService;
     }
 
-    public async Task<CouponModel> GetDiscount(string productName)
+    public async Task<CouponModel> GetDiscount(string productId)
     {
-        var discountRequest = new GetDiscountRequest { ProductName = productName };
-        return await _discountProtoService.GetDiscountAsync(discountRequest);
+        var discountRequest = new GetDiscountRequest { ProductId = productId };
+        var result =  _discountProtoService.GetDiscount(discountRequest);
+        await Task.CompletedTask;
+        return result;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Basket.Repositories;
 using Basket.Services;
-using Discount.disc;
+using Discount.gRPC.Protos;
 using StackExchange.Redis;
 
 namespace Basket;
