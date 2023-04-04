@@ -1,6 +1,6 @@
-﻿using Marketplace.Domain.Entities;
-using Marketplace.Domain.Exceptions;
-using Marketplace.Domain.Models.Constants;
+﻿using Inventory.Domain.Entities;
+using Inventory.Domain.Exceptions;
+using Inventory.Domain.Models.Constants;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 
