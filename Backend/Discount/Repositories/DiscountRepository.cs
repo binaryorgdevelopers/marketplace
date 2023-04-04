@@ -23,21 +23,21 @@ public class DiscountRepository : IDiscountRepository
         return affected != 0;
     }
 
-    public async Task<bool> DeleteDiscount(string productName)
+    public async Task<bool> DeleteDiscount(Guid productId)
     {
         await using var connection =
             new NpgsqlConnection(Configuration.GetValue<string>("ConnectionStrings:Postgres"));
-        var result = await connection.ExecuteAsync("DELETE FROM Coupon WHERE ProductName=@ProductName",
-            new { ProductName = productName });
+        var result = await connection.ExecuteAsync("DELETE FROM Coupon WHERE productId=@productId",
+            new { productId = productId });
         return result >= 0;
     }
 
-    public async Task<CouponModel> GetDiscount(string productName)
+    public async Task<CouponModel> GetDiscount(Guid productId)
     {
         await using var connection =
             new NpgsqlConnection(Configuration.GetValue<string>("ConnectionStrings:Postgres"));
         var coupon = await connection.QueryFirstOrDefaultAsync<CouponModel>
-            ("Select * from Coupon WHERE ProductName=@ProductName", new { ProductName = productName });
+            ("Select * from Coupon WHERE Id=@ProductId", new { ProductId = productId });
         return coupon ?? new CouponModel()
             { ProductName = "No Discount", Amount = 0, Description = "No Discount description" };
     }

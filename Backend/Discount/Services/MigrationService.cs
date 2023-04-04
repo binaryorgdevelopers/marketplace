@@ -23,8 +23,8 @@ public static class MigrationService
                 Connection = connection
             };
             //Drops table
-            command.CommandText = "DROP TABLE IF EXISTS Coupon";
-            command.ExecuteNonQuery();
+            // command.CommandText = "DROP TABLE IF EXISTS Coupon";
+            // command.ExecuteNonQuery();
             //Create table
             command.CommandText =
                 @"CREATE TABLE Coupon(Id SERIAL PRIMARY KEY , ProductName VARCHAR(100) NOT NULL,Description TEXT,AMOUNT INT)";

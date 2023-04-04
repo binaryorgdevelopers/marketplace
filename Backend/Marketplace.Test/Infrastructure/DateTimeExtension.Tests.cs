@@ -1,4 +1,4 @@
-﻿using Marketplace.Domain.Extensions;
+﻿using Inventory.Domain.Extensions;
 
 namespace Marketplace.Test.Infrastructure;
 

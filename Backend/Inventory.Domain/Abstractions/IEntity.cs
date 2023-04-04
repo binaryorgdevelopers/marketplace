@@ -1,0 +1,2 @@
+﻿namespace Inventory.Domain.Abstractions;
+

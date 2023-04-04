@@ -7,6 +7,7 @@ public class Notification : IIdentifiable
     public Guid Id { get; set; }
     public Guid? UserId { get; }
     public string Title { get; set; }
+    public string Key { get; set; }
     public string Message { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? SentAt { get; set; }
