@@ -21,15 +21,15 @@ public class BasketController : ControllerBase
 
     [HttpGet("{username}", Name = "GetBasket")]
     public async Task<ActionResult<ShoppingCart>> GetBasket(Guid username)
-        => Ok(await _basketRepository.GetBasket(username));
+        => Ok(await _basketRepository.GetBasketAsync(username.ToString()));
 
 
     [HttpDelete("{userName}", Name = "DeleteBasket")]
     public async Task<ActionResult> Delete(Guid userName)
-        => Ok(await _basketRepository.DeleteBasket(userName));
+        => Ok(await _basketRepository.DeleteBasketAsync(userName.ToString()));
 
     [HttpPost(Name = "UpdateBasket")]
-    public async Task<ActionResult<ShoppingCart>> UpdateBasket( ShoppingCart basket)
+    public async Task<ActionResult<ShoppingCart>> UpdateBasket(ShoppingCart basket)
     {
         foreach (var item in basket.Items)
         {
@@ -37,7 +37,7 @@ public class BasketController : ControllerBase
             item.Price -= coupon.Amount;
         }
 
-        var result = await _basketRepository.UpdateBasket(basket);
+        var result = await _basketRepository.UpdateBasketAsync(basket);
 
         return Ok(result);
     }
