@@ -5,7 +5,8 @@ namespace Basket.Repositories;
 
 public interface IBasketRepository
 {
-    Task<ShoppingCart> GetBasket(Guid userName);
-    Task<ShoppingCart> UpdateBasket(ShoppingCart basket);
-    Task<BasketDeleted> DeleteBasket(Guid userName);
+    Task<ShoppingCart> GetBasketAsync(string customerId);
+    IEnumerable<string> GetUsers();
+    Task<ShoppingCart> UpdateBasketAsync(ShoppingCart basket);
+    Task<BasketDeleted> DeleteBasketAsync(string id);
 }

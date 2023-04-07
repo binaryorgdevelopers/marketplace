@@ -22,12 +22,12 @@ public static class MigrationService
             {
                 Connection = connection
             };
-            //Drops table
-            // command.CommandText = "DROP TABLE IF EXISTS Coupon";
-            // command.ExecuteNonQuery();
-            //Create table
+            // Drops table
+            command.CommandText = "DROP TABLE IF EXISTS Coupon";
+            command.ExecuteNonQuery();
+            // Create table
             command.CommandText =
-                @"CREATE TABLE Coupon(Id SERIAL PRIMARY KEY , ProductName VARCHAR(100) NOT NULL,Description TEXT,AMOUNT INT)";
+                @"CREATE TABLE Coupon(Id uuid PRIMARY KEY, ProductName VARCHAR(100) NOT NULL,Description TEXT,AMOUNT INT)";
             command.ExecuteNonQuery();
             logger.LogInformation("Migrated postgresql database.");
         }

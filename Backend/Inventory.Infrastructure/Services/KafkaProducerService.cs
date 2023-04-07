@@ -20,20 +20,19 @@ public class KafkaProducerService : IHostedService
         _producer = new ProducerBuilder<Null, string>(config).Build();
     }
 
-    public Task StartAsync(CancellationToken cancellationToken)
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
-        // for (int i = 0; i < 100; i++)
-        // {
-        //     var value = $"Hello world {i}";
-        //     _logger.LogInformation(value);
-        //     await _producer.ProduceAsync("notification", new Message<Null, string>()
-        //     {
-        //         Value = value
-        //     }, cancellationToken);
-        // }
+        for (int i = 0; i < 2; i++)
+        {
+            var value = $"Hello world {i}";
+            _logger.LogInformation(value);
+            await _producer.ProduceAsync("notification", new Message<Null, string>()
+            {
+                Value = value
+            }, cancellationToken);
+        }
 
         _producer.Flush(TimeSpan.FromSeconds(10));
-        return Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

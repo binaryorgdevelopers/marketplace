@@ -23,7 +23,9 @@ public class Customer : ICommon, IIdentifiable, IProtectable
 
     public bool Active { get; private set; }
     public string FirstName { get; set; }
+
     public string LastName { get; set; }
+
     // public string Locale { get; set; } = string.Empty;
     public string Username { get; set; }
     public string[] Authorities { get; set; }
@@ -31,20 +33,17 @@ public class Customer : ICommon, IIdentifiable, IProtectable
 
     public Customer()
     {
-        
     }
+
     public Customer(Guid id, string phoneNumber, string email, string firstName, string lastName, string username)
     {
         if (!Regexs.EmailRegex.IsMatch(email))
-        {
             throw new AuthException(Codes.InvalidEmail, $"Invalid email :'{email}.'");
-        }
 
 
         if (!PhoneNumberValidate(phoneNumber))
-        {
             throw new AuthException(Codes.InvalidPhoneNumber, $"Invalid phone number '{phoneNumber}'.");
-        }
+
 
         Id = id;
         PhoneNumber = phoneNumber;
@@ -57,15 +56,13 @@ public class Customer : ICommon, IIdentifiable, IProtectable
     public void SetPassword(string password, IPasswordHasher<Customer> passwordHasher)
     {
         if (string.IsNullOrWhiteSpace(password))
-        {
             throw new AuthException(Codes.InvalidPassword, $"Password can't be empty.");
-        }
+
 
         PasswordHash = passwordHasher.HashPassword(this, password);
     }
 
-    public TokenRequest ToTokenRequest() =>
-        new TokenRequest(Id, Email, PhoneNumber, FirstName, LastName, Roles.Customer.ToString());
+    public TokenRequest ToTokenRequest() => new(Id, Email, PhoneNumber, FirstName, LastName, Roles.Customer.ToString());
 
     public void ChangeStatus() => Active = !Active;
 

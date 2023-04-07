@@ -1,35 +1,70 @@
 ﻿using System.Text.Json;
 using Basket.Entities;
-using Microsoft.Extensions.Caching.Distributed;
 using Shared.Events;
+using StackExchange.Redis;
 
 namespace Basket.Repositories;
 
 public class BasketRepository : IBasketRepository
 {
-    private readonly IDistributedCache _redisCache;
+    private readonly ILogger<BasketRepository> _logger;
+    private readonly ConnectionMultiplexer _redis;
+    private readonly IDatabase _database;
 
-    public BasketRepository(IDistributedCache redisCache)
+    public BasketRepository(ILoggerFactory loggerFactory, ConnectionMultiplexer redis)
     {
-        _redisCache = redisCache;
+        _logger = loggerFactory.CreateLogger<BasketRepository>();
+        _redis = redis;
+        _database = redis.GetDatabase();
     }
 
-    public async Task<ShoppingCart> GetBasket(Guid userName)
+    public async Task<BasketDeleted> DeleteBasketAsync(string id)
     {
-        string? basket = await _redisCache.GetStringAsync(userName.ToString());
-        return (string.IsNullOrEmpty(basket) ? null : JsonSerializer.Deserialize<ShoppingCart>(basket)) ??
-               new ShoppingCart(userName);
+        await _database.KeyDeleteAsync(id);
+        return new BasketDeleted(Guid.Parse(id), "deleted");
     }
 
-    public async Task<ShoppingCart> UpdateBasket(ShoppingCart basket)
+    public IEnumerable<string> GetUsers()
     {
-        await _redisCache.SetStringAsync(basket.Username.ToString(), JsonSerializer.Serialize(basket));
-        return await GetBasket(basket.Username);
+        var server = GetServer();
+        var data = server.Keys();
+
+        return data?.Select(k => k.ToString());
     }
 
-    public async Task<BasketDeleted> DeleteBasket(Guid userName)
+    public async Task<ShoppingCart> GetBasketAsync(string customerId)
     {
-        await _redisCache.RemoveAsync(userName.ToString());
-        return new BasketDeleted(userName, "200");
+        var data = await _database.StringGetAsync(customerId);
+
+        if (data.IsNullOrEmpty)
+        {
+            return null;
+        }
+
+        return JsonSerializer.Deserialize<ShoppingCart>(data, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+    }
+
+    public async Task<ShoppingCart> UpdateBasketAsync(ShoppingCart basket)
+    {
+        var created = await _database.StringSetAsync(basket.Username.ToString(), JsonSerializer.Serialize(basket));
+
+        if (!created)
+        {
+            _logger.LogInformation("Problem occur persisting the item.");
+            return null;
+        }
+
+        _logger.LogInformation("Basket item persisted succesfully.");
+
+        return await GetBasketAsync(basket.Username.ToString());
+    }
+
+    private IServer GetServer()
+    {
+        var endpoint = _redis.GetEndPoints();
+        return _redis.GetServer(endpoint.First());
     }
 }

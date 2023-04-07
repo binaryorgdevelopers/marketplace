@@ -1,6 +1,8 @@
-﻿using Basket.Repositories;
+﻿using Basket.Models;
+using Basket.Repositories;
 using Basket.Services;
 using Discount.gRPC.Protos;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 
 namespace Basket;
@@ -11,6 +13,7 @@ public static class ServiceRegistrationExtension
     {
         builder.Services.AddScoped<IBasketRepository, BasketRepository>();
         builder.Services.AddScoped<DiscountGrpcService>();
+
         return builder;
     }
 
@@ -23,17 +26,14 @@ public static class ServiceRegistrationExtension
 
     public static WebApplicationBuilder AddRedis(this WebApplicationBuilder builder)
     {
-        string options = builder.Configuration.GetValue<string>("Redis:Host")!;
-        string password = builder.Configuration.GetValue<string>("Redis:Password")!;
-        builder.Services.AddStackExchangeRedisCache(option =>
+        builder.Services.Configure<BasketOptions>(builder.Configuration.GetSection("Redis"));
+        builder.Services.AddSingleton<ConnectionMultiplexer>(sp =>
         {
-            option.Configuration = options;
-            option.ConfigurationOptions = new ConfigurationOptions
-            {
-                EndPoints = { options },
-                Password = password,
-                AbortOnConnectFail = false
-            };
+            var settings = sp.GetRequiredService<IOptions<BasketOptions>>().Value;
+            var configuration = ConfigurationOptions.Parse(settings.ConnectionString, true);
+            configuration.Password = settings.Password;
+
+            return ConnectionMultiplexer.Connect(configuration);
         });
 
         return builder;
