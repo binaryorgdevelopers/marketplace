@@ -23,6 +23,9 @@ public class OrderingContext : DbContext, IUnitOfWork
     private readonly IMediator _mediator;
     private IDbContextTransaction _currentTransaction;
 
+    public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
+    public bool HasActiveTransaction => _currentTransaction != null;
+
     public OrderingContext(DbContextOptions<OrderingContext> options) : base(options)
     {
     }

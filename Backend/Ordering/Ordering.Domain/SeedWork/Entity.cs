@@ -40,14 +40,14 @@ public abstract class Entity
 
     public static bool operator ==(Entity left, Entity right)
     {
-        if (object.Equals(left, null))
-            return object.Equals(right, null);
-        else return left.Equals(right);
+        if (Object.Equals(left, null))
+            return (Object.Equals(right, null)) ? true : false;
+        else
+            return left.Equals(right);
     }
 
-    public static bool operator !=(Entity left, Entity right)
+    public static bool operator !=(Entity? left, Entity? right)
     {
         return !(left == right);
     }
-    
 }

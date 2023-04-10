@@ -2,6 +2,6 @@
 
 public interface IRequestManager
 {
-    Task<bool> ExistsAsync();
+    Task<bool> ExistsAsync(Guid id);
     Task CreateRequestCommandAsync<T>(Guid id);
 }
