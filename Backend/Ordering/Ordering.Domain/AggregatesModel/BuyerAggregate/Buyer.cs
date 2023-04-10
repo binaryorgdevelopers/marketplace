@@ -35,14 +35,14 @@ public class Buyer : Entity, IAggregateRoot
 
         if (existingPayment != null)
         {
-            AddDomainEvent(new BuyerAndPaymentMethodVerified(this, existingPayment, orderId));
+            AddDomainEvent(new BuyerAndPaymentMethodVerifiedDomainEvent(this, existingPayment, orderId));
             return existingPayment;
         }
 
         var payment = new PaymentMethod(cardTypeId, alias, cardNumber, securityNumber, cardHolderName, expiration);
         _paymentMethods.Add(payment);
 
-        AddDomainEvent(new BuyerAndPaymentMethodVerified(this, payment, orderId));
+        AddDomainEvent(new BuyerAndPaymentMethodVerifiedDomainEvent(this, payment, orderId));
 
         return payment;
     }
