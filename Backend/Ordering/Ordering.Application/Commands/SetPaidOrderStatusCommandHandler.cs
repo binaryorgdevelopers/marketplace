@@ -3,7 +3,7 @@ using Ordering.Domain.AggregatesModel.OrderAggregate;
 
 namespace Ordering.Application.Commands;
 
-public class SetPaidOrderStatusCommandHandler : IRequestHandler<SetPainOrderStatusCommand, bool>
+public class SetPaidOrderStatusCommandHandler : IRequestHandler<SetPaidOrderStatusCommand, bool>
 {
     private readonly IOrderRepository _orderRepository;
 
@@ -19,7 +19,7 @@ public class SetPaidOrderStatusCommandHandler : IRequestHandler<SetPainOrderStat
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<bool> Handle(SetPainOrderStatusCommand command, CancellationToken cancellationToken)
+    public async Task<bool> Handle(SetPaidOrderStatusCommand command, CancellationToken cancellationToken)
     {
         // Simulate a work time for validating the payment
 

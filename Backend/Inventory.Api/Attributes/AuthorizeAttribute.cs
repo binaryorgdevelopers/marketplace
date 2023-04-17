@@ -13,7 +13,7 @@ public class AddRolesAttribute : Attribute, IAuthorizationFilter
 
     public AddRolesAttribute(params Roles[] roles)
     {
-        _roles = roles ?? Array.Empty<Roles>();
+        _roles = roles;
     }
 
     public void OnAuthorization(AuthorizationFilterContext context)

@@ -7,16 +7,23 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
-      <PackageReference Include="MediatR" Version="12.0.1" />
-      <PackageReference Include="Serilog" Version="2.12.0" />
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
+        <PackageReference Include="MediatR" Version="12.0.1" />
+        <PackageReference Include="Serilog" Version="2.12.0" />
+        <PackageReference Include="Dapper" />
+        <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\EventBus\EventBus.csproj" />
-      <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
-      <ProjectReference Include="..\Ordering.Infrastructure\Ordering.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\EventBus\EventBus.csproj" />
+        <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Logging.Abstractions">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\7.0.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

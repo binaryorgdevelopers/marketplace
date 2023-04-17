@@ -1,7 +1,7 @@
 ﻿using EventBus.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Ordering.Infrastructure.Idempotency;
+using Ordering.Domain.Abstractions;
 
 namespace Ordering.Application.Commands;
 

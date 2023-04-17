@@ -22,7 +22,7 @@ public class JwtMiddleware
         {
             context.Items["Client"] = client;
         }
-
+        
         await _next(context);
     }
 }

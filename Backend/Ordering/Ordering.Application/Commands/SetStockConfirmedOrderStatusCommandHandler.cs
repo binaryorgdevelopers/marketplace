@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using Ordering.Domain.Abstractions;
 using Ordering.Domain.AggregatesModel.OrderAggregate;
-using Ordering.Infrastructure.Idempotency;
 
 namespace Ordering.Application.Commands;
 
