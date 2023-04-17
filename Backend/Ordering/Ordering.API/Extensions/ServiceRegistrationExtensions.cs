@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EventBus.Abstractions;
 using Ordering.API.Controllers;
@@ -7,6 +6,7 @@ using Ordering.Application.Commands;
 using Ordering.Application.IntegrationEvents.Events;
 using Ordering.Infrastructure;
 using Ordering.Infrastructure.Filters;
+using Serilog;
 
 namespace Ordering.API.Extensions;
 
@@ -22,7 +22,6 @@ public static class ServiceRegistrationExtensions
         container.Populate(builder.Services);
         container.RegisterModule(new MediatorModule());
         container.RegisterModule(new ApplicationModules(builder.Configuration["ConnectionString"]));
-
         return new AutofacServiceProvider(container.Build());
     }
 
@@ -65,5 +64,36 @@ public static class ServiceRegistrationExtensions
         eventBus
             .Subscribe<OrderPaymentSucceededIntegrationEvent,
                 IIntegrationEventHandler<OrderPaymentSucceededIntegrationEvent>>();
+    }
+
+    public static void GetConfiguration()
+    {
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddEnvironmentVariables();
+
+        var config = builder.Build();
+
+        if (config.GetValue("UseVault", false))
+        {
+            // Stay tuned
+        }
+    }
+
+    public static Serilog.ILogger CreateSerilogLogger(IConfiguration configuration)
+    {
+        var seqServerUrl = configuration["Serilog:SeqServerUrl"];
+        var logstashUrl = configuration["Serilog:LogstashUrl"];
+
+        return new LoggerConfiguration()
+            .MinimumLevel.Verbose()
+            .Enrich.WithProperty("ApplicationContext", "Ordering")
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .WriteTo.Seq(string.IsNullOrWhiteSpace(seqServerUrl) ? "http/localhost:8086" : seqServerUrl)
+            .WriteTo.Http(string.IsNullOrWhiteSpace(logstashUrl) ? "http://localhost:8085" : logstashUrl)
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
     }
 }

@@ -1,7 +1,12 @@
 ﻿using System.Data.SqlClient;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Ordering.Application.Extensions;
+using Ordering.Domain.AggregatesModel.BuyerAggregate;
 using Ordering.Domain.AggregatesModel.OrderAggregate;
+using Ordering.Domain.SeedWork;
 using Polly;
 using Polly.Retry;
 
@@ -9,6 +14,90 @@ namespace Ordering.Infrastructure;
 
 public class OrderingContextSeed
 {
+    public async Task SeedAsync(OrderingContext context, IWebHostEnvironment env, IOptions<OrderingSettings> settings,
+        ILogger<OrderingContextSeed> logger)
+    {
+        var policy = CreatePolicy(logger, nameof(OrderingContextSeed));
+
+        await policy.ExecuteAsync(async () =>
+        {
+            var useCustomizationData = settings.Value.UseCustomizationData;
+            var contentRootPath = env.ContentRootPath;
+
+
+            await using (context)
+            {
+                await context.Database.MigrateAsync();
+                if (!context.CardTypes.Any())
+                {
+                    context.CardTypes.AddRange(useCustomizationData
+                        ? GetCardTypesFromFile(contentRootPath, logger)
+                        : GetPredefinedCardTypes());
+                    await context.SaveChangesAsync();
+                }
+
+                if (!context.OrderStatus.Any())
+                {
+                    context.OrderStatus.AddRange(useCustomizationData
+                        ? GetOrderStatusFromFile(contentRootPath, logger)
+                        : GetPredefinedOrderStatus());
+                }
+
+                await context.SaveChangesAsync();
+            }
+        });
+    }
+
+
+    private IEnumerable<CardType> GetCardTypesFromFile(string contentRootPath, ILogger<OrderingContextSeed> log)
+    {
+        string csvFileCardTypes = Path.Combine(contentRootPath, "Setup", "CardTypes.csv");
+
+        if (!File.Exists(csvFileCardTypes))
+        {
+            return GetPredefinedCardTypes();
+        }
+
+        string[] csvheaders;
+        try
+        {
+            string[] requiredHeaders = { "CardType" };
+            csvheaders = GetHeaders(requiredHeaders, csvFileCardTypes);
+        }
+        catch (Exception ex)
+        {
+            log.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
+            return GetPredefinedCardTypes();
+        }
+
+        int id = 1;
+        return File.ReadAllLines(csvFileCardTypes)
+            .Skip(1) // skip header column
+            .SelectTry(x => CreateCardType(x, ref id))
+            .OnCaughtException(ex =>
+            {
+                log.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
+                return null;
+            })
+            .Where(x => x != null);
+    }
+
+    private IEnumerable<CardType> GetPredefinedCardTypes()
+    {
+        return Enumeration.GetAll<CardType>();
+    }
+
+    private CardType CreateCardType(string value, ref int id)
+    {
+        if (String.IsNullOrEmpty(value))
+        {
+            throw new Exception("Orderstatus is null or empty");
+        }
+
+        return new CardType(id++, value.Trim('"').Trim());
+    }
+
+
     private IEnumerable<OrderStatus> GetOrderStatusFromFile(string contentRootPath, ILogger<OrderingContextSeed> log)
     {
         string csvFileOrderStatus = Path.Combine(contentRootPath, "Setup", "OrderStatus.csv");

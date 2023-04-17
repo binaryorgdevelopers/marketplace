@@ -29,7 +29,7 @@ public record Order
 public record OrderSummary
 {
     public int ordernumber { get; init; }
-    public DateTime date { get; init; }
+    public DateTime date { get; init; } 
     public string status { get; init; }
     public double total { get; init; }
 }
