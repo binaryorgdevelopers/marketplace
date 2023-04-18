@@ -1,11 +1,17 @@
-﻿using Autofac;
+﻿using System.Data.Common;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EventBus.Abstractions;
+using EventBusRabbitMq;
+using IntegrationEventLogEF.Services;
 using Ordering.API.Controllers;
 using Ordering.Application.Commands;
+using Ordering.Application.IntegrationEvents;
 using Ordering.Application.IntegrationEvents.Events;
 using Ordering.Infrastructure;
 using Ordering.Infrastructure.Filters;
+using Ordering.Infrastructure.Services;
+using RabbitMQ.Client;
 using Serilog;
 
 namespace Ordering.API.Extensions;
@@ -86,14 +92,64 @@ public static class ServiceRegistrationExtensions
         var seqServerUrl = configuration["Serilog:SeqServerUrl"];
         var logstashUrl = configuration["Serilog:LogstashUrl"];
 
-        return new LoggerConfiguration()
+        var result = new LoggerConfiguration()
             .MinimumLevel.Verbose()
             .Enrich.WithProperty("ApplicationContext", "Ordering")
             .Enrich.FromLogContext()
             .WriteTo.Console()
-            .WriteTo.Seq(string.IsNullOrWhiteSpace(seqServerUrl) ? "http/localhost:8086" : seqServerUrl)
-            .WriteTo.Http(string.IsNullOrWhiteSpace(logstashUrl) ? "http://localhost:8085" : logstashUrl)
+            // .WriteTo.Seq(string.IsNullOrWhiteSpace(seqServerUrl) ? "http/localhost:8086" : seqServerUrl)
+            // .WriteTo.Http(string.IsNullOrWhiteSpace(logstashUrl) ? "http://localhost:8085" : logstashUrl)
             .ReadFrom.Configuration(configuration)
             .CreateLogger();
+        return result;
+    }
+
+    public static WebApplicationBuilder RegisterMediatR(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
+        // builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof().Assembly));
+        builder.Services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssemblies(typeof(CancelOrderCommand).Assembly));
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddCustomIntegrations(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        builder.Services.AddTransient<Func<DbConnection, IIntegrationEventLogService>>(sp =>
+            (DbConnection c) => new IntegrationEventLogService(c));
+        builder.Services.AddTransient<IOrderingIntegrationEventService, OrderingIntegrationEventService>();
+
+        builder.Services.AddSingleton<IRabbitMqPersistentConnection>(sp =>
+        {
+            var logger = sp.GetRequiredService<ILogger<DefaultRabbitMqPersistentConnection>>();
+
+            var factory = new ConnectionFactory
+            {
+                HostName = builder.Configuration["EventBusConnection"],
+                DispatchConsumersAsync = true
+            };
+            if (!string.IsNullOrEmpty(builder.Configuration["EventBusUserName"]))
+            {
+                factory.UserName = builder.Configuration["EventBusUserName"];
+            }
+
+            if (!string.IsNullOrEmpty(builder.Configuration["EventBusPassword"]))
+            {
+                factory.Password = builder.Configuration["EventBusPassword"];
+            }
+
+            var retryCount = 5;
+            if (!string.IsNullOrEmpty(builder.Configuration["EventBusRetryCount"]))
+            {
+                retryCount = int.Parse(builder.Configuration["EventBusRetryCount"]);
+            }
+
+            return new DefaultRabbitMqPersistentConnection(factory, logger, retryCount);
+        });
+
+
+        return builder;
     }
 }

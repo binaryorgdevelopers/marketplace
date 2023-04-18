@@ -17,6 +17,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\EventBus\EventBus.csproj" />
+        <ProjectReference Include="..\..\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
         <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
     </ItemGroup>
 

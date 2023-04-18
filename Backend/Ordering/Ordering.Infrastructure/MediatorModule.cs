@@ -13,11 +13,11 @@ public class MediatorModule : Autofac.Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        builder.RegisterAssemblyTypes(typeof(IMediator).GetType().Assembly)
+        builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
             .AsImplementedInterfaces();
 
         //Register all Command classes (they implement IRequestHandler)
-        builder.RegisterAssemblyTypes(typeof(CreateOrderCommand).GetType().Assembly)
+        builder.RegisterAssemblyTypes(typeof(CreateOrderCommand).GetTypeInfo().Assembly)
             .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
         //Register the DomainEventHandler classes (they implement INotificationHandler<>) in assembly holding the Domain Events
@@ -27,7 +27,7 @@ public class MediatorModule : Autofac.Module
 
         // Register the Command's Validators (Validators based on FluentValidation library)
         builder
-            .RegisterAssemblyTypes(typeof(CreateOrderCommandValidator).GetType().Assembly)
+            .RegisterAssemblyTypes(typeof(CreateOrderCommandValidator).GetTypeInfo().Assembly)
             .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
             .AsImplementedInterfaces();
 

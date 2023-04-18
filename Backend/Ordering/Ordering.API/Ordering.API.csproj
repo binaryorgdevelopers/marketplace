@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\EventBusRabbitMq\EventBusRabbitMq.csproj" />
         <ProjectReference Include="..\..\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
         <ProjectReference Include="..\..\WebHost\WebHost.csproj" />
         <ProjectReference Include="..\Ordering.Infrastructure\Ordering.Infrastructure.csproj" />
