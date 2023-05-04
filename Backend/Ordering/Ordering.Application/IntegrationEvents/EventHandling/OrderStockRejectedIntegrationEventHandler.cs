@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.Marshalling;
-using EventBus.Abstractions;
+﻿using EventBus.Abstractions;
 using EventBus.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;

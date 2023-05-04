@@ -1,20 +1,23 @@
 ﻿using EventBus.Models;
 using MassTransit;
+using Ordering.Application.IntegrationEvents;
 
 namespace Ordering.Infrastructure.EventBus.Producers;
 
-public class UserTokenProducer : IProducer<UserToken, UserId>
+public class UserTokenProducer : IProducer<UserToken, UserDto>
 {
-    private readonly IRequestClient<UserId> _requestClient;
+    private readonly IOrderingIntegrationEventService _integrationEventService;
+    private readonly IRequestClient<UserDto> _requestClient;
 
-    public UserTokenProducer(IRequestClient<UserId> requestClient)
+    public UserTokenProducer(IOrderingIntegrationEventService integrationEventService)
     {
-        _requestClient = requestClient;
+        _integrationEventService = integrationEventService;
+        // _requestClient = requestClient;
     }
 
-    public async Task<UserId> Handle(UserToken request)
+    public async Task<UserDto> Handle(UserToken request)
     {
-        var response = await _requestClient.GetResponse<UserId>(request);
+        var response = await _requestClient.GetResponse<UserDto>(request);
         return response.Message;
     }
 }

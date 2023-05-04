@@ -13,7 +13,7 @@ internal class OrderStatusEntityTypeConfiguration : IEntityTypeConfiguration<Ord
         orderStatusConfiguration.HasKey(o => o.Id);
 
         orderStatusConfiguration.Property(o => o.Id)
-            .HasDefaultValue(1)
+            .HasDefaultValue(Guid.NewGuid())
             .ValueGeneratedNever()
             .IsRequired();
 

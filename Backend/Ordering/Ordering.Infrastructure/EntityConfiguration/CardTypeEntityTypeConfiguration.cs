@@ -13,7 +13,7 @@ internal class CardTypeEntityTypeConfiguration : IEntityTypeConfiguration<CardTy
         cardTypesConfiguration.HasKey(ct => ct.Id);
 
         cardTypesConfiguration.Property(ct => ct.Id)
-            .HasDefaultValue(1)
+            .HasDefaultValue(Guid.NewGuid())
             .ValueGeneratedNever()
             .IsRequired();
 

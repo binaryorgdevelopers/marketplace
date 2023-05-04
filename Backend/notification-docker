@@ -5,8 +5,12 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
+
 COPY ["NotificationService/NotificationService.csproj", "NotificationService/"]
+COPY "Marketplace.Common/Marketplace.Common.csproj" "Marketplace.Common/Marketplace.Common.csproj"
+
 RUN dotnet restore "NotificationService/NotificationService.csproj"
+
 COPY . .
 WORKDIR "/src/NotificationService"
 RUN dotnet build "NotificationService.csproj" -c Release -o /app/build
@@ -16,5 +20,7 @@ RUN dotnet publish "NotificationService.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
+
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "NotificationService.dll"]

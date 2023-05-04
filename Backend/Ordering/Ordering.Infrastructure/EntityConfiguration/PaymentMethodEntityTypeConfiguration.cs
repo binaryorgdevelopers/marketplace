@@ -14,9 +14,9 @@ internal class PaymentMethodEntityTypeConfiguration : IEntityTypeConfiguration<P
 
         paymentConfiguration.Ignore(b => b.DomainEvents);
 
-        paymentConfiguration.Property(b => b.Id).UseHiLo("paymentseq", OrderingContext.DEFAULT_SCHEMA);
+        // paymentConfiguration.Property(b => b.Id).UseHiLo("paymentseq", OrderingContext.DEFAULT_SCHEMA);
 
-        paymentConfiguration.Property<int>("BuyerId").IsRequired();
+        paymentConfiguration.Property<Guid>("BuyerId").IsRequired();
 
         paymentConfiguration
             .Property<string>("_cardHolderName")
@@ -53,7 +53,7 @@ internal class PaymentMethodEntityTypeConfiguration : IEntityTypeConfiguration<P
             .IsRequired();
 
         paymentConfiguration
-            .Property<int>("_cardTypeId")
+            .Property<Guid>("_cardTypeId")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("CardTypeId")
             .IsRequired();

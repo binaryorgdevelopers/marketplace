@@ -307,7 +307,7 @@ namespace Marketplace.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Blob_UserId",
                 table: "Blob",
-                column: "UserId");
+                column: "UserDto");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Category_ParentId",
@@ -337,7 +337,7 @@ namespace Marketplace.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Shop_UserId",
                 table: "Shop",
-                column: "UserId");
+                column: "UserDto");
         }
 
         /// <inheritdoc />

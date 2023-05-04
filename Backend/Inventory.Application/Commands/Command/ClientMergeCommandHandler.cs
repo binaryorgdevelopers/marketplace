@@ -1,8 +1,8 @@
-﻿using Marketplace.Application.Abstractions.Messaging;
+﻿using Authentication.Enum;
+using Marketplace.Application.Abstractions.Messaging;
 using Marketplace.Application.Common.Messages.Commands;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Entities;
-using Inventory.Domain.Models.Constants;
 using Inventory.Domain.Shared;
 
 namespace Marketplace.Application.Commands.Command;

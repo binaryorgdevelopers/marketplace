@@ -6,14 +6,14 @@ namespace Ordering.Application.Commands;
 public class CancelOrderCommand:IRequest<bool>
 {
     [DataMember]
-    public int OrderNumber { get; set; }
+    public Guid OrderNumber { get; set; }
 
     public CancelOrderCommand()
     {
         
     }
 
-    public CancelOrderCommand(int orderNumber)
+    public CancelOrderCommand(Guid orderNumber)
     {
         OrderNumber = orderNumber;
     }

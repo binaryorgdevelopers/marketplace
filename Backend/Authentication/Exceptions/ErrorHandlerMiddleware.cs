@@ -1,8 +1,9 @@
 ﻿using System.Net;
 using System.Text.Json;
-using Inventory.Domain.Exceptions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
-namespace Inventory.Api.Middleware;
+namespace Authentication.Exceptions;
 
 public class ErrorHandlerMiddleware
 {

@@ -4,7 +4,7 @@ namespace Ordering.Application.IntegrationEvents.Events;
 
 public record OrderStatusChangedToAwaitingValidationIntegrationEvent : IntegrationEvent
 {
-    public OrderStatusChangedToAwaitingValidationIntegrationEvent(int orderId, string orderStatus, string buyerName, IEnumerable<OrderStockItem> orderStockItems)
+    public OrderStatusChangedToAwaitingValidationIntegrationEvent(Guid orderId, string orderStatus, string buyerName, IEnumerable<OrderStockItem> orderStockItems)
     {
         OrderId = orderId;
         OrderStatus = orderStatus;
@@ -12,7 +12,7 @@ public record OrderStatusChangedToAwaitingValidationIntegrationEvent : Integrati
         OrderStockItems = orderStockItems;
     }
 
-    public int OrderId { get; }
+    public Guid OrderId { get; }
     public string OrderStatus { get; }
     public string BuyerName { get; }
     public IEnumerable<OrderStockItem> OrderStockItems { get; }
@@ -20,12 +20,12 @@ public record OrderStatusChangedToAwaitingValidationIntegrationEvent : Integrati
 
 public record OrderStockItem
 {
-    public OrderStockItem(int units, int productId)
+    public OrderStockItem(int units, Guid productId)
     {
         Units = units;
         ProductId = productId;
     }
 
-    public int ProductId { get; }
+    public Guid ProductId { get; }
     public int Units { get; }
 }

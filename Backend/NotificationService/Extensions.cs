@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NotificationService.DAL;
-using NotificationService.DAL.Entities;
 using NotificationService.Dtos;
 using NotificationService.Hubs;
-using NotificationService.Notifications;
+using NotificationService.Persistence.Entities;
+using NotificationService.RequestHandlers;
 using NotificationService.Services;
 using Shared.Abstraction.MediatR;
 using Shared.Models;

@@ -35,7 +35,7 @@ public class
                 notification.OrderId, nameof(OrderStatus.StockConfirmed), OrderStatus.StockConfirmed.Id);
 
         var order = await _orderRepository.GetAsync(notification.OrderId);
-        var buyer = await _buyerRepository.FindByIdAsync(order.GetBuyerId.Value.ToString());
+        var buyer = await _buyerRepository.FindByIdAsync(order.GetBuyerId.Value);
 
         var orderStatusChangedToStockConfirmedIntegrationEvent =
             new OrderStatusChangedToStockConfirmedIntegrationEvent(order.Id, order.OrderStatus.Name, buyer.Name);

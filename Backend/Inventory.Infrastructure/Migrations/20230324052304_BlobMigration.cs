@@ -31,7 +31,7 @@ namespace Marketplace.Infrastructure.Migrations
                 table: "Blob");
 
             migrationBuilder.AlterColumn<Guid>(
-                name: "UserId",
+                name: "UserDto",
                 table: "Blob",
                 type: "uuid",
                 nullable: true,
@@ -41,7 +41,7 @@ namespace Marketplace.Infrastructure.Migrations
             migrationBuilder.AddForeignKey(
                 name: "FK_Blob_Users_UserId",
                 table: "Blob",
-                column: "UserId",
+                column: "UserDto",
                 principalTable: "Users",
                 principalColumn: "Id");
         }
@@ -54,7 +54,7 @@ namespace Marketplace.Infrastructure.Migrations
                 table: "Blob");
 
             migrationBuilder.AlterColumn<Guid>(
-                name: "UserId",
+                name: "UserDto",
                 table: "Blob",
                 type: "uuid",
                 nullable: false,
@@ -100,7 +100,7 @@ namespace Marketplace.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Shop_UserId",
                 table: "Shop",
-                column: "UserId");
+                column: "UserDto");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Blob_Shop_ShopId",
@@ -113,7 +113,7 @@ namespace Marketplace.Infrastructure.Migrations
             migrationBuilder.AddForeignKey(
                 name: "FK_Blob_Users_UserId",
                 table: "Blob",
-                column: "UserId",
+                column: "UserDto",
                 principalTable: "Users",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);

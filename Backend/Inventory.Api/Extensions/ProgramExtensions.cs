@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Inventory.Api.Middleware;
+using Authentication;
 using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Inventory.Domain.Abstractions.Repositories;
@@ -15,14 +15,8 @@ using StackExchange.Redis;
 
 namespace Inventory.Api.Extensions;
 
-public static class WebApplicationExtensions
+public static class ProgramExtensions
 {
-    public static void UseCustomMiddlewares(this IApplicationBuilder builder)
-    {
-        builder.UseMiddleware<JwtMiddleware>();
-        builder.UseMiddleware<ErrorHandlerMiddleware>();
-    }
-
     public static WebApplicationBuilder RegisterLambda(this WebApplicationBuilder builder)
     {
         builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
@@ -68,13 +62,13 @@ public static class WebApplicationExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    public static WebApplicationBuilder AddJwt(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddCustomAuthentication(this WebApplicationBuilder builder)
     {
         var options = builder.Configuration.GetOptions<JwtOptions>(JwtOptions.SectionName);
         builder.Services.AddSingleton(options);
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
         builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-
+        builder.Services.AddScoped<ITokenValidator, TokenValidatorService>();
         builder.Services.AddAuthentication(opt =>
         {
             opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -86,7 +80,7 @@ public static class WebApplicationExtensions
             jwtOptions.RequireHttpsMetadata = false;
             jwtOptions.TokenValidationParameters = new TokenValidationParameters
             {
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Secret)),
                 ValidIssuer = options.Issuer,
                 ValidAudience = options.ValidAudience,
                 ValidateAudience = options.ValidateAudience,
@@ -108,6 +102,7 @@ public static class WebApplicationExtensions
         });
         return builder;
     }
+
 
     public static WebApplicationBuilder AddRedis(this WebApplicationBuilder builder)
     {

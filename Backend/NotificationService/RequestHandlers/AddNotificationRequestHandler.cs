@@ -1,9 +1,9 @@
 ﻿using NotificationService.DAL;
-using NotificationService.DAL.Entities;
 using NotificationService.Dtos;
+using NotificationService.Persistence.Entities;
 using Shared.Abstraction.MediatR;
 
-namespace NotificationService.Notifications;
+namespace NotificationService.RequestHandlers;
 
 public class AddNotificationRequestHandler : IRequestHandler<NotificationRequest, Notification>
 {

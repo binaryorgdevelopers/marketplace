@@ -46,28 +46,28 @@ public class IdentifiedCommandHandler<T, TR> : IRequestHandler<IdentifiedCommand
             {
                 var command = request.Command;
                 var commandName = command.GetGenericTypeName();
-                var idProperty = string.Empty;
-                var commandId = string.Empty;
+                var idProperty = Guid.Empty;
+                var commandId = Guid.Empty;
 
                 switch (command)
                 {
                     case CreateOrderCommand createOrderCommand:
-                        idProperty = nameof(createOrderCommand.UserId);
+                        idProperty = createOrderCommand.UserId;
                         commandId = createOrderCommand.UserId;
                         break;
                     case CancelOrderCommand cancelOrderCommand:
-                        idProperty = nameof(cancelOrderCommand.OrderNumber);
-                        commandId = $"{cancelOrderCommand.OrderNumber}";
+                        idProperty =cancelOrderCommand.OrderNumber;
+                        commandId = cancelOrderCommand.OrderNumber;
                         break;
 
                     case ShipOrderCommand shipOrderCommand:
-                        idProperty = nameof(shipOrderCommand.OrderNumber);
-                        commandId = $"{shipOrderCommand.OrderNumber}";
+                        idProperty = shipOrderCommand.OrderNumber;
+                        commandId = shipOrderCommand.OrderNumber;
                         break;
 
                     default:
-                        idProperty = "Id?";
-                        commandId = "n/a";
+                        idProperty = Guid.Empty;
+                        commandId =Guid.Empty;
                         break;
                 }
 

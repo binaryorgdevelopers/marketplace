@@ -1,4 +1,4 @@
-﻿using Inventory.Domain.Models.Constants;
+﻿using Authentication.Enum;
 using static System.Enum;
 
 namespace Inventory.Domain.Entities;

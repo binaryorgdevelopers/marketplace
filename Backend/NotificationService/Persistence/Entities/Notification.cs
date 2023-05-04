@@ -1,6 +1,6 @@
 ﻿using Shared.Abstraction;
 
-namespace NotificationService.DAL.Entities;
+namespace NotificationService.Persistence.Entities;
 
 public class Notification : IIdentifiable
 {

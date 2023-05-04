@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Ordering.Domain.Exceptions;
+﻿using Ordering.Domain.Exceptions;
 using Ordering.Domain.SeedWork;
 
 namespace Ordering.Domain.AggregatesModel.OrderAggregate;
@@ -12,13 +11,13 @@ public class OrderItem : Entity
     private decimal _discount;
     private int _units;
 
-    public int ProductId { get; private set; }
+    public Guid ProductId { get; private set; }
 
     public OrderItem()
     {
     }
 
-    public OrderItem(int productId, string productName, decimal unitPrice, decimal discount, string pictureUrl,
+    public OrderItem(Guid productId, string productName, decimal unitPrice, decimal discount, string pictureUrl,
         int units = 1)
     {
         if (units < 1) throw new OrderingDomainException("Invalid number of units");

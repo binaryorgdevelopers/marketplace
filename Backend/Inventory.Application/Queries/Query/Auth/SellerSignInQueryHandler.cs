@@ -1,4 +1,5 @@
-﻿using Marketplace.Application.Abstractions.Messaging;
+﻿using Authentication.Enum;
+using Marketplace.Application.Abstractions.Messaging;
 using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Events;

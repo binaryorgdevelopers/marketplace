@@ -5,9 +5,9 @@ namespace Ordering.Application.Commands;
 
 public class SetPaidOrderStatusCommand : IRequest<bool>
 {
-    [DataMember] public int OrderNumber { get; private set; }
+    [DataMember] public Guid OrderNumber { get; private set; }
 
-    public SetPaidOrderStatusCommand(int orderNumber)
+    public SetPaidOrderStatusCommand(Guid orderNumber)
     {
         OrderNumber = orderNumber;
     }

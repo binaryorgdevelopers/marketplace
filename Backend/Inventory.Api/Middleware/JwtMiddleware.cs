@@ -15,14 +15,18 @@ public class JwtMiddleware
 
     public async Task Invoke(HttpContext context, IJwtTokenGenerator tokenGenerator, ISender sender)
     {
-        var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-        var userId = tokenGenerator.ValidateJwtToken(token);
-        var client = (await sender.Send(new ClientByIdQuery(userId))).Value;
-        if (userId != null)
+        if (context.Request.Protocol != "HTTP/2")
         {
-            context.Items["Client"] = client;
+            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var userId = tokenGenerator.ValidateJwtToken(token);
+            var client = (await sender.Send(new ClientByIdQuery(userId))).Value;
+            if (userId != null)
+            {
+                context.Items["User"] = client;
+            }
         }
-        
+
+
         await _next(context);
     }
 }

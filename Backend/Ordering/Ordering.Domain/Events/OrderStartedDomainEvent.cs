@@ -10,9 +10,9 @@ namespace Ordering.Domain.Events;
 /// </summary>
 public class OrderStartedDomainEvent : INotification
 {
-    public string UserId { get; }
+    public Guid UserId { get; }
     public string UserName { get; }
-    public int CardTypeId { get; }
+    public Guid CardTypeId { get; }
     public string CardNumber { get; }
     public string CardSecurityNumber { get; }
     public string CardHolderName { get; }
@@ -20,8 +20,8 @@ public class OrderStartedDomainEvent : INotification
     public Order Order { get; }
 
 
-    public OrderStartedDomainEvent(Order order, string userId, string userName,
-        int cardTypeId, string cardNumber,
+    public OrderStartedDomainEvent(Order order, Guid userId, string userName,
+        Guid cardTypeId, string cardNumber,
         string cardSecurityNumber, string cardHolderName,
         DateTime cardExpiration)
     {

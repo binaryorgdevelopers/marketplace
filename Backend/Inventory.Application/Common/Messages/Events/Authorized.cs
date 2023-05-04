@@ -1,6 +1,8 @@
-﻿using Inventory.Domain.Models.Constants;
+﻿
 
 // ReSharper disable All
+
+using Authentication.Enum;
 
 namespace Marketplace.Application.Common.Messages.Events;
 

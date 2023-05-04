@@ -13,11 +13,11 @@ internal class OrderItemEntityTypeConfiguration : IEntityTypeConfiguration<Order
         orderItemConfiguration.HasKey(o => o.Id);
 
         orderItemConfiguration.Ignore(b => b.DomainEvents);
+        //
+        // orderItemConfiguration.Property(o => o.Id)
+        //     .UseHiLo("orderitemseq");
 
-        orderItemConfiguration.Property(o => o.Id)
-            .UseHiLo("orderitemseq");
-
-        orderItemConfiguration.Property<int>("OrderId")
+        orderItemConfiguration.Property<Guid>("OrderId")
             .IsRequired();
 
         orderItemConfiguration
@@ -26,7 +26,7 @@ internal class OrderItemEntityTypeConfiguration : IEntityTypeConfiguration<Order
             .HasColumnName("Discount")
             .IsRequired();
 
-        orderItemConfiguration.Property<int>("ProductId")
+        orderItemConfiguration.Property<Guid>("ProductId")
             .IsRequired();
 
         orderItemConfiguration

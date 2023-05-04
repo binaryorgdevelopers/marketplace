@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using EventBus.Abstractions;
 using Ordering.Application.Commands;
 using Ordering.Application.Queries;
@@ -23,9 +22,9 @@ public class ApplicationModules : Module
 
     protected override void Load(ContainerBuilder builder)
     {
-        builder.Register(c => new OrderQueries(QueryConnectionString))
-            .As<IOrderQueries>()
-            .InstancePerLifetimeScope();
+        // builder.Register(c => new OrderQueries(QueryConnectionString))
+        //     .As<IOrderQueries>()
+        //     .InstancePerLifetimeScope();
 
         builder.RegisterType<BuyerRepository>()
             .As<IBuyerRepository>()

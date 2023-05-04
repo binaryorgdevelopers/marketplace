@@ -24,10 +24,10 @@ public class
 
     public async Task Handle(OrderStartedDomainEvent notification, CancellationToken cancellationToken)
     {
-        var cardTypeId = (notification.CardTypeId != 0) ? notification.CardTypeId : 1;
+        var cardTypeId = (notification.CardTypeId != null) ? notification.CardTypeId : Guid.NewGuid();
         var buyer = await _buyerRepository.FindAsync(notification.UserId);
 
-        bool buyerOriginallyExisted = (buyer == null) ? false : true;
+        bool buyerOriginallyExisted = buyer != null;
 
         if (!buyerOriginallyExisted) buyer = new Buyer(notification.UserId, notification.UserName);
         buyer.VerifyOrAddPaymentMethod(cardTypeId,

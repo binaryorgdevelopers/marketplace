@@ -20,10 +20,10 @@ public class UserConsumer : IConsumer<UserToken>
     public async Task Consume(ConsumeContext<UserToken> context)
         => await Task.Run(() =>
         {
-            var message = context.Message;
-            var userId = _jwtTokenGenerator.ValidateJwtToken(message.Token);
-
-            context.RespondAsync(new UserId(userId.Value));
-            return Task.FromResult(Task.CompletedTask);
+            // var message = context.Message;
+            // var user = _jwtTokenGenerator.ValidateJwtToken(message.Token);
+            //
+            // context.RespondAsync(new UserDto(userId.Value));
+            // return Task.FromResult(Task.CompletedTask);
         });
 }

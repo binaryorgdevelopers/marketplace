@@ -35,7 +35,7 @@ public static class InfrastructureExtension
         return services;
     }
 
-    public static void AddDatabase(this IServiceCollection services,
+    public static IServiceCollection AddDatabase(this IServiceCollection services,
         IConfiguration configuration)
     {
         services.AddDbContext<DataContext>(options =>
@@ -43,6 +43,7 @@ public static class InfrastructureExtension
             options.UseNpgsql(configuration.GetValue<string>("Postgresql:ConnectionString"));
             options.EnableSensitiveDataLogging();
         });
+        return services;
     }
 
     private static IServiceCollection AddCloudStorage(this IServiceCollection services, IConfiguration configuration)
@@ -67,16 +68,21 @@ public static class InfrastructureExtension
     private static IServiceCollection AddRabbitMq(this IServiceCollection services, IConfiguration configuration)
     {
         var settings = configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
-        services.AddMassTransit(mt => mt.UsingRabbitMq((cntxt, cfg) =>
+        services.AddMassTransit(mt =>
         {
-            cfg.Host(new Uri(settings.Uri), "/", c =>
+            mt.AddConsumer<UserConsumer>();
+
+            mt.UsingRabbitMq((cntxt, cfg) =>
             {
-                c.Username(settings.Username);
-                c.Password(settings.Password);
+                cfg.Host(new Uri(settings.Uri), "/", c =>
+                {
+                    c.Username(settings.Username);
+                    c.Password(settings.Password);
+                });
+
+                cfg.ReceiveEndpoint("user", (c) => c.Consumer<UserConsumer>());
             });
-            
-            cfg.ReceiveEndpoint("user", (c) => c.Consumer<UserConsumer>());
-        }));
+        });
         return services;
     }
 }

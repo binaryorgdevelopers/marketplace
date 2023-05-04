@@ -1,11 +1,11 @@
-﻿using Marketplace.Application.Abstractions.Messaging;
+﻿using Authentication.Enum;
+using Marketplace.Application.Abstractions.Messaging;
 using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Events;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Abstractions.Services;
 using Inventory.Domain.Entities;
-using Inventory.Domain.Models.Constants;
 using Inventory.Domain.Shared;
 using Microsoft.AspNetCore.Identity;
 

@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Basket\Basket.csproj" />
         <ProjectReference Include="..\..\EventBus\EventBus.csproj" />
         <ProjectReference Include="..\..\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
         <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />

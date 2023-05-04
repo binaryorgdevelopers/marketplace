@@ -1,18 +1,23 @@
 ﻿using System.Reflection;
 using EventBus.Models;
 using IntegrationEventLogEF;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Ordering.Domain.Abstractions;
+using Ordering.Domain.AggregatesModel.BuyerAggregate;
 using Ordering.Domain.AggregatesModel.OrderAggregate;
 using Ordering.Infrastructure.EventBus.Producers;
+using Ordering.Infrastructure.Idempotency;
 using Ordering.Infrastructure.Repositories;
 
 namespace Ordering.Infrastructure;
 
 public static class InfrastructureExtensions
 {
-    public static IServiceCollection RegisterMassTransitServices(this IServiceCollection services)
+    public static IServiceCollection RegisterMassTransitServices(this IServiceCollection services,
+        IConfiguration configuration)
     {
         // Determines Interface type
         var producer = typeof(IProducer<,>);
@@ -26,8 +31,21 @@ public static class InfrastructureExtensions
         //     services.AddScoped(producer, @class);
         // }
 
-        services.AddScoped(typeof(IProducer<UserToken, UserId>), typeof(UserTokenProducer));
+        services.AddMassTransit(x =>
+        {
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(configuration["EventBusConnection"], "/", h =>
+                {
+                    h.Username(configuration["EventBusUserName"]);
+                    h.Password(configuration["EventBusPassword"]);
+                });
+            });
+        });
 
+
+        services.AddScoped(typeof(IProducer<UserToken, UserDto>), typeof(UserTokenProducer));
+        services.AddScoped<IRequestManager, RequestManager>();
         return services;
     }
 
@@ -54,6 +72,7 @@ public static class InfrastructureExtensions
                 });
         });
         services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IBuyerRepository, BuyerRepository>();
         return services;
     }
 }

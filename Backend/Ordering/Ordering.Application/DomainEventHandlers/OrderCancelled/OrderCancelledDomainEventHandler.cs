@@ -31,7 +31,7 @@ public class OrderCancelledDomainEventHandler : INotificationHandler<OrderCancel
                 notification.Order.Id, nameof(OrderStatus.Cancelled), OrderStatus.Cancelled.Id);
 
         var order = await _orderRepository.GetAsync(notification.Order.Id);
-        var buyer = await _buyerRepository.FindByIdAsync(order.GetBuyerId.Value.ToString());
+        var buyer = await _buyerRepository.FindByIdAsync(order.GetBuyerId.Value);
 
         var orderStatusChangedToCancelledIntegrationEvent =
             new OrderStatusChangeToCancelledIntegrationEvent(order.Id, order.OrderStatus.Name, buyer.Name);

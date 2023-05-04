@@ -35,7 +35,7 @@ public class OrderStatusChangedToAwaitingValidationDomainEventHandler :
 
         var order = await _orderRepository.GetAsync(notification.OrderId);
 
-        var buyer = await _buyerRepository.FindByIdAsync(order.GetBuyerId.Value.ToString());
+        var buyer = await _buyerRepository.FindByIdAsync(order.GetBuyerId.Value);
 
         var orderStockList = notification.OrderItems
             .Select(item => new OrderStockItem(item.GetUnits(), item.ProductId));

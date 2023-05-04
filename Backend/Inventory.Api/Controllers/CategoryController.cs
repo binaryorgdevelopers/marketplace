@@ -1,8 +1,8 @@
-﻿using Inventory.Api.Attributes;
+﻿using Authentication.Attributes;
+using Authentication.Enum;
 using Inventory.Api.Extensions;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Queries.Query.Categories;
-using Inventory.Domain.Models.Constants;
 using Inventory.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -36,14 +36,16 @@ public class CategoryController : ControllerBase
 
     [HttpPost("filter")]
     public async Task<IActionResult> CategoryByName(FilterCommand filter) =>
-        await Result.Create(new CategoryFilterQuery(filter.Field, filter.Value))
+        await Result
+            .Create(new CategoryFilterQuery(filter.Field, filter.Value))
             .Bind(command => _sender.Send(command))
             .Match(Ok, BadRequest);
 
     [HttpGet]
     public async Task<IActionResult> CategoryByName([FromQuery] string name)
     {
-        return await Result.Create(new CategoryFilterQuery("", name))
+        return await Result
+            .Create(new CategoryFilterQuery("", name))
             .Bind(command => _sender.Send(command))
             .Match(Ok, BadRequest);
     }

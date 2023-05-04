@@ -5,9 +5,9 @@ namespace Ordering.Application.Commands;
 
 public class ShipOrderCommand : IRequest<bool>
 {
-    [DataMember] public int OrderNumber { get; private set; }
+    [DataMember] public Guid OrderNumber { get; private set; }
 
-    public ShipOrderCommand(int orderNumber)
+    public ShipOrderCommand(Guid orderNumber)
     {
         OrderNumber = orderNumber;
     }

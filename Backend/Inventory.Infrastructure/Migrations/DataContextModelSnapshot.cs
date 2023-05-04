@@ -95,14 +95,14 @@ namespace Marketplace.Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid?>("UserDto")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserDto");
 
                     b.ToTable("Blob", (string)null);
                 });
@@ -477,7 +477,7 @@ namespace Marketplace.Infrastructure.Migrations
 
                     b.HasOne("Inventory.Domain.Entities.User", "User")
                         .WithMany("Files")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserDto");
 
                     b.Navigation("Product");
 

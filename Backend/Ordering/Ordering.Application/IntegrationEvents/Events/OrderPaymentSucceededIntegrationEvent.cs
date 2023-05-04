@@ -4,6 +4,6 @@ namespace Ordering.Application.IntegrationEvents.Events;
 
 public record OrderPaymentSucceededIntegrationEvent : IntegrationEvent
 {
-    public int OrderId { get; }
-    public OrderPaymentSucceededIntegrationEvent(int orderId) => OrderId = orderId;
+    public Guid OrderId { get; }
+    public OrderPaymentSucceededIntegrationEvent(Guid orderId) => OrderId = orderId;
 }

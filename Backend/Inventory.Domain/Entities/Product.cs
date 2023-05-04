@@ -44,10 +44,10 @@ public class Product : IIdentifiable, ICommon
         string description, Guid categoryId, Guid sellerId, IEnumerable<Blob> photos,
         IEnumerable<Characteristics> characteristics)
     {
-        NullException.ThrowIfNull(Title);
-        NullException.ThrowIfNull(Price);
-        NullException.ThrowIfNull(Count);
-        NullException.ThrowIfNull(Description);
+        NullException.ThrowIfNull(title);
+        NullException.ThrowIfNull(price);
+        NullException.ThrowIfNull(count);
+        NullException.ThrowIfNull(description);
 
         Title = title;
         Price = price;

@@ -8,10 +8,10 @@ namespace Ordering.Domain.Events;
 /// </summary>
 public class OrderStatusChangedToPaidDomainEvent : INotification
 {
-    public int OrderId { get; }
+    public Guid OrderId { get; }
     public IEnumerable<OrderItem> OrderItems { get; }
 
-    public OrderStatusChangedToPaidDomainEvent(int orderId, IEnumerable<OrderItem> orderItems)
+    public OrderStatusChangedToPaidDomainEvent(Guid orderId, IEnumerable<OrderItem> orderItems)
     {
         OrderId = orderId;
         OrderItems = orderItems;

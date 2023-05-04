@@ -1,5 +1,6 @@
-﻿using Inventory.Domain.Abstractions;
-using Inventory.Domain.Exceptions;
+﻿using Authentication;
+using Authentication.Enum;
+using Inventory.Domain.Abstractions;
 using Inventory.Domain.Models;
 using Inventory.Domain.Models.Constants;
 using Microsoft.AspNetCore.Identity;

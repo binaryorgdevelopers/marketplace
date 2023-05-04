@@ -1,7 +1,6 @@
 ﻿using Basket.Models;
 using Basket.Repositories;
 using Basket.Services;
-using Discount.gRPC.Protos;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 
@@ -14,13 +13,6 @@ public static class ServiceRegistrationExtension
         builder.Services.AddScoped<IBasketRepository, BasketRepository>();
         builder.Services.AddScoped<DiscountGrpcService>();
 
-        return builder;
-    }
-
-    public static WebApplicationBuilder AddGrpc(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(o =>
-            o.Address = new Uri(builder.Configuration.GetValue<string>("Grpc:Host")!));
         return builder;
     }
 

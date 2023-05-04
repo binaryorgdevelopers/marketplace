@@ -1,4 +1,4 @@
-﻿using NotificationService.DAL.Entities;
+﻿using NotificationService.Persistence.Entities;
 using Shared.Abstraction.MediatR;
 
 namespace NotificationService.Dtos;

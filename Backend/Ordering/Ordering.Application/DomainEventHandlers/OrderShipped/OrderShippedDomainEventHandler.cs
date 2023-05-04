@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Ordering.Application.IntegrationEvents;
 using Ordering.Application.IntegrationEvents.Events;
@@ -32,7 +31,7 @@ public class OrderShippedDomainEventHandler : INotificationHandler<OrderShippedD
                 notification.Order.Id, nameof(OrderStatus.Shipped), OrderStatus.Shipped.Id);
 
         var order = await _orderRepository.GetAsync(notification.Order.Id);
-        var buyer = await _buyerRepository.FindByIdAsync(order.GetBuyerId.Value.ToString());
+        var buyer = await _buyerRepository.FindByIdAsync(order.GetBuyerId.Value);
 
         var orderStatusChangedToShippedIntegrationEvent = new OrderStatusChangedToShippedIntegrationEvent(
             order.Id, order.OrderStatus.Name, buyer.Name);

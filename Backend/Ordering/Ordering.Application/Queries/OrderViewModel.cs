@@ -14,7 +14,7 @@ public record OrderViewModel
 
 public record Order
 {
-    public int ordernumber { get; init; }
+    public Guid ordernumber { get; init; }
     public DateTime date { get; init; }
     public string status { get; init; }
     public string description { get; init; }
@@ -28,7 +28,7 @@ public record Order
 
 public record OrderSummary
 {
-    public int ordernumber { get; init; }
+    public Guid ordernumber { get; init; }
     public DateTime date { get; init; } 
     public string status { get; init; }
     public double total { get; init; }
@@ -36,6 +36,6 @@ public record OrderSummary
 
 public record CardType
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     public string Name { get; init; }
 }

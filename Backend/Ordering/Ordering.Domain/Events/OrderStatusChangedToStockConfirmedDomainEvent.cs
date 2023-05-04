@@ -8,8 +8,8 @@ namespace Ordering.Domain.Events;
 public class OrderStatusChangedToStockConfirmedDomainEvent
     : INotification
 {
-    public int OrderId { get; }
+    public Guid OrderId { get; }
 
-    public OrderStatusChangedToStockConfirmedDomainEvent(int orderId)
+    public OrderStatusChangedToStockConfirmedDomainEvent(Guid orderId)
         => OrderId = orderId;
 }

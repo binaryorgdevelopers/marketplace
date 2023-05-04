@@ -14,15 +14,15 @@ internal class BuyerEntityTypeConfiguration : IEntityTypeConfiguration<Buyer>
 
         buyerConfiguration.Ignore(b => b.DomainEvents);
 
-        buyerConfiguration.Property(b => b.Id)
-            .UseHiLo("buyerseq", OrderingContext.DEFAULT_SCHEMA);
+        // buyerConfiguration.Property(b => b.Id)
+        //     .UseHiLo("buyerseq", OrderingContext.DEFAULT_SCHEMA);
 
         buyerConfiguration.Property(b => b.IdentityGuid)
             .HasMaxLength(200)
             .IsRequired();
 
         buyerConfiguration.HasIndex("IdentityGuid")
-            .IsUnique(true);
+            .IsUnique();
 
         buyerConfiguration.Property(b => b.Name);
 

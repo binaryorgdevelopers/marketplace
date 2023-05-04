@@ -1,13 +1,18 @@
 ﻿using System.Data.Common;
+using Authentication;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using EventBus;
 using EventBus.Abstractions;
 using EventBusRabbitMq;
 using IntegrationEventLogEF.Services;
 using Ordering.API.Controllers;
+using Ordering.API.Services;
+using Ordering.Application;
 using Ordering.Application.Commands;
 using Ordering.Application.IntegrationEvents;
 using Ordering.Application.IntegrationEvents.Events;
+using Ordering.Application.Queries;
 using Ordering.Infrastructure;
 using Ordering.Infrastructure.Filters;
 using Ordering.Infrastructure.Services;
@@ -29,6 +34,12 @@ public static class ServiceRegistrationExtensions
         container.RegisterModule(new MediatorModule());
         container.RegisterModule(new ApplicationModules(builder.Configuration["ConnectionString"]));
         return new AutofacServiceProvider(container.Build());
+    }
+
+    public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddSingleton<ITokenValidator, ValidatorService>();
+        return builder;
     }
 
     public static WebApplicationBuilder AddCustomMvc(this WebApplicationBuilder builder)
@@ -107,7 +118,6 @@ public static class ServiceRegistrationExtensions
     public static WebApplicationBuilder RegisterMediatR(this WebApplicationBuilder builder)
     {
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
-        // builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof().Assembly));
         builder.Services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblies(typeof(CancelOrderCommand).Assembly));
 
@@ -150,6 +160,38 @@ public static class ServiceRegistrationExtensions
         });
 
 
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddEventBus(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddSingleton<IEventBus, global::EventBusRabbitMq.EventBusRabbitMq>(sp =>
+        {
+            var subscriptionClientName = builder.Configuration["SubscriptionClientName"];
+            var rabbitmqPersistenceConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
+            var logger = sp.GetRequiredService<ILogger<global::EventBusRabbitMq.EventBusRabbitMq>>();
+            var eventBusSubscriptionManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
+
+            var retryCount = 5;
+            if (string.IsNullOrEmpty(builder.Configuration["EventBusRetryCount"]))
+            {
+                retryCount = int.Parse(builder.Configuration["EventBusRetryCount"]);
+            }
+
+            return new global::EventBusRabbitMq.EventBusRabbitMq(rabbitmqPersistenceConnection, logger, sp,
+                eventBusSubscriptionManager, subscriptionClientName, retryCount);
+        });
+        builder.Services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddQueries(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddSingleton<StateService>();
+        string connectionString = builder.Configuration.GetValue<string>("ConnectionString")!;
+        builder.Services.AddScoped<IOrderQueries, OrderQueries>(_ =>
+            new OrderQueries(connectionString, new StateService()));
         return builder;
     }
 }

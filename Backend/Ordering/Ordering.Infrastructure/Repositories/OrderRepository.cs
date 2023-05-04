@@ -22,7 +22,7 @@ public class OrderRepository : IOrderRepository
         _context.Entry(order).State = EntityState.Modified;
     }
 
-    public async Task<Order> GetAsync(int orderId)
+    public async Task<Order> GetAsync(Guid orderId)
     {
         var order = await _context
             .Orders

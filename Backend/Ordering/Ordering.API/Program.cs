@@ -1,29 +1,34 @@
 using System.Net;
+using Authentication.Extensions;
 using IntegrationEventLogEF;
+using Marketplace.Ordering.Ordering.API;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Options;
 using Ordering.API.Extensions;
 using Ordering.Infrastructure;
 using Serilog;
+using Shared.Extensions.gRPC;
 using WebHost;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-Log.Logger = ServiceRegistrationExtensions.CreateSerilogLogger(builder.Configuration);
+// Log.Logger = ServiceRegistrationExtensions.CreateSerilogLogger(builder.Configuration);
 
 builder.AddAutofacModules();
 builder
     .AddCustomMvc()
     .RegisterMediatR()
     .AddCustomIntegrations()
+    .AddEventBus()
+    .AddQueries()
+    .AddServices()
     .Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
-    .RegisterMassTransitServices()
+    .RegisterMassTransitServices(builder.Configuration)
     .AddDatabase(builder.Configuration)
+    .AddCustomGrpcClient<AuthService.AuthServiceClient>(builder.Configuration)
     .AddControllers();
-
 
 var app = builder.Build();
 
@@ -36,6 +41,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCustomMiddlewares();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -46,10 +52,10 @@ ServiceRegistrationExtensions.ConfigureEventBus(app);
 try
 {
     Log.Information("Configuring web host ({ApplicationContext})...", "Ordering");
-    var host = BuildWebHost(builder.Configuration, args);
+    // var host = BuildWebHost(builder.Configuration, args);
     Log.Information("Applying migrations ({ApplicationContext})...", "Ordering");
 
-    host.MigrateDbContext<OrderingContext>((context, services) =>
+    app.Services.MigrateDbContext<OrderingContext>((context, services) =>
     {
         var env = services.GetService<IWebHostEnvironment>();
         var settings = services.GetService<IOptions<OrderingSettings>>();
@@ -60,12 +66,13 @@ try
             .Wait();
     }).MigrateDbContext<IntegrationEventLogContext>((_, __) => { });
     Log.Information("Starting web host ({ApplicationContext})...", "Ordering");
-    host.Run();
+    app.Run();
     return 0;
 }
-catch (Exception e)
+catch (Exception exception)
 {
-    Log.Fatal("Program terminated unexpectedly ({ApplicationContext})", "Ordering");
+    Log.Fatal("Program terminated unexpectedly ({ApplicationContext},error: '{Error}')",
+        "Ordering", exception.Message);
     return 1;
 }
 finally

@@ -1,6 +1,5 @@
 ﻿using System.Runtime.Serialization;
 using MediatR;
-using Ordering.API.Application.Models;
 using Ordering.Application.Extensions;
 using Ordering.Application.Models;
 
@@ -11,7 +10,7 @@ public class CreateOrderCommand : IRequest<bool>
 {
     [DataMember] private readonly List<OrderItemDTO> _orderItems;
 
-    [DataMember] public string UserId { get; private set; }
+    [DataMember] public Guid UserId { get; private set; }
 
     [DataMember] public string UserName { get; private set; }
 
@@ -33,7 +32,7 @@ public class CreateOrderCommand : IRequest<bool>
 
     [DataMember] public string CardSecurityNumber { get; private set; }
 
-    [DataMember] public int CardTypeId { get; private set; }
+    [DataMember] public Guid CardTypeId { get; private set; }
 
     [DataMember] public IEnumerable<OrderItemDTO> OrderItems => _orderItems;
 
@@ -42,10 +41,10 @@ public class CreateOrderCommand : IRequest<bool>
         _orderItems = new List<OrderItemDTO>();
     }
 
-    public CreateOrderCommand(List<BasketItem> basketItems, string userId, string userName, string city, string street,
+    public CreateOrderCommand(List<BasketItem> basketItems, Guid userId, string userName, string city, string street,
         string state, string country, string zipcode,
         string cardNumber, string cardHolderName, DateTime cardExpiration,
-        string cardSecurityNumber, int cardTypeId) : this()
+        string cardSecurityNumber, Guid cardTypeId) : this()
     {
         _orderItems = basketItems.ToOrderItemsDto().ToList();
         UserId = userId;
@@ -65,7 +64,7 @@ public class CreateOrderCommand : IRequest<bool>
 
     public record OrderItemDTO
     {
-        public int ProductId { get; init; }
+        public Guid ProductId { get; init; }
 
         public string ProductName { get; init; }
 

@@ -1,4 +1,4 @@
-﻿namespace Inventory.Domain.Exceptions;
+﻿namespace Authentication;
 
 public class AuthException : Exception
 {

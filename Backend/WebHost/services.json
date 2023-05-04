@@ -1,0 +1,6 @@
+{
+  "Inventory": "https://localhost:2001;http://localhost:2001",
+  "Basket": "https://localhost:4000;http://localhost:4001",
+  "Discount": "https://localhost:1000;http://localhost:1000",
+  "Ordering": "https://localhost:3000;http://localhost:3001"
+}

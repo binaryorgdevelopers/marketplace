@@ -1,4 +1,4 @@
-﻿namespace Inventory.Domain.Models.Constants;
+﻿namespace Authentication.Enum;
 
 public enum Roles
 {

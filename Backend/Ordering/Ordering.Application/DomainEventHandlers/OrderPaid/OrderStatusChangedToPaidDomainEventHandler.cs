@@ -30,7 +30,7 @@ public class OrderStatusChangedToPaidDomainEventHandler : INotificationHandler<O
             .LogTrace("Order with Id: {OrderId} has been successfully updated to status {Status} ({Id})",
                 notification.OrderId, nameof(OrderStatus.Paid), OrderStatus.Paid.Id);
         var order = await _orderRepository.GetAsync(notification.OrderId);
-        var buyer = await _buyerRepository.FindByIdAsync(order.GetBuyerId.Value.ToString());
+        var buyer = await _buyerRepository.FindByIdAsync(order.GetBuyerId.Value);
 
         var orderStockList = notification.OrderItems
             .Select(orderItem => new OrderStockItem(orderItem.GetUnits(), orderItem.ProductId));

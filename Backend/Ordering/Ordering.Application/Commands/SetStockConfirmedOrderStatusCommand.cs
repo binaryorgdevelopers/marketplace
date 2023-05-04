@@ -5,7 +5,7 @@ namespace Ordering.Application.Commands;
 
 public class SetStockConfirmedOrderStatusCommand : IRequest<bool>
 {
-    [DataMember] public int OrderNumber { get; private set; }
+    [DataMember] public Guid OrderNumber { get; private set; }
 
-    public SetStockConfirmedOrderStatusCommand(int orderNumber) => OrderNumber = orderNumber;
+    public SetStockConfirmedOrderStatusCommand(Guid orderNumber) => OrderNumber = orderNumber;
 }

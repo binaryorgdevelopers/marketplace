@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Ordering.Domain.Events;
+﻿using Ordering.Domain.Events;
 using Ordering.Domain.Exceptions;
 using Ordering.Domain.SeedWork;
 
@@ -11,18 +10,18 @@ public class Order : Entity, IAggregateRoot
 
     public Address Address { get; private set; }
 
-    public int? GetBuyerId => _buyerId;
-    private int? _buyerId;
+    public Guid? GetBuyerId => _buyerId;
+    private Guid? _buyerId;
 
     public OrderStatus OrderStatus { get; private set; }
-    private int _orderStatusId;
+    private Guid _orderStatusId;
 
     private string _description;
 
     private readonly List<OrderItem> _orderItems;
-    public IReadOnlyCollection<OrderItem> OrderItems => _orderItems;
+    public ICollection<OrderItem> OrderItems => _orderItems;
 
-    private int? _paymentMethodId;
+    private Guid? _paymentMethodId;
 
     public static Order NewDraft()
     {
@@ -44,9 +43,9 @@ public class Order : Entity, IAggregateRoot
         _isDraft = false;
     }
 
-    public Order(string userId, string username, Address address, int cardTypeId, string cardNumber,
-        string cardSecurity, string cardHolderName, DateTime cardExpiration, int? buyerId = null,
-        int? paymentMethodId = null)
+    public Order(Guid userId, string username, Address address, Guid cardTypeId, string cardNumber,
+        string cardSecurity, string cardHolderName, DateTime cardExpiration, Guid? buyerId = null,
+        Guid? paymentMethodId = null)
     {
         _buyerId = buyerId;
         _paymentMethodId = paymentMethodId;
@@ -60,7 +59,7 @@ public class Order : Entity, IAggregateRoot
             cardSecurity, cardHolderName, cardExpiration);
     }
 
-    public void AddOrderItem(int productId, string productName, decimal unitPrice, decimal discount, string pictureUrl,
+    public void AddOrderItem(Guid productId, string productName, decimal unitPrice, decimal discount, string pictureUrl,
         int units = 1)
     {
         var existingOrderForProduct = _orderItems.SingleOrDefault(o => o.ProductId == productId);
@@ -82,8 +81,8 @@ public class Order : Entity, IAggregateRoot
         }
     }
 
-    public void SetPaymentId(int id) => _paymentMethodId = id;
-    public void SetBuyerId(int id) => _buyerId = id;
+    public void SetPaymentId(Guid id) => _paymentMethodId = id;
+    public void SetBuyerId(Guid id) => _buyerId = id;
 
     public void SetAwaitingValidationStatus()
     {
@@ -133,7 +132,7 @@ public class Order : Entity, IAggregateRoot
         AddDomainEvent(new OrderCancelledDomainEvent(this));
     }
 
-    public void SetCancelledStatusWhenStockIsRejected(IEnumerable<int> orderStockRejectedItems)
+    public void SetCancelledStatusWhenStockIsRejected(IEnumerable<Guid> orderStockRejectedItems)
     {
         if (_orderStatusId == OrderStatus.AwaitingValidation.Id)
         {
@@ -159,7 +158,7 @@ public class Order : Entity, IAggregateRoot
     }
 
 
-    private void AddOrderStartedDomainEvent(string userId, string username, int cardTypeId, string cardNumber,
+    private void AddOrderStartedDomainEvent(Guid userId, string username, Guid cardTypeId, string cardNumber,
         string cardSecurityNumber, string cardHolderName, DateTime cardExpiration)
 
     {

@@ -5,10 +5,10 @@ namespace Ordering.Application.Commands;
 
 public class SetStockRejectedOrderStatusCommand : IRequest<bool>
 {
-    [DataMember] public int OrderNumber { get; private set; }
-    [DataMember] public List<int> OrderStockItems { get; private set; }
+    [DataMember] public Guid OrderNumber { get; private set; }
+    [DataMember] public List<Guid> OrderStockItems { get; private set; }
 
-    public SetStockRejectedOrderStatusCommand(int orderNumber,List<int> orderStockItems)
+    public SetStockRejectedOrderStatusCommand(Guid orderNumber,List<Guid> orderStockItems)
     {
         OrderNumber = orderNumber;
         OrderStockItems = orderStockItems;

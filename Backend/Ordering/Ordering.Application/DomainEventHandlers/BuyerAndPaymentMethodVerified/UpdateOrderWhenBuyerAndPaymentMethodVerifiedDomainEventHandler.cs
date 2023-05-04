@@ -10,11 +10,11 @@ public class
         BuyerAndPaymentMethodVerifiedDomainEvent>
 {
     private readonly IOrderRepository _orderRepository;
-    private readonly LoggerFactory _logger;
+    private readonly ILoggerFactory _logger;
 
 
     public UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler(IOrderRepository orderRepository,
-        LoggerFactory logger)
+        ILoggerFactory logger)
     {
         _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));

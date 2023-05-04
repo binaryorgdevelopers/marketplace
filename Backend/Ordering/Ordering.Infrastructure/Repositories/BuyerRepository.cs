@@ -28,7 +28,7 @@ public class BuyerRepository : IBuyerRepository
         .Update(buyer)
         .Entity;
 
-    public async Task<Buyer> FindAsync(string identity)
+    public async Task<Buyer> FindAsync(Guid identity)
     {
         var buyer = await _context.Buyers
             .Include(b => b.PaymentMethods)
@@ -37,11 +37,11 @@ public class BuyerRepository : IBuyerRepository
         return buyer;
     }
 
-    public async Task<Buyer> FindByIdAsync(string id)
+    public async Task<Buyer> FindByIdAsync(Guid id)
     {
         var buyer = await _context.Buyers
             .Include(b => b.PaymentMethods)
-            .Where(b => b.Id == int.Parse(id))
+            .Where(b => b.Id == id)
             .SingleOrDefaultAsync();
         return buyer;
     }

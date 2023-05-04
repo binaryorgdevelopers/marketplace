@@ -8,7 +8,14 @@
 
     <ItemGroup>
         <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+        <PackageReference Include="Google.Protobuf" Version="3.22.3" />
+        <PackageReference Include="Google.Protobuf.Tools" Version="3.22.3" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.52.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
         <PackageReference Include="Serilog.AspNetCore" />
         <PackageReference Include="Serilog.Enrichers.Environment" />
@@ -19,10 +26,27 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Authentication\Authentication.csproj" />
         <ProjectReference Include="..\..\EventBusRabbitMq\EventBusRabbitMq.csproj" />
         <ProjectReference Include="..\..\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
+        <ProjectReference Include="..\..\Shared\Shared.csproj" />
         <ProjectReference Include="..\..\WebHost\WebHost.csproj" />
         <ProjectReference Include="..\Ordering.Infrastructure\Ordering.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Protobuf Include="..\..\Inventory.Api\Protos\auth.proto" GrpcServices="Client">
+            <Link>Protos\auth.proto</Link>
+        </Protobuf>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Update="Protos\basket.proto">
+            <Link>Protos\basket.proto</Link>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Protos\basket.proto" />
+        <Protobuf Include="Protos\basket.proto" GrpcService="Server" />
+    </ItemGroup>
 </Project>

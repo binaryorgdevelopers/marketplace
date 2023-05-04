@@ -24,7 +24,7 @@ public class OrderingContextSeed
             var useCustomizationData = settings.Value.UseCustomizationData;
             var contentRootPath = env.ContentRootPath;
 
-
+            var c = GetCardTypesFromFile(contentRootPath, logger);
             await using (context)
             {
                 await context.Database.MigrateAsync();
@@ -94,7 +94,7 @@ public class OrderingContextSeed
             throw new Exception("Orderstatus is null or empty");
         }
 
-        return new CardType(id++, value.Trim('"').Trim());
+        return new CardType(Guid.NewGuid(), value.Trim('"').Trim());
     }
 
 
@@ -137,7 +137,7 @@ public class OrderingContextSeed
             throw new Exception("Orderstatus is null or empty");
         }
 
-        return new OrderStatus(id++, value.Trim('"').Trim().ToLowerInvariant());
+        return new OrderStatus(Guid.NewGuid(), value.Trim('"').Trim().ToLowerInvariant());
     }
 
     private IEnumerable<OrderStatus> GetPredefinedOrderStatus()

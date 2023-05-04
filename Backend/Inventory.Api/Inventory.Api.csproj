@@ -26,6 +26,8 @@
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.3" />
         <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <PackageReference Include="Google.Protobuf" Version="3.22.3" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.52.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -35,8 +37,15 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\EventBusRabbitMq\EventBusRabbitMq.csproj" />
         <ProjectReference Include="..\Inventory.Application\Inventory.Application.csproj" />
         <ProjectReference Include="..\Inventory.Domain\Inventory.Domain.csproj" />
         <ProjectReference Include="..\Inventory.Infrastructure\Inventory.Infrastructure.csproj" />
+        <ProjectReference Include="..\Shared\Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="Protos\auth.proto" />
+        <Protobuf Include="Protos\auth.proto" GrpcService="Server" />
     </ItemGroup>
 </Project>

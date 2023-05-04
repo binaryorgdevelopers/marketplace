@@ -1,5 +1,4 @@
-﻿using Ordering.API.Application.Models;
-using Ordering.Application.Commands;
+﻿using Ordering.Application.Commands;
 using Ordering.Application.Models;
 
 namespace Ordering.Application.Extensions;

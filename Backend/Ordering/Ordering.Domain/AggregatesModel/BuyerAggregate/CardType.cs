@@ -9,11 +9,11 @@ namespace Ordering.Domain.AggregatesModel.BuyerAggregate;
 public class CardType
     : Enumeration
 {
-    public static CardType Amex = new(1, nameof(Amex));
-    public static CardType Visa = new(2, nameof(Visa));
-    public static CardType MasterCard = new(3, nameof(MasterCard));
+    public static CardType Amex = new(Guid.NewGuid(), nameof(Amex));
+    public static CardType Visa = new(Guid.NewGuid(), nameof(Visa));
+    public static CardType MasterCard = new(Guid.NewGuid(), nameof(MasterCard));
 
-    public CardType(int id, string name)
+    public CardType(Guid id, string name)
         : base(id, name)
     {
     }
