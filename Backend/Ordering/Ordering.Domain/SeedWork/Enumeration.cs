@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ordering.Domain.SeedWork;
 
@@ -7,9 +6,9 @@ public class Enumeration : IComparable
 {
     public string Name { get; private set; }
 
-    public int Id { get; private set; }
+    public Guid Id { get; private set; }
 
-    protected Enumeration(int id, string name) => (Id, Name) = (id, name);
+    protected Enumeration(Guid id, string name) => (Id, Name) = (id, name);
 
     public override string ToString() => Name;
 
@@ -31,17 +30,17 @@ public class Enumeration : IComparable
     public override int GetHashCode() => Id.GetHashCode();
 
 
-    public static int AbsoluteDifference(Enumeration firstValue, Enumeration secondValue)
-    {
-        var absoluteDifference = Math.Abs(firstValue.Id - secondValue.Id);
-        return absoluteDifference;
-    }
+    // public static int AbsoluteDifference(Enumeration firstValue, Enumeration secondValue)
+    // {
+    //     var absoluteDifference = Math.Abs(firstValue.Id - secondValue.Id);
+    //     return absoluteDifference;
+    // }
 
-    public static T FromValue<T>(int value) where T : Enumeration
-    {
-        var matchingItem = Parse<T, int>(value, "value", item => item.Id == value);
-        return matchingItem;
-    }
+    // public static T FromValue<T>(Guid value) where T : Enumeration
+    // {
+    //     var matchingItem = Parse<T, int>(value, "value", item => item.Id == value);
+    //     return matchingItem;
+    // }
 
     public static T FromDisplayName<T>(string displayName) where T : Enumeration
     {

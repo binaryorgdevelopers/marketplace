@@ -21,25 +21,25 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     public JsonWebToken GenerateToken(TokenRequest user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_jwtOptions.SecretKey);
+        var key = Encoding.ASCII.GetBytes(_jwtOptions.Secret);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-            Expires = DateTime.UtcNow.AddDays(7),
+            Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiryMinutes),
             SigningCredentials =
                 new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
         return new JsonWebToken(tokenHandler.WriteToken(token),
-            DateTime.Now.AddHours(_jwtOptions.ExpiryMinutes).ToShortTimeString());
+            DateTime.Now.AddMinutes(_jwtOptions.ExpiryMinutes).ToShortTimeString());
     }
 
     public Guid? ValidateJwtToken(string? token)
     {
         if (token is null) return null;
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.UTF8.GetBytes(_jwtOptions.SecretKey);
+        var key = Encoding.UTF8.GetBytes(_jwtOptions.Secret);
 
         try
         {
@@ -51,7 +51,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
                 ValidateAudience = false,
                 ClockSkew = TimeSpan.Zero,
                 ValidIssuer = _jwtOptions.Issuer,
-                ValidAudience = _jwtOptions.ValidAudience
+                ValidAudience = _jwtOptions.ValidAudience,
             }, out SecurityToken validatedToken);
 
             var jwtToken = (JwtSecurityToken)validatedToken;

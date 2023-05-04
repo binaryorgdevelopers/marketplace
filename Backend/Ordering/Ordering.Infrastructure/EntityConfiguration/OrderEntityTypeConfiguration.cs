@@ -15,8 +15,8 @@ internal class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
 
         orderConfiguration.Ignore(b => b.DomainEvents);
 
-        orderConfiguration.Property(o => o.Id)
-            .UseHiLo("orderseq", OrderingContext.DEFAULT_SCHEMA);
+        // orderConfiguration.Property(o => o.Id)
+        //     .UseHiLo("orderseq", OrderingContext.DEFAULT_SCHEMA);
 
         //Address value object persisted as owned entity type supported since EF Core 2.0
         orderConfiguration
@@ -24,13 +24,13 @@ internal class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
             {
                 // Explicit configuration of the shadow key property in the owned type 
                 // as a workaround for a documented issue in EF Core 5: https://github.com/dotnet/efcore/issues/20740
-                a.Property<int>("OrderId")
-                .UseHiLo("orderseq", OrderingContext.DEFAULT_SCHEMA);
-                a.WithOwner();
+                // a.Property<Guid>("OrderId")
+                //     .UseHiLo("orderseq", OrderingContext.DEFAULT_SCHEMA);
+                // a.WithOwner();
             });
 
         orderConfiguration
-            .Property<int?>("_buyerId")
+            .Property<Guid?>("_buyerId")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("BuyerId")
             .IsRequired(false);
@@ -42,14 +42,14 @@ internal class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
             .IsRequired();
 
         orderConfiguration
-            .Property<int>("_orderStatusId")
+            .Property<Guid>("_orderStatusId")
             // .HasField("_orderStatusId")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("OrderStatusId")
             .IsRequired();
 
         orderConfiguration
-            .Property<int?>("_paymentMethodId")
+            .Property<Guid?>("_paymentMethodId")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("PaymentMethodId")
             .IsRequired(false);
@@ -75,7 +75,7 @@ internal class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
             // .HasForeignKey("BuyerId");
             .HasForeignKey("_buyerId");
 
-        orderConfiguration.HasOne(o => o)
+        orderConfiguration.HasOne(o => o.OrderStatus)
             .WithMany()
             // .HasForeignKey("OrderStatusId");
             .HasForeignKey("_orderStatusId");

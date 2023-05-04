@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using NotificationService.DAL.Entities;
 using NotificationService.Dtos;
+using NotificationService.Persistence.Entities;
 using Shared.Abstraction.MediatR;
 using Shared.Extensions;
 

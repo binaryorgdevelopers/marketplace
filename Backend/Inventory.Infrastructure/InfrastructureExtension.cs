@@ -7,10 +7,13 @@ using Inventory.Domain.Models;
 using Marketplace.Infrastructure.Persistence;
 using Marketplace.Infrastructure.Repositories;
 using Marketplace.Infrastructure.Services;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using EventBus.Models;
+using Marketplace.Infrastructure.Consumers;
 
 namespace Marketplace.Infrastructure;
 
@@ -27,11 +30,12 @@ public static class InfrastructureExtension
             .AddScoped<IPasswordHasher<Customer>, PasswordHasher<Customer>>()
             .AddScoped<ILoggingBroker, LoggingBroker>()
             .AddScoped(typeof(SearchService<>))
-            .AddHostedService<UserManagerService>();
+            .AddHostedService<UserManagerService>()
+            .AddRabbitMq(configuration);
         return services;
     }
 
-    public static void AddDatabase(this IServiceCollection services,
+    public static IServiceCollection AddDatabase(this IServiceCollection services,
         IConfiguration configuration)
     {
         services.AddDbContext<DataContext>(options =>
@@ -39,6 +43,7 @@ public static class InfrastructureExtension
             options.UseNpgsql(configuration.GetValue<string>("Postgresql:ConnectionString"));
             options.EnableSensitiveDataLogging();
         });
+        return services;
     }
 
     private static IServiceCollection AddCloudStorage(this IServiceCollection services, IConfiguration configuration)
@@ -57,6 +62,27 @@ public static class InfrastructureExtension
         var options = configuration.GetSection("KafkaConfiguration");
         services.Configure<KafkaConfiguration>(options);
         services.AddHostedService<KafkaProducerService>();
+        return services;
+    }
+
+    private static IServiceCollection AddRabbitMq(this IServiceCollection services, IConfiguration configuration)
+    {
+        var settings = configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
+        services.AddMassTransit(mt =>
+        {
+            mt.AddConsumer<UserConsumer>();
+
+            mt.UsingRabbitMq((cntxt, cfg) =>
+            {
+                cfg.Host(new Uri(settings.Uri), "/", c =>
+                {
+                    c.Username(settings.Username);
+                    c.Password(settings.Password);
+                });
+
+                cfg.ReceiveEndpoint("user", (c) => c.Consumer<UserConsumer>());
+            });
+        });
         return services;
     }
 }

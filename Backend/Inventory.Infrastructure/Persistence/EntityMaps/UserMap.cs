@@ -1,5 +1,5 @@
-﻿using Inventory.Domain.Entities;
-using Inventory.Domain.Models.Constants;
+﻿using Authentication.Enum;
+using Inventory.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

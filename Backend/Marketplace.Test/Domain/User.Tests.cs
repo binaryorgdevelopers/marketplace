@@ -1,6 +1,6 @@
-﻿using Inventory.Domain.Entities;
-using Inventory.Domain.Exceptions;
-using Inventory.Domain.Models.Constants;
+﻿using Authentication;
+using Authentication.Enum;
+using Inventory.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 

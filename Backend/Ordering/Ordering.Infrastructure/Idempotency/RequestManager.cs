@@ -1,6 +1,16 @@
-﻿namespace Ordering.Infrastructure.Idempotency;
+﻿using Ordering.Domain.Abstractions;
 
-public class RequestManager
+namespace Ordering.Infrastructure.Idempotency;
+
+public class RequestManager:IRequestManager
 {
-    
+    public Task<bool> ExistsAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task CreateRequestCommandAsync<T>(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

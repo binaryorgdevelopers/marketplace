@@ -1,5 +1,5 @@
-﻿using Inventory.Domain.Abstractions;
-using Inventory.Domain.Models.Constants;
+﻿using Authentication.Enum;
+using Inventory.Domain.Abstractions;
 
 namespace Inventory.Domain.Entities;
 

@@ -1,5 +1,5 @@
 using Basket.Entities;
-using Shared.Events;
+using Basket.Models;
 
 namespace Basket.Repositories;
 

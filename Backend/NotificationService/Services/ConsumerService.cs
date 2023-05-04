@@ -29,7 +29,7 @@ public class ConsumerService : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        Console.WriteLine("Starting...");
+        _logger.LogInformation("Starting...");
         _cluster.ConsumeFromLatest(Topics.Notification);
         _cluster.MessageReceived += record =>
         {

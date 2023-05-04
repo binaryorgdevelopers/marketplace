@@ -1,4 +1,6 @@
 using Basket;
+using Discount.gRPC.Protos;
+using Shared.Extensions.gRPC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,9 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder
     .AddServices()
-    .AddGrpc()
     .AddRedis()
     .Services
+    .AddCustomGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(builder.Configuration)
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddControllers();

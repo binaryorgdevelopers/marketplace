@@ -1,0 +1,23 @@
+syntax = "proto3";
+package Marketplace.Ordering.Ordering.Api;
+
+message OrderDraft{
+  string BuyerId = 1;
+  repeated BasketItem Items = 2;
+};
+message BasketItem{
+  string Id = 1;
+  string ProductId = 2;
+  int32 Quantity = 3;
+}
+message BasketRequest{
+//  string 
+}
+message Result{
+  int32 Code = 1;
+  OrderDraft Basket = 2;
+  
+}
+service OrderingCheckoutService{
+  rpc DraftOrder(OrderDraft) returns(Result);
+}

@@ -5,21 +5,26 @@ namespace Ordering.Domain.AggregatesModel.OrderAggregate;
 
 public class OrderStatus : Enumeration
 {
-    public static OrderStatus Submitted = new OrderStatus(1, nameof(Submitted).ToLowerInvariant());
-    public static OrderStatus AwaitingValidation = new OrderStatus(2, nameof(AwaitingValidation).ToLowerInvariant());
-    public static OrderStatus Stockconfirmed = new OrderStatus(3, nameof(Stockconfirmed).ToLowerInvariant());
-    public static OrderStatus Paid = new OrderStatus(4, nameof(Paid).ToLowerInvariant());
-    public static OrderStatus Shipped = new OrderStatus(5, nameof(Shipped).ToLowerInvariant());
-    public static OrderStatus Cancelled = new OrderStatus(6, nameof(Cancelled).ToLowerInvariant());
+    public static OrderStatus Submitted = new OrderStatus(Guid.NewGuid(), nameof(Submitted).ToLowerInvariant());
+
+    public static OrderStatus AwaitingValidation =
+        new OrderStatus(Guid.NewGuid(), nameof(AwaitingValidation).ToLowerInvariant());
+
+    public static OrderStatus StockConfirmed =
+        new OrderStatus(Guid.NewGuid(), nameof(StockConfirmed).ToLowerInvariant());
+
+    public static OrderStatus Paid = new OrderStatus(Guid.NewGuid(), nameof(Paid).ToLowerInvariant());
+    public static OrderStatus Shipped = new OrderStatus(Guid.NewGuid(), nameof(Shipped).ToLowerInvariant());
+    public static OrderStatus Cancelled = new OrderStatus(Guid.NewGuid(), nameof(Cancelled).ToLowerInvariant());
 
 
-    public OrderStatus(int id, string name) : base(id, name)
+    public OrderStatus(Guid id, string name) : base(id, name)
     {
     }
 
 
     public static IEnumerable<OrderStatus> List() => new[]
-        { Submitted, AwaitingValidation, Stockconfirmed, Paid, Shipped, Cancelled };
+        { Submitted, AwaitingValidation, StockConfirmed, Paid, Shipped, Cancelled };
 
     public static OrderStatus FromName(string name)
     {
@@ -30,7 +35,7 @@ public class OrderStatus : Enumeration
         return state;
     }
 
-    public static OrderStatus From(int id)
+    public static OrderStatus From(Guid id)
     {
         var state = List().SingleOrDefault(s => s.Id == id);
         if (state == null)

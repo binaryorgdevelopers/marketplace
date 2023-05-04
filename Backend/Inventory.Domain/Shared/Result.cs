@@ -1,36 +1,5 @@
 ﻿namespace Inventory.Domain.Shared;
 
-// public class Result
-// {
-//     protected Result(bool isSuccess, Error error)
-//     {
-//         switch (isSuccess)
-//         {
-//             case true when error == Error.None:
-//                 throw new InvalidOperationException();
-//             case false when error == Error.None:
-//                 throw new InvalidOperationException();
-//             default:
-//                 IsSuccess = isSuccess;
-//                 Error = error;
-//                 break;
-//         }
-//     }
-//
-//     public bool IsSuccess { get; }
-//
-//     public bool IsFailure => !IsFailure;
-//
-//     public Error Error { get; }
-//
-//     public static Result Success() => new(true, Error.None);
-//
-//     public static Result<TValue> Success<TValue>(TValue value) => new(true, Error.None, value);
-//
-//     public static Result Failure(Error error) =>
-//         new(false, error);
-// }
-
 public class Result
 {
     public bool IsSuccess { get; set; }

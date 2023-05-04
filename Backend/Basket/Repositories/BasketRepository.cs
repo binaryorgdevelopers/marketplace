@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using Basket.Entities;
-using Shared.Events;
+using Basket.Models;
 using StackExchange.Redis;
 
 namespace Basket.Repositories;
