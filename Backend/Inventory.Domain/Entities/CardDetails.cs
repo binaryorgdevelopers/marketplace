@@ -7,55 +7,40 @@ namespace Inventory.Domain.Entities;
 
 public class CardDetail : IIdentifiable
 {
-    private const string Password = "DAVR";
-    private static readonly byte[] Salt = Encoding.Unicode.GetBytes("This is my salt value.");
+    private const string Password = "dotnetrun";
+    private static readonly byte[] Salt = Encoding.Unicode.GetBytes("Document.getElementById('root')");
     public Guid Id { get; set; }
 
+    /// <summary>
+    /// Cn-Card Number in encrypted format
+    /// </summary>
     public string Cn { get; set; }
 
-    // [NotMapped]
-    // public string CardNumber
-    // {
-    //     get => Encrypt(_cn);
-    //     set => _cn = Decrypt(value);
-    // }
 
+    /// <summary>
+    /// Expiry Month in encrypted format
+    /// </summary>
     public string Em { get; set; }
 
-    // [NotMapped]
-    // public string ExpirationMonth
-    // {
-    //     get => Encrypt(_em);
-    //     set => _em = Decrypt(value);
-    // }
 
+    /// <summary>
+    /// Expiry Year in encrypted format
+    /// </summary>
     public string Ey { get; set; }
 
-    // [NotMapped]
-    // public string ExpirationYear
-    // {
-    //     get => Encrypt(_ey);
-    //     set => _ey = Decrypt(value);
-    // }
 
+    /// <summary>
+    /// CVV in encrypted format
+    /// </summary>
     public string Cv { get; set; }
 
-    // [NotMapped]
-    // public string CVV
-    // {
-    //     get => Encrypt(_cv);
-    //     set => _cv = Decrypt(value);
-    // }
-
+    /// <summary>
+    /// CardHolder Name in encrypted format
+    /// </summary>
     public string Chn { get; set; }
 
-    // [NotMapped]
-    // public string CardHolderName
-    // {
-    //     get => Encrypt(_chn);
-    //     set => _chn = Decrypt(value);
-    // }
 
+    public Guid CustomerId { get; set; }
     public Customer Customer { get; set; }
 
     public CardDetail()
@@ -63,20 +48,21 @@ public class CardDetail : IIdentifiable
     }
 
     private CardDetail(string cardNumber, string expiryMonth, string expiryYear, string cvv,
-        string cardHolderName)
+        string cardHolderName, Guid userId)
     {
         Cn = Encrypt(cardNumber);
         Em = Encrypt(expiryMonth);
         Ey = Encrypt(expiryYear);
         Cv = Encrypt(cvv);
         Chn = Encrypt(cardHolderName);
+        CustomerId = userId;
     }
 
 
     public static CardDetail Create(string cardNumber, string expiryMonth, string expiryYear, string cvv,
-        string cardHolderName) => new(cardNumber, expiryMonth, expiryYear, cvv, cardHolderName);
+        string cardHolderName, Guid userId) => new(cardNumber, expiryMonth, expiryYear, cvv, cardHolderName, userId);
 
-    private string Encrypt(string text)
+    public static string Encrypt(string text)
     {
         byte[] encryptedBytes;
         using (var aes = Aes.Create())
@@ -98,14 +84,14 @@ public class CardDetail : IIdentifiable
         return Convert.ToBase64String(encryptedBytes);
     }
 
-    private string Decrypt(string encryptedText)
+    public static string Decrypt(string encryptedText)
     {
         byte[] decryptedBytes;
 
         using (var aes = Aes.Create())
         {
             var key = new Rfc2898DeriveBytes(Password, Salt);
-            aes.Key = key.GetBytes(aes.KeySize / 8);    
+            aes.Key = key.GetBytes(aes.KeySize / 8);
             aes.IV = key.GetBytes(aes.BlockSize / 8);
 
             using (var decryptor = aes.CreateDecryptor())

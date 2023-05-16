@@ -1,4 +1,5 @@
-﻿using Inventory.Domain.Entities;
+﻿using Google.Apis.Auth.OAuth2;
+using Inventory.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,10 +15,30 @@ public class CardDetailsMap : IEntityTypeConfiguration<CardDetail>
             .HasOne(c => c.Customer)
             .WithMany(c => c.CardDetails);
 
-        // builder.Ignore(e => e.CardNumber);
-        // builder.Ignore(e => e.ExpirationMonth);
-        // builder.Ignore(e => e.ExpirationYear);
-        // builder.Ignore(e => e.CardHolderName);
-        // builder.Ignore(e => e.CVV);
+        builder.Property(c => c.Cn)
+            .HasConversion(
+                set => CardDetail.Encrypt(set),
+                get => CardDetail.Decrypt(get)
+            );
+        builder.Property(c => c.Chn)
+            .HasConversion(
+                set => CardDetail.Encrypt(set),
+                get => CardDetail.Decrypt(get)
+            );
+        builder.Property(c => c.Ey)
+            .HasConversion(
+                set => CardDetail.Encrypt(set),
+                get => CardDetail.Decrypt(get)
+            );
+        builder.Property(c => c.Cv)
+            .HasConversion(
+                set => CardDetail.Encrypt(set),
+                get => CardDetail.Decrypt(get)
+            );
+        builder.Property(c => c.Em)
+            .HasConversion(
+                set => CardDetail.Encrypt(set),
+                get => CardDetail.Decrypt(get)
+            );
     }
 }

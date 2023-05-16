@@ -1,5 +1,8 @@
-﻿using Authentication.Attributes;
+﻿using System.Reflection.Metadata.Ecma335;
+using Authentication.Attributes;
 using Authentication.Enum;
+using Inventory.Api.Extensions;
+using Inventory.Domain.Shared;
 using Marketplace.Application.Common.Messages.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -32,4 +35,12 @@ public class UserController : Controller
         var result = await _sender.Send(command);
         return Ok(result);
     }
+
+    [AddRoles(Roles.Admin, Roles.Customer, Roles.User)]
+    public async ValueTask<IActionResult> BindCardToUser(BindCardToUserCommand cardToUserCommand)
+        =>
+            await Result
+                .Create(cardToUserCommand)
+                .Bind(c => _sender.Send(c))
+                .Match(Ok, BadRequest);
 }
