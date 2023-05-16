@@ -1,6 +1,6 @@
 ﻿namespace Inventory.Domain.Exceptions;
 
-public class NullException
+internal sealed class NullException
 {
     public static void ThrowIfNull<T>(T entity)
     {

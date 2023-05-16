@@ -19,7 +19,7 @@ public class TokenValidatorService : ITokenValidator
     public Task<UserDto?> ValidateToken(UserToken userToken)
         => Task.Run(() =>
         {
-            Guid? guid = _jwtTokenGenerator.ValidateJwtToken(userToken.Token.Substring(7));
+            Guid? guid = _jwtTokenGenerator.ValidateJwtToken(userToken.Token[7..]);
             if (guid is null) return null;
             var user = _userRepository.Get(u => u.Id == guid.Value).FirstOrDefault();
             return new UserDto(user.Id, user.FirstName, user.LastName, user.Email, user.Role.ToString());

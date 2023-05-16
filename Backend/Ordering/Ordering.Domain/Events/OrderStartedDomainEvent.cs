@@ -3,7 +3,7 @@ using Ordering.Domain.AggregatesModel.OrderAggregate;
 
 // ReSharper disable All
 
-namespace Ordering.Domain.Events;
+namespace Davr.Services.Marketplace.Ordering.Domain.Events;
 
 /// <summary>
 /// Event used when order is created

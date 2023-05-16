@@ -1,9 +1,11 @@
 ﻿using Amazon.S3;
+using EventBus.Models;
 using Inventory.Domain.Abstractions;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Abstractions.Services;
 using Inventory.Domain.Entities;
 using Inventory.Domain.Models;
+using Marketplace.Infrastructure.Consumers;
 using Marketplace.Infrastructure.Persistence;
 using Marketplace.Infrastructure.Repositories;
 using Marketplace.Infrastructure.Services;
@@ -12,8 +14,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using EventBus.Models;
-using Marketplace.Infrastructure.Consumers;
 
 namespace Marketplace.Infrastructure;
 

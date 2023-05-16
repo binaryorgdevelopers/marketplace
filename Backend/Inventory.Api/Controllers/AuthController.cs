@@ -1,6 +1,6 @@
 ﻿using Inventory.Api.Extensions;
-using Marketplace.Application.Common.Messages.Commands;
 using Inventory.Domain.Shared;
+using Marketplace.Application.Common.Messages.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

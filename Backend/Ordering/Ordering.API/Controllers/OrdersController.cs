@@ -1,6 +1,5 @@
 ﻿using Authentication.Attributes;
 using Authentication.Enum;
-using EventBus.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Ordering.Application.Commands;
@@ -28,20 +27,12 @@ public class OrdersController : ControllerBase
     [HttpPut("cancel")]
     [AddRoles(Roles.Admin, Roles.Seller)]
     public async Task<IActionResult> CancelOrderAsync([FromBody] CancelOrderCommand command,
-        [FromHeader(Name = "x-requestid")] string requestId)
+        [FromHeader(Name = "requestId")] string requestId)
     {
         if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
         {
-            var requestCancelOrder = new IdentifiedCommand<CancelOrderCommand, bool>(guid, command);
 
-            _logger.LogInformation(
-                "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                requestCancelOrder.GetGenericTypeName(),
-                nameof(requestCancelOrder.Command.OrderNumber),
-                requestCancelOrder.Command.OrderNumber,
-                requestCancelOrder);
-
-            await _mediator.Send(requestCancelOrder);
+            await _mediator.Send(command);
         }
 
         return Ok();
@@ -50,21 +41,13 @@ public class OrdersController : ControllerBase
     [HttpPut("ship")]
     [AddRoles(Roles.Admin, Roles.Seller)]
     public async Task<IActionResult> ShipOrderAsync([FromBody] ShipOrderCommand command,
-        [FromHeader(Name = "x-requestid")] string requestId)
+        [FromHeader(Name = "requestId")] string requestId)
     {
         bool commandResult = false;
 
         if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
         {
             var requestShipOrder = new IdentifiedCommand<ShipOrderCommand, bool>(guid, command);
-
-            _logger.LogInformation(
-                "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                requestShipOrder.GetGenericTypeName(),
-                nameof(requestShipOrder.Command.OrderNumber),
-                requestShipOrder.Command.OrderNumber,
-                requestShipOrder);
-
             await _mediator.Send(requestShipOrder);
         }
 
@@ -78,7 +61,6 @@ public class OrdersController : ControllerBase
     {
         try
         {
-            //Todo: It's good idea to take advantage of GetOrderByIdQuery and handle by GetCustomerByIdQueryHandler
             //var order customer = await _mediator.Send(new GetOrderByIdQuery(orderId));
             var order = await _orderQueries.GetOrderAsync(orderId);
 
@@ -113,12 +95,6 @@ public class OrdersController : ControllerBase
     public async Task<ActionResult<OrderDraftDto>> CreateOrderDraftFromBasketDataAsync(
         CreateOrderDraftCommand createOrderDraftCommand)
     {
-        _logger.LogInformation(
-            "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-            createOrderDraftCommand.GetGenericTypeName(),
-            nameof(createOrderDraftCommand.BuyerId),
-            createOrderDraftCommand.BuyerId,
-            createOrderDraftCommand);
         var orderDraftDto = await _mediator.Send(createOrderDraftCommand);
 
         return Ok(orderDraftDto);

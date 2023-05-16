@@ -19,9 +19,6 @@ public class
         _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
-    // Domain Logic comment
-    // When the Buyer and Buyer's payment method have been created or verified that they existed,
-    // then we can update the original Order with the BuyerId and PaymentId (foreign keys)
 
     public async Task Handle(BuyerAndPaymentMethodVerifiedDomainEvent notification, CancellationToken cancellationToken)
     {

@@ -24,4 +24,12 @@ public class UserController : Controller
         var result = await _sender.Send(updateUserCommand);
         return Ok(result);
     }
+
+    [AddRoles(Roles.Admin)]
+    [HttpPost("block")]
+    public async ValueTask<ActionResult> BlockUser(UserBlockCommand command)
+    {
+        var result = await _sender.Send(command);
+        return Ok(result);
+    }
 }

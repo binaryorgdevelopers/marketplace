@@ -1,6 +1,6 @@
 ﻿namespace Inventory.Domain.Abstractions;
 /// <summary>
-/// Marketplace.Common Interface for Database Entities 
+/// Common Interface for Database Entities 
 /// </summary>
 public interface IIdentifiable
 {

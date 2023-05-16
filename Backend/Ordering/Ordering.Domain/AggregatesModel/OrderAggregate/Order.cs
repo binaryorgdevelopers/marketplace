@@ -1,4 +1,5 @@
-﻿using Ordering.Domain.Events;
+﻿using Davr.Services.Marketplace.Ordering.Domain.Events;
+using Ordering.Domain.Events;
 using Ordering.Domain.Exceptions;
 using Ordering.Domain.SeedWork;
 

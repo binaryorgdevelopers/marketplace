@@ -1,7 +1,6 @@
 ﻿using Authentication;
 using Grpc.Core;
-using Marketplace.Ordering.Ordering.API;
-using UserToken = EventBus.Models.UserToken;
+using User = Marketplace.Ordering.Ordering.API.User;
 
 namespace Inventory.Api.Authentication;
 
@@ -18,11 +17,11 @@ public class AuthService : Marketplace.Ordering.Ordering.API.AuthService.AuthSer
     }
 
 
-    public override async Task<Result> ValidateToken(Marketplace.Ordering.Ordering.API.UserToken request,
+    public override async Task<Marketplace.Ordering.Ordering.API.Result> ValidateToken(Marketplace.Ordering.Ordering.API.UserToken request,
         ServerCallContext context)
     {
-        var result = await _tokenValidator.ValidateToken(new UserToken(request.Token));
-        var user = new Result();
+        var result = await _tokenValidator.ValidateToken(new EventBus.Models.UserToken(request.Token));
+        var user = new Marketplace.Ordering.Ordering.API.Result();
         if (result is null)
         {
             user.Code = 400;
@@ -40,7 +39,6 @@ public class AuthService : Marketplace.Ordering.Ordering.API.AuthService.AuthSer
                 Email = result.Email
             };
         }
-
         return user;
     }
 }

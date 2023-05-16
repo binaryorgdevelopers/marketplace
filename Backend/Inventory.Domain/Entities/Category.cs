@@ -28,9 +28,10 @@ public class Category : IIdentifiable, ICommon
     {
     }
 
-    public Category(string title, Category parent = null)
+    public Category(string title, Category parent)
     {
         Title = title;
-        Parent = parent;
+        // Parent = parent;
+        ParentId = parent.Id;
     }
 }

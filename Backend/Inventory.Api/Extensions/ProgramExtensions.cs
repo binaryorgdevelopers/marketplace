@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Authentication;
-using Marketplace.Application.Common;
-using Marketplace.Application.Common.Messages.Commands;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Shared;
+using Marketplace.Application.Common;
+using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Infrastructure;
 using Marketplace.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

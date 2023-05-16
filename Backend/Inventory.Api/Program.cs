@@ -24,7 +24,8 @@ builder
     .AddCustomAuthentication()
     .AddCustomSwagger()
     .AddCustomLogging()
-    .AddRedis().Services
+    .AddRedis()
+    .Services
     .AddInfrastructure(builder.Configuration)
     .AddApplication()
     .AddSwaggerGen()

@@ -5,12 +5,18 @@ public class Result
     public bool IsSuccess { get; set; }
     public bool IsFailure { get; set; }
     public Error Error { get; set; }
+    public string Message { get; set; }
 
     public Result(bool isSuccess, Error error = null)
     {
         IsSuccess = isSuccess;
         Error = error;
         IsFailure = !isSuccess;
+    }
+
+    public Result(string message)
+    {
+        Message = message;
     }
 
     public static Result Success()
@@ -22,6 +28,8 @@ public class Result
     {
         return new Result<T>(true, data, null);
     }
+
+    public static Result Success(string message) => new(message);
 
     public static Result Failure(Error error)
     {

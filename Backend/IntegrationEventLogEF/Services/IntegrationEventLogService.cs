@@ -49,6 +49,7 @@ public class IntegrationEventLogService : IIntegrationEventLogService
         ArgumentNullException.ThrowIfNull(transaction, nameof(transaction));
 
         var eventLogEntry = new IntegrationEventLogEntry(@event, Guid.NewGuid());
+        System.Console.WriteLine("Request Received");
 
         _integrationEvent.Database.UseTransaction(transaction.GetDbTransaction());
         _integrationEvent.IntegrationEventLogs.Add(eventLogEntry);

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace NotificationService.Migrations
+namespace Davr.Services.NotificationService.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration

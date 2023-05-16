@@ -50,7 +50,6 @@ public class DataContext : DbContext
                 var createdAtValue = (DateTime)(createdAt.GetValue(entry.Entity) ?? DateTime.Now);
                 createdAt.SetValue(entry.Entity, createdAtValue.SetKindUtc());
             }
-            // ((User)entry.Entity).UpdatedAt = DateTime.Now.SetKindUtc();
         }
 
         return base.SaveChangesAsync(cancellationToken);

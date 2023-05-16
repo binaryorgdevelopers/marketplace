@@ -8,6 +8,7 @@ WORKDIR /src
 
 COPY ["NotificationService/NotificationService.csproj", "NotificationService/"]
 COPY "Marketplace.Common/Marketplace.Common.csproj" "Marketplace.Common/Marketplace.Common.csproj"
+COPY "EventBus/EventBus.csproj" "EventBus/EventBus.csproj"
 
 RUN dotnet restore "NotificationService/NotificationService.csproj"
 

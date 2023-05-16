@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using EventBus.Abstractions;
 using Ordering.Application.Commands;
-using Ordering.Application.Queries;
 using Ordering.Domain.Abstractions;
 using Ordering.Domain.AggregatesModel.BuyerAggregate;
 using Ordering.Domain.AggregatesModel.OrderAggregate;

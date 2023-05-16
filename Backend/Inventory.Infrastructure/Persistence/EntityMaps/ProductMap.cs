@@ -1,5 +1,5 @@
-﻿using Marketplace.Application.Common.Extensions;
-using Inventory.Domain.Entities;
+﻿using Inventory.Domain.Entities;
+using Marketplace.Application.Common.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

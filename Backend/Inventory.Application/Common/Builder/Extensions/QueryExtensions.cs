@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
-using Marketplace.Application.Common.Builder.Models;
 using Inventory.Domain.Abstractions;
+using Marketplace.Application.Common.Builder.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Application.Common.Builder.Extensions;

@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Common.Messages.Events;
+﻿using Davr.Services.Marketplace.Application.Common.Messages.Events;
 using Inventory.Domain.Models;
 
 namespace Marketplace.Application.Common;

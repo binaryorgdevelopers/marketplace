@@ -1,9 +1,9 @@
 ﻿using Authentication.Attributes;
 using Authentication.Enum;
 using Inventory.Api.Extensions;
+using Inventory.Domain.Shared;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Queries.Query.Categories;
-using Inventory.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ public class CategoryController : ControllerBase
     public CategoryController(ISender sender) => _sender = sender;
 
     [AllowAnonymous]
-    [HttpGet("category/{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<ActionResult> CategoryById(Guid id)
     {
         var result = await _sender.Send(new CategoryByIdQuery(id));

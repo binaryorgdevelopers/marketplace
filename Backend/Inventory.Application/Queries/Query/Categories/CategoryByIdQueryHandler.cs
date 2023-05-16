@@ -1,9 +1,9 @@
-﻿using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Common.Messages.Messages;
-using Inventory.Domain.Abstractions.Repositories;
+﻿using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Entities;
 using Inventory.Domain.Models.Constants;
 using Inventory.Domain.Shared;
+using Marketplace.Application.Abstractions.Messaging;
+using Marketplace.Application.Common.Messages.Messages;
 
 namespace Marketplace.Application.Queries.Query.Categories;
 

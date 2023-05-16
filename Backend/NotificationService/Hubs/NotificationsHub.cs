@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using NotificationService.Dtos;
 using NotificationService.Persistence.Entities;
 using Shared.Abstraction.MediatR;
 using Shared.Extensions;
 
 namespace NotificationService.Hubs;
 
-public class NotificationsHub : Microsoft.AspNetCore.SignalR.Hub, IHubWrapper
+public class NotificationsHub : Hub, IHubWrapper
 {
 
     private readonly IRequestHandler<NotificationRequest, Notification> _notificationRequestHandler;

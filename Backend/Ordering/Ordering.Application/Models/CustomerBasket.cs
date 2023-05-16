@@ -1,6 +1,4 @@
-﻿using Ordering.Application.Models;
-
-namespace Ordering.API.Application.Models;
+﻿namespace Ordering.Application.Models;
 
 public class CustomerBasket
 {

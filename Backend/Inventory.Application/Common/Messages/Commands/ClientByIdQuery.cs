@@ -1,5 +1,5 @@
-﻿using Marketplace.Application.Abstractions.Messaging;
-using Inventory.Domain.Entities;
+﻿using Inventory.Domain.Entities;
+using Marketplace.Application.Abstractions.Messaging;
 
 namespace Marketplace.Application.Common.Messages.Commands;
 

@@ -1,13 +1,13 @@
 ﻿using Authentication.Enum;
-using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Common;
-using Marketplace.Application.Common.Messages.Commands;
-using Marketplace.Application.Common.Messages.Events;
+using Davr.Services.Marketplace.Application.Common.Messages.Events;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Entities;
 using Inventory.Domain.Extensions;
 using Inventory.Domain.Models.Constants;
 using Inventory.Domain.Shared;
+using Marketplace.Application.Abstractions.Messaging;
+using Marketplace.Application.Common;
+using Marketplace.Application.Common.Messages.Commands;
 using Microsoft.AspNetCore.Identity;
 
 namespace Marketplace.Application.Queries.Query.Auth;
@@ -16,6 +16,7 @@ public class CustomerSignInQueryHandler : ICommandHandler<CustomerSignInCommand,
 {
     private readonly IGenericRepository<Customer> _customer;
     private readonly IPasswordHasher<Customer> _passwordHasher;
+    
     private readonly IJwtTokenGenerator _tokenGenerator;
 
     public CustomerSignInQueryHandler(IGenericRepository<Customer> customer, IPasswordHasher<Customer> passwordHasher,
@@ -32,6 +33,9 @@ public class CustomerSignInQueryHandler : ICommandHandler<CustomerSignInCommand,
         if (user is null)
             return Result.Failure<AuthResult>(new Error(Codes.UserNotFound,
                 $"user with email:'{request.Email}' not found"));
+        if (!user.Active)
+            return Result.Failure<AuthResult>(new Error(Codes.InvalidCredential,
+                "User is blocked, Please contact customer support"));
         var validationResult = user.ValidatePassword(request.Password, _passwordHasher);
         if (!validationResult)
             return Result.Failure<AuthResult>(new Error(Codes.InvalidPassword, "Invalid password"));

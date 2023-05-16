@@ -1,5 +1,5 @@
-﻿using Marketplace.Application.Common.Messages.Commands;
-using Inventory.Domain.Abstractions.Repositories;
+﻿using Inventory.Domain.Abstractions.Repositories;
+using Marketplace.Application.Common.Messages.Commands;
 using MediatR;
 
 namespace Inventory.Api.Middleware;

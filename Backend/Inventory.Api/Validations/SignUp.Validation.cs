@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using Marketplace.Application.Common.Messages.Commands;
 using Inventory.Domain.Models.Constants;
+using Marketplace.Application.Common.Messages.Commands;
 
 namespace Inventory.Api.Validations;
 

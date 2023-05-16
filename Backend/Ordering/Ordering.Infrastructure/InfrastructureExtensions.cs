@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
-using EventBus.Models;
 using IntegrationEventLogEF;
-using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,20 +29,20 @@ public static class InfrastructureExtensions
         //     services.AddScoped(producer, @class);
         // }
 
-        services.AddMassTransit(x =>
-        {
-            x.UsingRabbitMq((context, cfg) =>
-            {
-                cfg.Host(configuration["EventBusConnection"], "/", h =>
-                {
-                    h.Username(configuration["EventBusUserName"]);
-                    h.Password(configuration["EventBusPassword"]);
-                });
-            });
-        });
+        // services.AddMassTransit(x =>
+        // {
+        //     x.UsingRabbitMq((context, cfg) =>
+        //     {
+        //         cfg.Host(configuration["EventBusConnection"], "/", h =>
+        //         {
+        //             h.Username(configuration["EventBusUserName"]);
+        //             h.Password(configuration["EventBusPassword"]);
+        //         });
+        //     });
+        // });
 
 
-        services.AddScoped(typeof(IProducer<UserToken, UserDto>), typeof(UserTokenProducer));
+        // services.AddScoped(typeof(IProducer<UserToken, UserDto>), typeof(UserTokenProducer));
         services.AddScoped<IRequestManager, RequestManager>();
         return services;
     }

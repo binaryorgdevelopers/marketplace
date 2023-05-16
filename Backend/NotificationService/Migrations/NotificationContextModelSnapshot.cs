@@ -3,12 +3,12 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NotificationService.DAL;
+using NotificationService.Persistence;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace NotificationService.Migrations
+namespace Davr.Services.NotificationService.Migrations
 {
     [DbContext(typeof(NotificationContext))]
     partial class NotificationContextModelSnapshot : ModelSnapshot
