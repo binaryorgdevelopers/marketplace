@@ -4,7 +4,7 @@
 
 using Authentication.Enum;
 
-namespace Marketplace.Application.Common.Messages.Events;
+namespace Davr.Services.Marketplace.Application.Common.Messages.Events;
 
 public record Authorized 
 {

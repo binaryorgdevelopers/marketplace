@@ -1,16 +1,17 @@
 ﻿using Authentication;
 using EventBus.Models;
+using Marketplace.Ordering.Ordering.API;
 using Ordering.Application;
-using Ordering.Infrastructure.Services;
+using UserToken = EventBus.Models.UserToken;
 
 namespace Ordering.API.Services;
 
 public class ValidatorService : ITokenValidator
 {
-    private readonly Marketplace.Ordering.Ordering.API.AuthService.AuthServiceClient _authServiceClient;
+    private readonly AuthService.AuthServiceClient _authServiceClient;
     private readonly StateService _stateService;
 
-    public ValidatorService(Marketplace.Ordering.Ordering.API.AuthService.AuthServiceClient authServiceClient,
+    public ValidatorService(AuthService.AuthServiceClient authServiceClient,
         StateService stateService)
     {
         _authServiceClient = authServiceClient;
@@ -20,7 +21,7 @@ public class ValidatorService : ITokenValidator
     public Task<UserDto?> ValidateToken(UserToken user) =>
         Task.Run(() =>
         {
-            var userToken = new Marketplace.Ordering.Ordering.API.UserToken
+            var userToken = new global::Marketplace.Ordering.Ordering.API.UserToken
             {
                 Token = user.Token
             };

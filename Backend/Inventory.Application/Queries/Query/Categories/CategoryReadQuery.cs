@@ -1,14 +1,15 @@
-﻿using Marketplace.Application.Abstractions.Messaging;
-using Inventory.Domain.Abstractions.Repositories;
+﻿using Inventory.Domain.Abstractions.Repositories;
+using Inventory.Domain.Entities;
 using Inventory.Domain.Shared;
+using Marketplace.Application.Abstractions.Messaging;
 
 namespace Marketplace.Application.Queries.Query.Categories;
 
 public partial class CategoryReadQueryHandler : ICommandHandler<CategoryReadQuery>
 {
-    private readonly IGenericRepository<Inventory.Domain.Entities.Category> _categoryRepository;
+    private readonly IGenericRepository<Category> _categoryRepository;
 
-    public CategoryReadQueryHandler(IGenericRepository<Inventory.Domain.Entities.Category> categoryRepository)
+    public CategoryReadQueryHandler(IGenericRepository<Category> categoryRepository)
     {
         _categoryRepository = categoryRepository;
     }

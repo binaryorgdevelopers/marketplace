@@ -1,9 +1,9 @@
-﻿using MediatR;
+﻿using Davr.Services.Marketplace.Ordering.Domain.Events;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Ordering.Application.IntegrationEvents;
 using Ordering.Application.IntegrationEvents.Events;
 using Ordering.Domain.AggregatesModel.BuyerAggregate;
-using Ordering.Domain.Events;
 
 namespace Ordering.Application.DomainEventHandlers.OrderStartedEvent;
 

@@ -5,6 +5,7 @@ using Marketplace.Ordering.Ordering.API;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Options;
 using Ordering.API.Extensions;
+using Ordering.API.Services;
 using Ordering.Infrastructure;
 using Serilog;
 using Shared.Extensions.gRPC;
@@ -28,10 +29,9 @@ builder
     .RegisterMassTransitServices(builder.Configuration)
     .AddDatabase(builder.Configuration)
     .AddCustomGrpcClient<AuthService.AuthServiceClient>(builder.Configuration)
+    .AddCustomGrpcServer<OrderingGrpcService>()
     .AddControllers();
-
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {
@@ -41,6 +41,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapGrpcService<OrderingGrpcService>();
 app.UseCustomMiddlewares();
 app.UseAuthorization();
 
@@ -57,9 +58,9 @@ try
 
     app.Services.MigrateDbContext<OrderingContext>((context, services) =>
     {
-        var env = services.GetService<IWebHostEnvironment>();
-        var settings = services.GetService<IOptions<OrderingSettings>>();
-        var logger = services.GetService<ILogger<OrderingContextSeed>>();
+        var env = ServiceProviderServiceExtensions.GetService<IWebHostEnvironment>(services);
+        var settings = ServiceProviderServiceExtensions.GetService<IOptions<OrderingSettings>>(services);
+        var logger = ServiceProviderServiceExtensions.GetService<ILogger<OrderingContextSeed>>(services);
 
         new OrderingContextSeed()
             .SeedAsync(context, env, settings, logger)
@@ -104,8 +105,13 @@ IWebHost BuildWebHost(IConfiguration configuration, string[] args) =>
     return (port, grpcPort);
 }
 
-public partial class Program
+namespace Ordering.API
 {
-    public static string Namespace = typeof(Program).Namespace;
-    public static string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
+    public partial class Program
+    {
+        public static string Namespace = typeof(Program).Namespace;
+
+        public static string AppName =
+            Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
+    }
 }

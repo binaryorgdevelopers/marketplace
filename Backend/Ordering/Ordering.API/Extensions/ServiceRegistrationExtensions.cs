@@ -39,6 +39,7 @@ public static class ServiceRegistrationExtensions
     public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddSingleton<ITokenValidator, ValidatorService>();
+        builder.Services.AddSingleton<CatalogGrpcService>();
         return builder;
     }
 

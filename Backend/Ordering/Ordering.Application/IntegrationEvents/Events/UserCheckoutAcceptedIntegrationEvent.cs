@@ -1,5 +1,5 @@
 ﻿using EventBus.Events;
-using Ordering.API.Application.Models;
+using Ordering.Application.Models;
 
 namespace Ordering.Application.IntegrationEvents.Events;
 

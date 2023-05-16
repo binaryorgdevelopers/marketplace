@@ -1,8 +1,8 @@
-﻿using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Common.Messages.Commands;
-using Inventory.Domain.Abstractions.Repositories;
+﻿using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Entities;
 using Inventory.Domain.Shared;
+using Marketplace.Application.Abstractions.Messaging;
+using Marketplace.Application.Common.Messages.Commands;
 
 namespace Marketplace.Application.Queries.Query.Client;
 

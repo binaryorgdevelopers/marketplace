@@ -56,11 +56,9 @@ public class EventBusRabbitMq : IEventBus
             exchange: BROKER_NAME,
             routingKey: eventName);
 
-        if (_subsManager.IsEmpty)
-        {
-            _queueName = string.Empty;
-            _consumerChannel.Close();
-        }
+        if (!_subsManager.IsEmpty) return;
+        _queueName = string.Empty;
+        _consumerChannel.Close();
     }
 
     public void Publish(IntegrationEvent @event)

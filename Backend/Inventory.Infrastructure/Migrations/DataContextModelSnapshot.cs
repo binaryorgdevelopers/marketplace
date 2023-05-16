@@ -17,7 +17,7 @@ namespace Marketplace.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -70,6 +70,51 @@ namespace Marketplace.Infrastructure.Migrations
                     b.ToTable("Badge");
                 });
 
+            modelBuilder.Entity("Inventory.Domain.Entities.BillingAddress", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StreetAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
+
+                    b.ToTable("BillingAddress");
+                });
+
             modelBuilder.Entity("Inventory.Domain.Entities.Blob", b =>
                 {
                     b.Property<Guid>("Id")
@@ -95,16 +140,52 @@ namespace Marketplace.Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("UserDto")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("UserDto");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Blob", (string)null);
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Entities.CardDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Chn")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Cn")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Cv")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Em")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Ey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CardDetail");
                 });
 
             modelBuilder.Entity("Inventory.Domain.Entities.Category", b =>
@@ -467,6 +548,17 @@ namespace Marketplace.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Inventory.Domain.Entities.BillingAddress", b =>
+                {
+                    b.HasOne("Inventory.Domain.Entities.Customer", "Customer")
+                        .WithOne("BillingAddress")
+                        .HasForeignKey("Inventory.Domain.Entities.BillingAddress", "CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("Inventory.Domain.Entities.Blob", b =>
                 {
                     b.HasOne("Inventory.Domain.Entities.Product", "Product")
@@ -477,11 +569,22 @@ namespace Marketplace.Infrastructure.Migrations
 
                     b.HasOne("Inventory.Domain.Entities.User", "User")
                         .WithMany("Files")
-                        .HasForeignKey("UserDto");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Product");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Entities.CardDetail", b =>
+                {
+                    b.HasOne("Inventory.Domain.Entities.Customer", "Customer")
+                        .WithMany("CardDetails")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Inventory.Domain.Entities.Category", b =>
@@ -548,6 +651,14 @@ namespace Marketplace.Infrastructure.Migrations
             modelBuilder.Entity("Inventory.Domain.Entities.Characteristics", b =>
                 {
                     b.Navigation("Values");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("BillingAddress")
+                        .IsRequired();
+
+                    b.Navigation("CardDetails");
                 });
 
             modelBuilder.Entity("Inventory.Domain.Entities.Product", b =>

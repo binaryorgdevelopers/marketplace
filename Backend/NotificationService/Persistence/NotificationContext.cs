@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NotificationService.Persistence.Entities;
 
-namespace NotificationService.DAL;
+namespace NotificationService.Persistence;
 
 public class NotificationContext : DbContext
 {

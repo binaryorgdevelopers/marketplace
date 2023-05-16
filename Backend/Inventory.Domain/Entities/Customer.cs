@@ -27,9 +27,12 @@ public class Customer : ICommon, IIdentifiable, IProtectable
 
     public string LastName { get; set; }
 
-    // public string Locale { get; set; } = string.Empty;
+    // public string? Locale { get; set; } = string.Empty;
     public string Username { get; set; }
     public string[] Authorities { get; set; }
+
+    public BillingAddress BillingAddress { get; set; }
+    public List<CardDetail> CardDetails { get; set; }
 
 
     public Customer()
@@ -52,7 +55,11 @@ public class Customer : ICommon, IIdentifiable, IProtectable
         FirstName = firstName;
         LastName = lastName;
         Username = username;
+        Active = true;
     }
+
+    public static Customer Create(Guid id, string phoneNumber, string email, string firstName, string lastName,
+        string username) => new(id, phoneNumber, email, firstName, lastName, username);
 
     public void SetPassword(string password, IPasswordHasher<Customer> passwordHasher)
     {

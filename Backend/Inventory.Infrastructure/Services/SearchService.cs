@@ -1,7 +1,7 @@
-﻿using Marketplace.Application.Common.Builder.Extensions;
-using Marketplace.Application.Common.Builder.Models;
-using Inventory.Domain.Abstractions;
+﻿using Inventory.Domain.Abstractions;
 using Inventory.Domain.Abstractions.Repositories;
+using Marketplace.Application.Common.Builder.Extensions;
+using Marketplace.Application.Common.Builder.Models;
 
 namespace Marketplace.Infrastructure.Services;
 

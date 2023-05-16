@@ -1,10 +1,8 @@
 ﻿using Authentication.Enum;
-using EventBus.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
 
 namespace Authentication.Attributes
 {
@@ -36,7 +34,11 @@ namespace Authentication.Attributes
                 return;
             }
 
-            if (_roles.Any() && !_roles.Contains((Roles)user.Role))
+            _ = user.Role;
+            // _ = System.Enum.TryParse(user.Role, out Roles role);
+            // Roles role = (Roles)System.Enum.Parse(typeof(Roles), user.Role);
+            var isExist = _roles.Contains(user.Role);
+            if (_roles.Any() && !isExist)
             {
                 context.Result = new JsonResult(new { message = "Not Allowed" })
                     { StatusCode = StatusCodes.Status401Unauthorized };

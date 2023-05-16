@@ -1,10 +1,10 @@
-﻿using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Common.Messages.Commands;
-using Marketplace.Application.Common.Messages.Events;
-using Inventory.Domain.Abstractions.Repositories;
+﻿using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Entities;
 using Inventory.Domain.Models.Constants;
 using Inventory.Domain.Shared;
+using Marketplace.Application.Abstractions.Messaging;
+using Marketplace.Application.Common.Messages.Commands;
+using Marketplace.Application.Common.Messages.Events;
 using Microsoft.AspNetCore.Identity;
 
 namespace Marketplace.Application.Commands.Command;
