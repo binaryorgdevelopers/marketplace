@@ -20,12 +20,18 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         _dataContext = dataContext;
     }
 
-    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate)
+    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken = default)
         => await _dataContext
             .Set<TEntity>()
             .AsNoTracking()
-            .FirstOrDefaultAsync(predicate);
+            .FirstOrDefaultAsync(predicate, cancellationToken: cancellationToken);
 
+
+    public async Task AddRangeAsync(IEnumerable<TEntity> entities,
+        CancellationToken cancellationToken = new())
+        => await _dataContext.Set<TEntity>()
+            .AddRangeAsync(entities, cancellationToken);
 
     public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
         => _dataContext.Set<TEntity>().Where(predicate);
@@ -47,10 +53,10 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
             .FirstOrDefault(predicate);
     }
 
-    public async Task AddAsync(TEntity entity)
+    public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        await _dataContext.Set<TEntity>().AddAsync(entity);
-        await _dataContext.SaveChangesAsync();
+        await _dataContext.Set<TEntity>().AddAsync(entity, cancellationToken);
+        await _dataContext.SaveChangesAsync(cancellationToken);
     }
 
     public void Update(TEntity entity)
@@ -59,17 +65,22 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         _dataContext.SaveChanges();
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         => _dataContext
             .Set<TEntity>()
-            .Remove((await GetAsync(c => c.Id == id))!);
+            .Remove((await GetAsync(c => c.Id == id, cancellationToken))!);
 
-    public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
-        => _dataContext.Set<TEntity>().AnyAsync(predicate);
+    public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken = new())
+        => _dataContext.Set<TEntity>().AnyAsync(predicate, cancellationToken: cancellationToken);
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dataContext.Set<TEntity>().ToListAsync();
 
-    public async Task SaveChangesAsync() => await _dataContext.SaveChangesAsync();
+    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = new()) =>
+        await _dataContext.Set<TEntity>().ToListAsync(cancellationToken: cancellationToken);
 
-    public async Task AddWithoutSaveAsync(TEntity entity) => await _dataContext.AddAsync(entity);
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default) =>
+        await _dataContext.SaveChangesAsync(cancellationToken);
+
+    public async Task AddWithoutSaveAsync(TEntity entity, CancellationToken cancellationToken) =>
+        await _dataContext.AddAsync(entity, cancellationToken);
 }
