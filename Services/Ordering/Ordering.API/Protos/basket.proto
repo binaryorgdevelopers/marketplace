@@ -1,0 +1,29 @@
+syntax = "proto3";
+package Marketplace.Ordering.Ordering.Api;
+
+message OrderDraft{
+  string BuyerId = 1;
+  string CardTypeId = 2;
+  repeated BasketItem Items = 3;
+}
+message BasketItem{
+  int32 Unit = 2;
+  string ProductId = 3;
+}
+
+message OrderCreated{
+  string OrderId = 1;
+  OrderState OrderState = 2;
+}
+enum OrderState{
+  Submitted = 0;
+  AwaitingValidation = 1;
+  StockConfirmed = 2;
+  Paid = 3;
+  Shipped = 4;
+  Cancelled = 5;
+}
+
+service OrderService{
+  rpc DraftOrder(OrderDraft) returns (OrderCreated);
+}

@@ -1,0 +1,343 @@
+﻿{
+  "payload": {
+    "data": {
+      "id": 288628,
+      "title": "Смартфон Honor X9 6/128GB",
+      "category": {
+        "id": 12690,
+        "title": "Смартфоны",
+        "productAmount": 355,
+        "parent": {
+          "id": 10044,
+          "title": "Смартфоны и телефоны",
+          "productAmount": 2639,
+          "parent": {
+            "id": 10020,
+            "title": "Электроника",
+            "productAmount": 7884,
+            "parent": null
+          }
+        }
+      },
+      "rating": 0.0,
+      "reviewsAmount": 0,
+      "ordersAmount": 1,
+      "rOrdersAmount": 1,
+      "totalAvailableAmount": 1,
+      "charityCommission": 0,
+      "description": "<p>Частота обновления экрана</p><p>90 Гц</p><p>Тип SIM-карты</p><p>nano SIM</p><p>Количество SIM-карт</p><p>2</p><p>NFC</p><p>Есть</p><p>Стандарт Bluetooth</p><p>5.1</p><p>Стандарт связи</p><p>3G, 4G LTE</p><p>Версия ОС</p><p>Android 11</p><p>Процессор</p><p>Qualcomm Snapdragon 680</p><p>Фронтальная камера</p><p>16 МП</p><p>Основная камера</p><p>64 МП, 8 МП, 2 МП, 2 МП</p><p>Вес</p><p>189 г</p><p>Емкость аккумулятора</p><p>4800 мА⋅ч</p><p>Соотношение сторон экрана</p><p>19.5:9</p><p>Разрешение экрана</p><p>2388x1080</p><p>Диагональ экрана</p><p>6.81\"</p><p>Объем встроенной памяти</p><p>128 ГБ</p><p>Объем оперативной памяти</p><p>6 ГБ</p>",
+      "comments": [],
+      "attributes": [],
+      "tags": [],
+      "synonyms": [],
+      "photos": [
+        {
+          "photo": {
+            "800": {
+              "high": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/original.jpg",
+              "low": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_low.jpg"
+            },
+            "720": {
+              "high": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/original.jpg",
+              "low": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_low.jpg"
+            },
+            "480": {
+              "high": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_540_low.jpg"
+            },
+            "240": {
+              "high": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_240_low.jpg"
+            },
+            "80": {
+              "high": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_80_low.jpg"
+            },
+            "24034": {
+              "high": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_240_low.jpg"
+            },
+            "120": {
+              "high": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_240_low.jpg"
+            },
+            "540": {
+              "high": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_540_low.jpg"
+            },
+            "60": {
+              "high": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cfpg4pfhgiov1qich8gg/t_product_80_low.jpg"
+            }
+          },
+          "photoKey": "cfpg4pfhgiov1qich8gg",
+          "color": null,
+          "hasVerticalPhoto": false
+        }
+      ],
+      "video": null,
+      "hasCircularPhotos": false,
+      "circularPhotosList": [],
+      "characteristics": [
+        {
+          "id": -1,
+          "title": "Цвет",
+          "values": [
+            {
+              "id": -127,
+              "title": "Голубой",
+              "value": "#659cee"
+            },
+            {
+              "id": -18,
+              "title": "Оранжевый",
+              "value": "#f16311"
+            },
+            {
+              "id": -3,
+              "title": "Серый",
+              "value": "#999a9c"
+            }
+          ]
+        }
+      ],
+      "productOptionDtos": [],
+      "skuList": [
+        {
+          "id": 449664,
+          "characteristics": [
+            {
+              "charIndex": 0,
+              "valueIndex": 0
+            }
+          ],
+          "availableAmount": 1,
+          "fullPrice": null,
+          "charityProfit": 0,
+          "purchasePrice": 3950000,
+          "barcode": 1000004496648,
+          "address": null,
+          "offer": null,
+          "discountBadge": null,
+          "installment": null,
+          "productOptionDtos": [
+            {
+              "optionId": 1,
+              "text": "Рассрочка Uzum",
+              "type": "UZUM_INSTALLMENT",
+              "paymentInfo": "В рассрочку от 474 000 сум/мес",
+              "paymentPerMonth": 474000,
+              "period": 12,
+              "active": true
+            }
+          ],
+          "vat": {
+            "type": "VAT0",
+            "vatAmount": 0,
+            "price": 3950000,
+            "vatRate": 0
+          },
+          "circularPhotosList": [],
+          "videoUrl": null,
+          "restriction": null
+        },
+        {
+          "id": 449665,
+          "characteristics": [
+            {
+              "charIndex": 0,
+              "valueIndex": 1
+            }
+          ],
+          "availableAmount": 0,
+          "fullPrice": null,
+          "charityProfit": 0,
+          "purchasePrice": 3950000,
+          "barcode": 1000004496655,
+          "address": null,
+          "offer": null,
+          "discountBadge": null,
+          "installment": null,
+          "productOptionDtos": [
+            {
+              "optionId": 1,
+              "text": "Рассрочка Uzum",
+              "type": "UZUM_INSTALLMENT",
+              "paymentInfo": "В рассрочку от 474 000 сум/мес",
+              "paymentPerMonth": 474000,
+              "period": 12,
+              "active": true
+            }
+          ],
+          "vat": {
+            "type": "VAT0",
+            "vatAmount": 0,
+            "price": 3950000,
+            "vatRate": 0
+          },
+          "circularPhotosList": [],
+          "videoUrl": null,
+          "restriction": null
+        },
+        {
+          "id": 449666,
+          "characteristics": [
+            {
+              "charIndex": 0,
+              "valueIndex": 2
+            }
+          ],
+          "availableAmount": 0,
+          "fullPrice": null,
+          "charityProfit": 0,
+          "purchasePrice": 3950000,
+          "barcode": 1000004496662,
+          "address": null,
+          "offer": null,
+          "discountBadge": null,
+          "installment": null,
+          "productOptionDtos": [
+            {
+              "optionId": 1,
+              "text": "Рассрочка Uzum",
+              "type": "UZUM_INSTALLMENT",
+              "paymentInfo": "В рассрочку от 474 000 сум/мес",
+              "paymentPerMonth": 474000,
+              "period": 12,
+              "active": true
+            }
+          ],
+          "vat": {
+            "type": "VAT0",
+            "vatAmount": 0,
+            "price": 3950000,
+            "vatRate": 0
+          },
+          "circularPhotosList": [],
+          "videoUrl": null,
+          "restriction": null
+        }
+      ],
+      "seller": {
+        "id": 132,
+        "title": "GADGET market",
+        "link": "gadgetm",
+        "banner": null,
+        "avatar": null,
+        "description": "Найдётся всё. Магазин современной техники с широким выбором. На все наши товары действует официальная гарантия",
+        "hasCharityProducts": false,
+        "registrationDate": 1658141761133,
+        "rating": 4.8,
+        "reviews": 214,
+        "orders": 3114,
+        "official": false,
+        "contacts": [],
+        "categories": [],
+        "currentCategory": null,
+        "filters": [],
+        "appliedFilters": [],
+        "priceFilter": null,
+        "totalProducts": 0,
+        "parents": [],
+        "products": [],
+        "sellerAccountId": 114,
+        "info": null
+      },
+      "topFeedback": null,
+      "isEco": false,
+      "isPerishable": false,
+      "hasVerticalPhoto": false,
+      "showKitty": false,
+      "bonusProduct": false,
+      "badges": [],
+      "volumeDiscount": null,
+      "favourite": false,
+      "colorPhotoPreview": false,
+      "adultCategory": false
+    },
+    "promotion": null
+  },
+  "customer": {
+    "firstName": "",
+    "accountId": 738533,
+    "phoneNumber": "998997541642",
+    "user_name": "998997541642",
+    "scope": [
+      "read",
+      "write"
+    ],
+    "customerId": 721774,
+    "active": true,
+    "exp": 1601454,
+    "locale": "ru",
+    "authorities": [
+      "ROLE_CUSTOMER",
+      "PHONE_VERIFIED"
+    ],
+    "client_id": "b2c-front",
+    "email": null,
+    "lastName": ""
+  },
+  "timestamp": [
+    2023,
+    2,
+    23,
+    0,
+    1,
+    31,
+    837773000
+  ],
+  "da": [
+    {
+      "title": "Диагональ дисплея",
+      "value": "13.6"
+    },
+    {
+      "title": "Цвет",
+      "value": "Midnight"
+    },
+    {
+      "title": "Оперативная",
+      "value": "16"
+    },
+    {
+      "title": "Тип дисплея",
+      "value": "Liquid Retina"
+    },
+    {
+      "title": "Процессор",
+      "value": "Apple M2"
+    },
+    {
+      "title": "Процессор",
+      "value": "Apple M2"
+    },
+    {
+      "title": "Веб-камера",
+      "value": "HD-камера FaceTime 1080p"
+    },
+    {
+      "title": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "title": "Количество ядер процессора",
+      "value": "8 ядер"
+    },
+    {
+      "title": "Общий объем накопителей",
+      "value": "1000 ГБ SSD"
+    },
+    {
+      "title": "Общий объем накопителей",
+      "value": "256GB SSD"
+    }
+  ]
+}
+
+
+
+
+
+
+

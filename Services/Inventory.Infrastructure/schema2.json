@@ -1,0 +1,426 @@
+﻿{
+  "payload": {
+    "data": {
+      "id": 132014,
+      "title": "Наушники беспроводные Pods 2, сенсорные, \"Premium\", с чипом 2022г",
+      "category": {
+        "id": 12980,
+        "title": "Беспроводные наушники",
+        "productAmount": 738,
+        "parent": {
+          "id": 11157,
+          "title": "Наушники",
+          "productAmount": 1192,
+          "parent": {
+            "id": 10144,
+            "title": "Наушники и аудиотехника",
+            "productAmount": 1638,
+            "parent": {
+              "id": 10020,
+              "title": "Электроника",
+              "productAmount": 8022,
+              "parent": null
+            }
+          }
+        }
+      },
+      "rating": 4.9,
+      "reviewsAmount": 10,
+      "ordersAmount": 152,
+      "rOrdersAmount": 100,
+      "totalAvailableAmount": 28,
+      "charityCommission": 0,
+      "description": "<p>Беспроводные наушники в футляре с беспроводной зарядкой. Воспроизведение аудио начинается автоматически, как только вы их надеваете, — и приостанавливается, когда вы их снимаете. В зависимости от того, используете вы один или два наушника, процессор автоматически распределяет аудио и включает микрофон соответствующим образом. А когда вы говорите по телефону или с Siri, дополнительный акселерометр и микрофоны убирают внешний шум и позволяют сфокусироваться на звуке вашего голоса. Наушники можно быстро зарядить в футляре. Для этого достаточно подключить футляр через разъём Lightning.</p><p><br></p><ul><li>Наушники упакованы в коробку с заводской пленкой. В коробке полный комплект документов. Сами наушники упакованы в толстую матовую заводскую пленку. Кейс от наушников глянцевый, выполнен из качественных материалов и не имеет никаких неровностей или зазоров. Сзади кейса металлический шарнир и мягкая бесшумная кнопка с помощью которой происходит анимированное подключение наушников. Крышка кейса магнитная, держится крепко. Наушники из кейса никуда не выпадают, держатся крепко на крепких магнитах. Зарядный порт на кейсе выполнен из металла. На динамиках черная прямая сеточка, двойной аудио канал для улучшенной звукопередачи. Черные точки на наушниках это датчики распознавания уха. Если хотите переключить музыку, то просто кликните 2 раза по наушнику (выберите это действие в настройках). Если разговариваете с человеком, но не хотите выключать музыку самостоятельно, просто высуньте их из ушей и музыка автоматически приостановиться.&nbsp;</li></ul>",
+      "comments": [],
+      "attributes": [],
+      "tags": [],
+      "synonyms": [],
+      "photos": [
+        {
+          "photo": {
+            "800": {
+              "high": "https://images.uzum.uz/cdjui235a95unf13jva0/original.jpg",
+              "low": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_low.jpg"
+            },
+            "720": {
+              "high": "https://images.uzum.uz/cdjui235a95unf13jva0/original.jpg",
+              "low": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_low.jpg"
+            },
+            "480": {
+              "high": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_540_low.jpg"
+            },
+            "240": {
+              "high": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_240_low.jpg"
+            },
+            "80": {
+              "high": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_80_low.jpg"
+            },
+            "24034": {
+              "high": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_240_low.jpg"
+            },
+            "120": {
+              "high": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_240_low.jpg"
+            },
+            "540": {
+              "high": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_540_low.jpg"
+            },
+            "60": {
+              "high": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjui235a95unf13jva0/t_product_80_low.jpg"
+            }
+          },
+          "photoKey": "cdjui235a95unf13jva0",
+          "color": null,
+          "hasVerticalPhoto": false
+        },
+        {
+          "photo": {
+            "800": {
+              "high": "https://images.uzum.uz/cdjui070tgqvlm59e44g/original.jpg",
+              "low": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_low.jpg"
+            },
+            "720": {
+              "high": "https://images.uzum.uz/cdjui070tgqvlm59e44g/original.jpg",
+              "low": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_low.jpg"
+            },
+            "480": {
+              "high": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_540_low.jpg"
+            },
+            "240": {
+              "high": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_240_low.jpg"
+            },
+            "80": {
+              "high": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_80_low.jpg"
+            },
+            "24034": {
+              "high": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_240_low.jpg"
+            },
+            "120": {
+              "high": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_240_low.jpg"
+            },
+            "540": {
+              "high": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_540_low.jpg"
+            },
+            "60": {
+              "high": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjui070tgqvlm59e44g/t_product_80_low.jpg"
+            }
+          },
+          "photoKey": "cdjui070tgqvlm59e44g",
+          "color": null,
+          "hasVerticalPhoto": false
+        },
+        {
+          "photo": {
+            "800": {
+              "high": "https://images.uzum.uz/cdjui135a95unf13jv9g/original.jpg",
+              "low": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_low.jpg"
+            },
+            "720": {
+              "high": "https://images.uzum.uz/cdjui135a95unf13jv9g/original.jpg",
+              "low": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_low.jpg"
+            },
+            "480": {
+              "high": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_540_low.jpg"
+            },
+            "240": {
+              "high": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_240_low.jpg"
+            },
+            "80": {
+              "high": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_80_low.jpg"
+            },
+            "24034": {
+              "high": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_240_low.jpg"
+            },
+            "120": {
+              "high": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_240_low.jpg"
+            },
+            "540": {
+              "high": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_540_low.jpg"
+            },
+            "60": {
+              "high": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjui135a95unf13jv9g/t_product_80_low.jpg"
+            }
+          },
+          "photoKey": "cdjui135a95unf13jv9g",
+          "color": null,
+          "hasVerticalPhoto": false
+        },
+        {
+          "photo": {
+            "800": {
+              "high": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/original.jpg",
+              "low": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_low.jpg"
+            },
+            "720": {
+              "high": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/original.jpg",
+              "low": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_low.jpg"
+            },
+            "480": {
+              "high": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_540_low.jpg"
+            },
+            "240": {
+              "high": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_240_low.jpg"
+            },
+            "80": {
+              "high": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_80_low.jpg"
+            },
+            "24034": {
+              "high": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_240_low.jpg"
+            },
+            "120": {
+              "high": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_240_low.jpg"
+            },
+            "540": {
+              "high": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_540_low.jpg"
+            },
+            "60": {
+              "high": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjui0jb3ho5lmurihcg/t_product_80_low.jpg"
+            }
+          },
+          "photoKey": "cdjui0jb3ho5lmurihcg",
+          "color": null,
+          "hasVerticalPhoto": false
+        },
+        {
+          "photo": {
+            "800": {
+              "high": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/original.jpg",
+              "low": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_low.jpg"
+            },
+            "720": {
+              "high": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/original.jpg",
+              "low": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_low.jpg"
+            },
+            "480": {
+              "high": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_540_low.jpg"
+            },
+            "240": {
+              "high": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_240_low.jpg"
+            },
+            "80": {
+              "high": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_80_low.jpg"
+            },
+            "24034": {
+              "high": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_240_low.jpg"
+            },
+            "120": {
+              "high": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_240_low.jpg"
+            },
+            "540": {
+              "high": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_540_low.jpg"
+            },
+            "60": {
+              "high": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjui1jb3ho5lmurihd0/t_product_80_low.jpg"
+            }
+          },
+          "photoKey": "cdjui1jb3ho5lmurihd0",
+          "color": null,
+          "hasVerticalPhoto": false
+        },
+        {
+          "photo": {
+            "800": {
+              "high": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/original.jpg",
+              "low": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_low.jpg"
+            },
+            "720": {
+              "high": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/original.jpg",
+              "low": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_low.jpg"
+            },
+            "480": {
+              "high": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_540_low.jpg"
+            },
+            "240": {
+              "high": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_240_low.jpg"
+            },
+            "80": {
+              "high": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_80_low.jpg"
+            },
+            "24034": {
+              "high": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_240_low.jpg"
+            },
+            "120": {
+              "high": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_240_high.jpg",
+              "low": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_240_low.jpg"
+            },
+            "540": {
+              "high": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_540_high.jpg",
+              "low": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_540_low.jpg"
+            },
+            "60": {
+              "high": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_80_high.jpg",
+              "low": "https://images.uzum.uz/cdjuhqrb3ho5lmurihc0/t_product_80_low.jpg"
+            }
+          },
+          "photoKey": "cdjuhqrb3ho5lmurihc0",
+          "color": null,
+          "hasVerticalPhoto": false
+        }
+      ],
+      "video": null,
+      "hasCircularPhotos": false,
+      "circularPhotosList": [],
+      "characteristics": [],
+      "productOptionDtos": [],
+      "skuList": [
+        {
+          "id": 195232,
+          "characteristics": [],
+          "availableAmount": 28,
+          "fullPrice": 175000,
+          "charityProfit": 0,
+          "purchasePrice": 157000,
+          "barcode": 1000001952321,
+          "address": null,
+          "offer": null,
+          "discountBadge": null,
+          "installment": null,
+          "productOptionDtos": [
+            {
+              "optionId": 1,
+              "text": "Рассрочка Uzum",
+              "type": "UZUM_INSTALLMENT",
+              "paymentInfo": "В рассрочку от 20 410 сум/мес",
+              "paymentPerMonth": 20410,
+              "period": 12,
+              "active": true
+            }
+          ],
+          "vat": {
+            "type": "VAT0",
+            "vatAmount": 0,
+            "price": 157000,
+            "vatRate": 0
+          },
+          "circularPhotosList": [],
+          "videoUrl": null,
+          "restriction": null
+        }
+      ],
+      "seller": {
+        "id": 1062,
+        "title": "ACCFOREVERYDAY",
+        "link": "accforeveryday",
+        "banner": null,
+        "avatar": null,
+        "description": "Только Premium качество Добро пожаловать!",
+        "hasCharityProducts": false,
+        "registrationDate": 1667577749689,
+        "rating": 4.9,
+        "reviews": 284,
+        "orders": 5145,
+        "official": false,
+        "contacts": [],
+        "categories": [],
+        "currentCategory": null,
+        "filters": [],
+        "appliedFilters": [],
+        "priceFilter": null,
+        "totalProducts": 0,
+        "parents": [],
+        "products": [],
+        "sellerAccountId": 56615,
+        "info": null
+      },
+      "topFeedback": {
+        "reviewId": 16787,
+        "productId": 132014,
+        "date": 1671378176760,
+        "edited": false,
+        "customer": "Камалитдин",
+        "reply": {
+          "id": 4877,
+          "date": 1671451984680,
+          "edited": true,
+          "content": "Спасибо за высокую оценку! Всегда рады Вам\n",
+          "shop": "ACCFOREVERYDAY",
+          "photos": [],
+          "liked": null,
+          "disliked": null
+        },
+        "rating": 5,
+        "characteristics": [],
+        "pros": null,
+        "cons": null,
+        "content": "спасибо большое за товар",
+        "photos": [],
+        "status": "PUBLISHED",
+        "hasVerticalPhoto": null,
+        "like": false,
+        "dislike": false,
+        "amountLike": 0,
+        "amountDislike": 0,
+        "id": 296503,
+        "isAnonymous": false
+      },
+      "isEco": false,
+      "isPerishable": false,
+      "hasVerticalPhoto": true,
+      "showKitty": false,
+      "bonusProduct": false,
+      "badges": [
+        {
+          "id": 55,
+          "text": "Распродажа",
+          "textColor": "#FFFFFF",
+          "backgroundColor": "#F86BB3",
+          "description": null,
+          "link": null,
+          "type": "SIMPLE_BADGE"
+        }
+      ],
+      "volumeDiscount": null,
+      "colorPhotoPreview": false,
+      "adultCategory": false,
+      "favourite": false
+    },
+    "promotion": null
+  },
+  "timestamp": [
+    2023,
+    2,
+    24,
+    10,
+    19,
+    2,
+    408262000
+  ]
+}

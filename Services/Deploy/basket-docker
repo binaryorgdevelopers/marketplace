@@ -1,0 +1,26 @@
+﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+
+COPY "Shared/Shared.csproj" "Shared/Shared.csproj"
+COPY "Basket/Basket.csproj" "Basket/Basket.csproj" 
+
+RUN dotnet restore "Basket/Basket.csproj"
+
+COPY . .
+
+WORKDIR /src/Basket
+RUN dotnet build "Basket.csproj" -c Release -o /app/build
+RUN dotnet publish "Basket.csproj" --no-restore -c Release -o /app/publish
+
+FROM build AS publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+
+ENTRYPOINT ["dotnet", "Basket.dll"]
