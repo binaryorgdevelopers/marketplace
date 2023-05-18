@@ -14,6 +14,14 @@ builder
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddControllers();
+builder.Services
+    .AddAuthentication()
+    .AddJwtBearer("Bearer", config =>
+    {
+        config.Authority = "http://localhost:1111/";
+
+        config.Audience = "Inventory";
+    });
 
 var app = builder.Build();
 
@@ -26,6 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
