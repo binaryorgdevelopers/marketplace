@@ -6,9 +6,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
-COPY "../NotificationService/NotificationService.csproj", "NotificationService/NotificationService.csproj"
-COPY "../Common/Common.csproj" "Common/Common.csproj"
-COPY "../EventBus/EventBus.csproj" "EventBus/EventBus.csproj"
+COPY "NotificationService/NotificationService.csproj", "NotificationService/NotificationService.csproj"
+COPY "Common/Common.csproj" "Common/Common.csproj"
+COPY "EventBus/EventBus.csproj" "EventBus/EventBus.csproj"
 
 RUN dotnet restore "NotificationService/NotificationService.csproj"
 
