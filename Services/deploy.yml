@@ -1,0 +1,7 @@
+﻿version: '3'
+services:
+  basket-service:
+    image: basketservice
+    ports:
+      - "4000:80"
+    restart: always
