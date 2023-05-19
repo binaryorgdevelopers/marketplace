@@ -5,17 +5,15 @@ namespace Ordering.Domain.AggregatesModel.OrderAggregate;
 
 public class OrderStatus : Enumeration
 {
-    public static OrderStatus Submitted = new OrderStatus(Guid.NewGuid(), nameof(Submitted).ToLowerInvariant());
+    public static OrderStatus Submitted = new(Guid.NewGuid(), nameof(Submitted).ToLowerInvariant());
 
-    public static OrderStatus AwaitingValidation =
-        new OrderStatus(Guid.NewGuid(), nameof(AwaitingValidation).ToLowerInvariant());
+    public static OrderStatus AwaitingValidation = new(Guid.NewGuid(), nameof(AwaitingValidation).ToLowerInvariant());
 
-    public static OrderStatus StockConfirmed =
-        new OrderStatus(Guid.NewGuid(), nameof(StockConfirmed).ToLowerInvariant());
+    public static OrderStatus StockConfirmed = new(Guid.NewGuid(), nameof(StockConfirmed).ToLowerInvariant());
 
-    public static OrderStatus Paid = new OrderStatus(Guid.NewGuid(), nameof(Paid).ToLowerInvariant());
-    public static OrderStatus Shipped = new OrderStatus(Guid.NewGuid(), nameof(Shipped).ToLowerInvariant());
-    public static OrderStatus Cancelled = new OrderStatus(Guid.NewGuid(), nameof(Cancelled).ToLowerInvariant());
+    public static OrderStatus Paid = new(Guid.NewGuid(), nameof(Paid).ToLowerInvariant());
+    public static OrderStatus Shipped = new(Guid.NewGuid(), nameof(Shipped).ToLowerInvariant());
+    public static OrderStatus Cancelled = new(Guid.NewGuid(), nameof(Cancelled).ToLowerInvariant());
 
 
     public OrderStatus(Guid id, string name) : base(id, name)

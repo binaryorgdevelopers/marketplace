@@ -1,6 +1,6 @@
 ﻿using Authentication;
 using Inventory.Domain.Abstractions;
-using Inventory.Domain.Models.Constants;
+using Shared.Models.Constants;
 
 namespace Inventory.Domain.Entities;
 

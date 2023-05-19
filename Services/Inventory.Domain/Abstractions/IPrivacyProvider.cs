@@ -1,5 +1,5 @@
-﻿using Inventory.Domain.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Shared.Models;
 
 namespace Inventory.Domain.Abstractions;
 

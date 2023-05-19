@@ -2,10 +2,9 @@
 using System.Security.Claims;
 using System.Text;
 using Inventory.Domain.Abstractions.Repositories;
-using Inventory.Domain.Models;
-using Marketplace.Application.Common;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Models;
 
 namespace Marketplace.Infrastructure.Services;
 

@@ -1,17 +1,14 @@
-﻿using Davr.Services.Marketplace.Application.Common.Messages.Events;
-using Inventory.Domain.Abstractions.Repositories;
+﻿using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Entities;
-using Inventory.Domain.Models;
-using Inventory.Domain.Models.Constants;
-using Inventory.Domain.Shared;
-using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Common;
-using Marketplace.Application.Common.Messages.Commands;
 using Microsoft.AspNetCore.Identity;
+using Shared.Abstraction.Messaging;
+using Shared.Messages;
+using Shared.Models;
+using Shared.Models.Constants;
 
 namespace Marketplace.Application.Commands.Command.Authentication;
 
-public class UserCreateCommandHandler : ICommandHandler<UserCreateCommand,AuthResult>
+public class UserCreateCommandHandler : ICommandHandler<UserCreateCommand, AuthResult>
 {
     private readonly IGenericRepository<User> _genericRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
@@ -46,7 +43,7 @@ public class UserCreateCommandHandler : ICommandHandler<UserCreateCommand,AuthRe
                     userTable.LastName,
                     userTable.PhoneNumber,
                     userTable.Email,
-                    userTable.Role),
+                    userTable.Role.ToString()),
                 _jwtTokenGenerator.GenerateToken(new TokenRequest(userTable.Id, userTable.Email, userTable.PhoneNumber,
                     userTable.FirstName,
                     userTable.LastName, request.Role)));

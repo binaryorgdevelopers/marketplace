@@ -3,9 +3,9 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using Inventory.Domain.Abstractions;
 using Inventory.Domain.Abstractions.Services;
-using Inventory.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Shared.Models;
 
 namespace Marketplace.Infrastructure.Services;
 

@@ -27,9 +27,9 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Authentication\Authentication.csproj" />
+        <ProjectReference Include="..\..\Common\Common.csproj" />
         <ProjectReference Include="..\..\EventBusRabbitMq\EventBusRabbitMq.csproj" />
         <ProjectReference Include="..\..\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
-        <ProjectReference Include="..\..\Shared\Shared.csproj" />
         <ProjectReference Include="..\..\WebHost\WebHost.csproj" />
         <ProjectReference Include="..\Ordering.Infrastructure\Ordering.Infrastructure.csproj" />
     </ItemGroup>

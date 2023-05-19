@@ -1,8 +1,6 @@
 ﻿using System.Text;
 using Authentication;
 using Inventory.Domain.Abstractions.Repositories;
-using Inventory.Domain.Shared;
-using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Infrastructure;
 using Marketplace.Infrastructure.Services;
@@ -11,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Serilog;
+using Shared.Models;
 using StackExchange.Redis;
 
 namespace Inventory.Api.Extensions;

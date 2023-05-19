@@ -1,9 +1,9 @@
 ﻿using Authentication;
 using Authentication.Enum;
 using Inventory.Domain.Abstractions;
-using Inventory.Domain.Models;
-using Inventory.Domain.Models.Constants;
 using Microsoft.AspNetCore.Identity;
+using Shared.Models;
+using Shared.Models.Constants;
 
 namespace Inventory.Domain.Entities;
 

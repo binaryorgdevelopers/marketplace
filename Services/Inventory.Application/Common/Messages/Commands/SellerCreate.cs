@@ -1,5 +1,6 @@
-﻿using Marketplace.Application.Abstractions.Messaging;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Shared.Abstraction.Messaging;
+using Shared.Models;
 
 namespace Marketplace.Application.Common.Messages.Commands;
 

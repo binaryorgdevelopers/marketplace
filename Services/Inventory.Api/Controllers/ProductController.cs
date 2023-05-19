@@ -2,7 +2,6 @@
 using Authentication.Enum;
 using Inventory.Api.Extensions;
 using Inventory.Domain.Entities;
-using Inventory.Domain.Shared;
 using Marketplace.Application.Common.Builder.Models;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
@@ -10,6 +9,7 @@ using Marketplace.Application.Queries.Query.Product;
 using Marketplace.Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models;
 
 namespace Inventory.Api.Controllers;
 
