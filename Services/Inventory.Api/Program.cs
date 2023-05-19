@@ -4,7 +4,7 @@ using Inventory.Api.Middleware;
 using Marketplace.Application;
 using Marketplace.Infrastructure;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Shared.Extensions.gRPC;
+using Shared.Extensions;
 using AuthService = Inventory.Api.Authentication.AuthService;
 
 var builder = WebApplication.CreateBuilder(args);

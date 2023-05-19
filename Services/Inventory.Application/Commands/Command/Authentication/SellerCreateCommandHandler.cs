@@ -1,13 +1,12 @@
 ﻿using Authentication.Enum;
-using Davr.Services.Marketplace.Application.Common.Messages.Events;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Abstractions.Services;
 using Inventory.Domain.Entities;
-using Inventory.Domain.Shared;
-using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Microsoft.AspNetCore.Identity;
+using Shared.Abstraction.Messaging;
+using Shared.Messages;
+using Shared.Models;
 
 namespace Marketplace.Application.Commands.Command.Authentication;
 
@@ -42,7 +41,7 @@ public class SellerCreateCommandHandler : ICommandHandler<SellerCreate, AuthResu
         seller.SetPassword(request.Password, _passwordHasher);
         await _genericRepository.AddAsync(seller);
         return Result.Success(new AuthResult(new Authorized(seller.Id, seller.FirstName,
-                seller.LastName, seller.PhoneNumber, seller.Email, Roles.Seller),
+                seller.LastName, seller.PhoneNumber, seller.Email, Roles.Seller.ToString()),
             _tokenGenerator.GenerateToken(seller.ToTokenRequest())));
     }
 }

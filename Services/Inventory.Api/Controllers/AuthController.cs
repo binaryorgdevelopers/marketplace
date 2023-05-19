@@ -1,8 +1,8 @@
 ﻿using Inventory.Api.Extensions;
-using Inventory.Domain.Shared;
 using Marketplace.Application.Common.Messages.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models;
 
 namespace Inventory.Api.Controllers;
 

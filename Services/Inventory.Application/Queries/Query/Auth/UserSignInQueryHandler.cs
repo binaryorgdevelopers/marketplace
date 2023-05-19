@@ -1,12 +1,11 @@
-﻿using Davr.Services.Marketplace.Application.Common.Messages.Events;
-using Inventory.Domain.Abstractions.Repositories;
+﻿using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Entities;
-using Inventory.Domain.Models.Constants;
-using Inventory.Domain.Shared;
-using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Microsoft.AspNetCore.Identity;
+using Shared.Abstraction.Messaging;
+using Shared.Messages;
+using Shared.Models;
+using Shared.Models.Constants;
 
 namespace Marketplace.Application.Queries.Query.Auth;
 
@@ -41,7 +40,7 @@ public class UserSignInQueryHandler : ICommandHandler<UserSignInCommand,AuthResu
         }
 
         Authorized authorized =
-            new Authorized(user.Id, user.FirstName, user.LastName, user.PhoneNumber, user.Email, user.Role);
+            new Authorized(user.Id, user.FirstName, user.LastName, user.PhoneNumber, user.Email, user.Role.ToString());
 
         return Result.Success(new AuthResult(authorized,
             _tokenGenerator.GenerateToken(user.ToTokenRequest())));

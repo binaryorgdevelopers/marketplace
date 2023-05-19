@@ -1,8 +1,8 @@
 ﻿using Authentication.Enum;
 using Inventory.Domain.Abstractions;
-using Inventory.Domain.Models;
-using Inventory.Domain.Models.Constants;
 using Microsoft.AspNetCore.Identity;
+using Shared.Models;
+using Shared.Models.Constants;
 
 namespace Inventory.Domain.Entities;
 
@@ -79,6 +79,5 @@ public class Seller : IIdentifiable, ICommon, IProtectable, IPrivacyProvider<Sel
         => Regexs.NumberRegex.IsMatch(input);
 
 
-    public TokenRequest ToTokenRequest() =>
-        new TokenRequest(Id, Email, PhoneNumber, FirstName, LastName, Roles.Seller.ToString());
+    public TokenRequest ToTokenRequest() => new(Id, Email, PhoneNumber, FirstName, LastName, Roles.Seller.ToString());
 }

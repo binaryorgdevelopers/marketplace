@@ -4,7 +4,6 @@ using Inventory.Domain.Abstractions;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Abstractions.Services;
 using Inventory.Domain.Entities;
-using Inventory.Domain.Models;
 using Marketplace.Infrastructure.Consumers;
 using Marketplace.Infrastructure.Persistence;
 using Marketplace.Infrastructure.Repositories;
@@ -14,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Models;
 
 namespace Marketplace.Infrastructure;
 

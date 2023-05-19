@@ -1,13 +1,12 @@
 ﻿using Authentication.Enum;
-using Davr.Services.Marketplace.Application.Common.Messages.Events;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Entities;
-using Inventory.Domain.Models.Constants;
-using Inventory.Domain.Shared;
-using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Microsoft.AspNetCore.Identity;
+using Shared.Abstraction.Messaging;
+using Shared.Messages;
+using Shared.Models;
+using Shared.Models.Constants;
 
 namespace Marketplace.Application.Commands.Command.Authentication;
 
@@ -28,7 +27,7 @@ internal sealed class CustomerCreateCommandHandler : ICommandHandler<CustomerCre
     public async Task<Result<AuthResult>> Handle(CustomerCreateCommand customerCreateCommand,
         CancellationToken cancellationToken)
     {
-        var existsAsync = await _customer.ExistsAsync(c => c.Email == customerCreateCommand.Email);
+        var existsAsync = await _customer.ExistsAsync(c => c.Email == customerCreateCommand.Email, cancellationToken);
         if (existsAsync)
             return Result.Failure<AuthResult>(
                 new Error("400", $"User with email :'{customerCreateCommand.Email}' is already exist"));
@@ -43,6 +42,6 @@ internal sealed class CustomerCreateCommandHandler : ICommandHandler<CustomerCre
 
         return Result.Success(new AuthResult(
             new Authorized(customer.Id, customer.FirstName, customerCreateCommand.LastName, customer.PhoneNumber,
-                customer.Email, Roles.Customer), _tokenGenerator.GenerateToken(customer.ToTokenRequest())));
+                customer.Email, Roles.Customer.ToString()), _tokenGenerator.GenerateToken(customer.ToTokenRequest())));
     }
 }

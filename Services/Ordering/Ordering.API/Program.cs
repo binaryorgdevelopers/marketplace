@@ -8,7 +8,7 @@ using Ordering.API.Extensions;
 using Ordering.API.Services;
 using Ordering.Infrastructure;
 using Serilog;
-using Shared.Extensions.gRPC;
+using Shared.Extensions;
 using WebHost;
 
 var builder = WebApplication.CreateBuilder(args);

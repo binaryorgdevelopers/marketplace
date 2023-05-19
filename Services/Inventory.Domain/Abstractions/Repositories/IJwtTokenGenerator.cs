@@ -1,4 +1,4 @@
-﻿using Inventory.Domain.Models;
+﻿using Shared.Models;
 
 namespace Inventory.Domain.Abstractions.Repositories;
 

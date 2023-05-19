@@ -42,7 +42,6 @@
         <ProjectReference Include="..\Inventory.Domain\Inventory.Domain.csproj" />
         <ProjectReference Include="..\Inventory.Infrastructure\Inventory.Infrastructure.csproj" />
         <ProjectReference Include="..\Ordering\Ordering.API\Ordering.API.csproj" />
-        <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>

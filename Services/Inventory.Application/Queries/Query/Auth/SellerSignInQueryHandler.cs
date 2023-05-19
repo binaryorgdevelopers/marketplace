@@ -1,14 +1,13 @@
 ﻿using Authentication.Enum;
-using Davr.Services.Marketplace.Application.Common.Messages.Events;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Entities;
 using Inventory.Domain.Extensions;
-using Inventory.Domain.Models.Constants;
-using Inventory.Domain.Shared;
-using Marketplace.Application.Abstractions.Messaging;
-using Marketplace.Application.Common;
 using Marketplace.Application.Common.Messages.Commands;
 using Microsoft.AspNetCore.Identity;
+using Shared.Abstraction.Messaging;
+using Shared.Messages;
+using Shared.Models;
+using Shared.Models.Constants;
 
 namespace Marketplace.Application.Queries.Query.Auth;
 
@@ -42,7 +41,7 @@ public class SellerSignInQueryHandler : ICommandHandler<SellerSignInCommand,Auth
         return Result.Success(
             new AuthResult(
                 new Authorized(seller.Id, seller.FirstName, seller.LastName, seller.PhoneNumber, seller.Email,
-                    Roles.Seller), _tokenGenerator.GenerateToken(seller.ToTokenRequest()))
+                    Roles.Seller.ToString()), _tokenGenerator.GenerateToken(seller.ToTokenRequest()))
         );
     }
 }

@@ -1,4 +1,5 @@
-﻿using Marketplace.Application.Abstractions.Messaging;
+﻿using Shared.Abstraction.Messaging;
+using Shared.Models;
 
 namespace Marketplace.Application.Common.Messages.Commands;
 
