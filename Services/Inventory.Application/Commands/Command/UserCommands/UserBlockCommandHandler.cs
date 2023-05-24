@@ -16,7 +16,7 @@ public class UserBlockCommandHandler : ICommandHandler<UserBlockCommand>
         _repository = repository;
     }
 
-    public async Task<Result> Handle(UserBlockCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result> HandleAsync(UserBlockCommand request, CancellationToken cancellationToken)
     {
         // var commandHandlerTypes = AppDomain.CurrentDomain.GetAssemblies()
         //     .SelectMany(x => x.GetTypes())

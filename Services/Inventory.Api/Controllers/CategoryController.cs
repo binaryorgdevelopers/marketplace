@@ -1,12 +1,10 @@
 ﻿using Authentication.Attributes;
 using Authentication.Enum;
-using Inventory.Api.Extensions;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Queries.Query.Categories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models;
 
 namespace Inventory.Api.Controllers;
 
@@ -32,21 +30,5 @@ public class CategoryController : ControllerBase
     {
         var result = await _sender.Send(categoryCreateCommand);
         return Ok(result);
-    }
-
-    [HttpPost("filter")]
-    public async Task<IActionResult> CategoryByName(FilterCommand filter) =>
-        await Result
-            .Create(new CategoryFilterQuery(filter.Field, filter.Value))
-            .Bind(command => _sender.Send(command))
-            .Match(Ok, BadRequest);
-
-    [HttpGet]
-    public async Task<IActionResult> CategoryByName([FromQuery] string name)
-    {
-        return await Result
-            .Create(new CategoryFilterQuery("", name))
-            .Bind(command => _sender.Send(command))
-            .Match(Ok, BadRequest);
     }
 }

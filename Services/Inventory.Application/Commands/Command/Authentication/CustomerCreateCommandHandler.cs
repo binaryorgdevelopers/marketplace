@@ -24,7 +24,7 @@ internal sealed class CustomerCreateCommandHandler : ICommandHandler<CustomerCre
         _tokenGenerator = tokenGenerator;
     }
 
-    public async Task<Result<AuthResult>> Handle(CustomerCreateCommand customerCreateCommand,
+    public async ValueTask<Result<AuthResult>> Handle(CustomerCreateCommand customerCreateCommand,
         CancellationToken cancellationToken)
     {
         var existsAsync = await _customer.ExistsAsync(c => c.Email == customerCreateCommand.Email, cancellationToken);
@@ -43,5 +43,10 @@ internal sealed class CustomerCreateCommandHandler : ICommandHandler<CustomerCre
         return Result.Success(new AuthResult(
             new Authorized(customer.Id, customer.FirstName, customerCreateCommand.LastName, customer.PhoneNumber,
                 customer.Email, Roles.Customer.ToString()), _tokenGenerator.GenerateToken(customer.ToTokenRequest())));
+    }
+
+    public ValueTask<Result<AuthResult>> HandleAsync(CustomerCreateCommand request, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }

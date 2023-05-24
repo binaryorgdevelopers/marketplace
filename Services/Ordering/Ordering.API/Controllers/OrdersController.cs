@@ -25,7 +25,7 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPut("cancel")]
-    [AddRoles(Roles.Admin, Roles.Seller)]
+    [AddRoles(Roles.Admin)]
     public async Task<IActionResult> CancelOrderAsync([FromBody] CancelOrderCommand command,
         [FromHeader(Name = "requestId")] string requestId)
     {

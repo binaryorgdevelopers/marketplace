@@ -273,7 +273,7 @@ namespace Marketplace.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Role")
+                    b.Property<int>("Roles")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -524,7 +524,7 @@ namespace Marketplace.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
+                    b.Property<string>("Roles")
                         .IsRequired()
                         .HasColumnType("text");
 

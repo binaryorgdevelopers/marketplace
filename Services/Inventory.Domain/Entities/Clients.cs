@@ -5,17 +5,6 @@ namespace Inventory.Domain.Entities;
 
 public class Clients : IIdentifiable, ICommon, IProtectable
 {
-    public Guid Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public DateTime LastSession { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string PasswordHash { get; }
-    public string PhoneNumber { get; set; }
-    public string Email { get; set; }
-    public Roles Role { get; set; }
-
     public Clients()
     {
     }
@@ -31,4 +20,15 @@ public class Clients : IIdentifiable, ICommon, IProtectable
         FirstName = firstName;
         LastName = lastName;
     }
+
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public Roles Role { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
+    public DateTime LastSession { get; set; }
+    public Guid Id { get; set; }
+    public string PasswordHash { get; }
+    public string PhoneNumber { get; set; }
+    public string Email { get; set; }
 }

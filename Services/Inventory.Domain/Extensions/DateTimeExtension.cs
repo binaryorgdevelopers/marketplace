@@ -3,9 +3,13 @@
 public static class DateTimeExtension
 {
     public static DateTime? SetKindUtc(this DateTime? dateTime)
-        => dateTime?.SetKindUtc();
+    {
+        return dateTime?.SetKindUtc();
+    }
 
 
     public static DateTime SetKindUtc(this DateTime dateTime)
-        => dateTime.Kind == DateTimeKind.Utc ? dateTime : DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+    {
+        return dateTime.Kind == DateTimeKind.Utc ? dateTime : DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+    }
 }

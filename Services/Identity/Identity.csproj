@@ -8,24 +8,32 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="IdentityServer4" Version="4.1.2" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.26.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <PackageReference Include="Google.Protobuf" Version="3.22.3" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.52.0" />
+
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Authentication\Authentication.csproj" />
-      <ProjectReference Include="..\Common\Common.csproj" />
+        <ProjectReference Include="..\Authentication\Authentication.csproj" />
+        <ProjectReference Include="..\Common\Common.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Protos\auth.proto"/>
+        <Protobuf Include="Protos\auth.proto" GrpcService="Server"/>
     </ItemGroup>
 
 </Project>

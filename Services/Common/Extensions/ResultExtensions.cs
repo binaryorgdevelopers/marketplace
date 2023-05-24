@@ -5,7 +5,7 @@ namespace Shared.Extensions;
 
 public static class ResultExtensions
 {
-    internal static async Task<IActionResult> Match(
+    public static async Task<IActionResult> Match(
         this Task<Result> resultTask,
         Func<IActionResult> onSuccess,
         Func<Result, IActionResult> onFailure)
@@ -14,7 +14,7 @@ public static class ResultExtensions
         return result.IsSuccess ? onSuccess() : onFailure(result);
     }
 
-    internal static async Task<IActionResult> Match<TIn>(
+    public static async Task<IActionResult> Match<TIn>(
         this Task<Result<TIn>> resultTask,
         Func<TIn, IActionResult> onSuccess,
         Func<Result, IActionResult> onFailure)

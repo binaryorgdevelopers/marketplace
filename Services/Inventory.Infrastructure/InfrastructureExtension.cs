@@ -1,14 +1,11 @@
 ﻿using Amazon.S3;
-using EventBus.Models;
 using Inventory.Domain.Abstractions;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Abstractions.Services;
 using Inventory.Domain.Entities;
-using Marketplace.Infrastructure.Consumers;
 using Marketplace.Infrastructure.Persistence;
 using Marketplace.Infrastructure.Repositories;
 using Marketplace.Infrastructure.Services;
-using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,11 +25,7 @@ public static class InfrastructureExtension
             .AddScoped<IPasswordHasher<User>, PasswordHasher<User>>()
             .AddScoped<IPasswordHasher<Seller>, PasswordHasher<Seller>>()
             .AddScoped<IPasswordHasher<Customer>, PasswordHasher<Customer>>()
-            .AddScoped<ILoggingBroker, LoggingBroker>()
-            .AddScoped(typeof(SearchService<>))
-            .AddHostedService<UserManagerService>()
-            .AddRabbitMq(configuration);
-        return services;
+            .AddScoped<ILoggingBroker, LoggingBroker>();return services;
     }
 
     public static IServiceCollection AddDatabase(this IServiceCollection services,
@@ -62,27 +55,6 @@ public static class InfrastructureExtension
         var options = configuration.GetSection("KafkaConfiguration");
         services.Configure<KafkaConfiguration>(options);
         services.AddHostedService<KafkaProducerService>();
-        return services;
-    }
-
-    private static IServiceCollection AddRabbitMq(this IServiceCollection services, IConfiguration configuration)
-    {
-        var settings = configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
-        services.AddMassTransit(mt =>
-        {
-            mt.AddConsumer<UserConsumer>();
-
-            mt.UsingRabbitMq((cntxt, cfg) =>
-            {
-                cfg.Host(new Uri(settings.Uri), "/", c =>
-                {
-                    c.Username(settings.Username);
-                    c.Password(settings.Password);
-                });
-
-                cfg.ReceiveEndpoint("user", (c) => c.Consumer<UserConsumer>());
-            });
-        });
         return services;
     }
 }

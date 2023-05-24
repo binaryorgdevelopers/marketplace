@@ -25,7 +25,7 @@ public class SellerSignInQueryHandler : ICommandHandler<SellerSignInCommand,Auth
         _passwordHasher =  passwordHasher;
     }
 
-    public async Task<Result<AuthResult>> Handle(SellerSignInCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result<AuthResult>> HandleAsync(SellerSignInCommand request, CancellationToken cancellationToken)
     {
         var seller = await _repository.GetAsync(c => c.Email == request.Email);
         if (seller is null)

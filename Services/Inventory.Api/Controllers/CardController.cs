@@ -1,12 +1,11 @@
 ﻿using Authentication.Attributes;
 using Authentication.Enum;
-using Inventory.Api.Extensions;
 using Marketplace.Application.Common.Messages.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models;
 
 namespace Inventory.Api.Controllers;
+
 [ApiController]
 [Route("api/card")]
 public class CardController : ControllerBase
@@ -21,18 +20,16 @@ public class CardController : ControllerBase
     [AddRoles(Roles.Admin, Roles.Customer, Roles.User)]
     [HttpPost("bind")]
     public async ValueTask<IActionResult> BindCardToUser(BindCardToUserCommand cardToUserCommand)
-        =>
-            await Result
-                .Create(cardToUserCommand)
-                .Bind(c => _sender.Send(c))
-                .Match(Ok, BadRequest);
+    {
+        var result = await _sender.Send(cardToUserCommand);
+        return Ok(result);
+    }
 
     [AddRoles(Roles.Admin, Roles.Customer, Roles.User)]
     [HttpGet("{guid}")]
     public async ValueTask<IActionResult> GetUserCards(Guid guid)
-        =>
-            await Result
-                .Create(new CardByUserIdCommand(guid))
-                .Bind(c => _sender.Send(c))
-                .Match(Ok, BadRequest);
+    {
+        var result = await _sender.Send(new CardByUserIdCommand(guid));
+        return Ok(result);
+    }
 }

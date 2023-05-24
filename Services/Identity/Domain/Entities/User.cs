@@ -1,5 +1,4 @@
 ﻿using Authentication;
-using Authentication.Enum;
 using Microsoft.AspNetCore.Identity;
 using Shared.BaseEntity;
 using Shared.Models;
@@ -9,18 +8,12 @@ namespace Identity.Domain.Entities;
 
 public class User : Protectable
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public Role Role { get; set; }
-
-    public List<string> Authorities { get; set; }
-    public string Locale { get; set; }
-
     public User()
     {
     }
 
-    public User(string firstName, string lastName, string email, string? phoneNumber, string? locale = null)
+    public User(string firstName, string lastName, string email, string? phoneNumber, Guid roleId,
+        string? locale = null)
     {
         ArgumentNullException.ThrowIfNull(firstName);
         ArgumentNullException.ThrowIfNull(lastName);
@@ -29,26 +22,50 @@ public class User : Protectable
         Email = email;
         PhoneNumber = phoneNumber ?? "_";
         Locale = locale ?? "UZ";
+        RoleId = roleId;
+        Authorities = new[] { "UZ" };
     }
+
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public Guid RoleId { get; set; }
+    public Role Role { get; set; }
+
+    public string[] Authorities { get; set; }
+    public string Locale { get; set; }
 
     public void SetPassword(string password, IPasswordHasher<User> passwordHasher)
     {
         if (string.IsNullOrWhiteSpace(password))
-            throw new AuthException(Codes.InvalidPassword, $"Password can't be empty.");
+            throw new AuthException(Codes.InvalidPassword, "Password can't be empty.");
 
 
         PasswordHash = passwordHasher.HashPassword(this, password);
     }
 
-    public TokenRequest ToTokenRequest() => new(Id, Email, PhoneNumber, FirstName, LastName, Roles.Customer.ToString());
+    public TokenRequest ToTokenRequest()
+    {
+        return new(Id, Email, PhoneNumber, FirstName, LastName, Role.Name);
+    }
 
-    public void Activate() => IsActive = true;
-    public void Deactivate() => IsActive = false;
+    public void Activate()
+    {
+        IsActive = true;
+    }
+
+    public void Deactivate()
+    {
+        IsActive = false;
+    }
 
 
     private static bool PhoneNumberValidate(string input)
-        => Regexs.NumberRegex.IsMatch(input);
+    {
+        return Regexs.NumberRegex.IsMatch(input);
+    }
 
     public bool ValidatePassword(string password, IPasswordHasher<User> passwordHasher)
-        => passwordHasher.VerifyHashedPassword(this, PasswordHash, password) != PasswordVerificationResult.Failed;
+    {
+        return passwordHasher.VerifyHashedPassword(this, PasswordHash, password) != PasswordVerificationResult.Failed;
+    }
 }

@@ -1,6 +1,6 @@
 ﻿using Authentication;
 using EventBus.Models;
-using Marketplace.Ordering.Ordering.API;
+using Identity.Services;
 using Ordering.Application;
 using UserToken = EventBus.Models.UserToken;
 
@@ -21,7 +21,7 @@ public class ValidatorService : ITokenValidator
     public Task<UserDto?> ValidateToken(UserToken user) =>
         Task.Run(() =>
         {
-            var userToken = new global::Marketplace.Ordering.Ordering.API.UserToken
+            var userToken = new GrpcToken()
             {
                 Token = user.Token
             };

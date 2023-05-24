@@ -11,8 +11,8 @@ namespace Marketplace.Application.Commands.Command;
 
 public class UserUpdateCommand : ICommandHandler<UpdateUserCommand>
 {
-    private readonly IGenericRepository<User?> _repository;
     private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IGenericRepository<User?> _repository;
 
     public UserUpdateCommand(IGenericRepository<User?> repository, IPasswordHasher<User> passwordHasher)
     {
@@ -20,7 +20,7 @@ public class UserUpdateCommand : ICommandHandler<UpdateUserCommand>
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<Result> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result> HandleAsync(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _repository.GetAsync(c => c.Email == request.Email);
 

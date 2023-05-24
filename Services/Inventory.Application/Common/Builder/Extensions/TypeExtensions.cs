@@ -6,8 +6,10 @@ namespace Marketplace.Application.Common.Builder.Extensions;
 
 public static class TypeExtensions
 {
-    public static bool IsSimpleType(this Type type) =>
-        type.IsPrimitive || type == typeof(string) || type == typeof(DateTime);
+    public static bool IsSimpleType(this Type type)
+    {
+        return type.IsPrimitive || type == typeof(string) || type == typeof(DateTime);
+    }
 
     public static MethodInfo GetCompareMethod(this Type type, bool searchComparing = false)
     {

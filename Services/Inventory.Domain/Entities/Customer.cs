@@ -9,32 +9,6 @@ namespace Inventory.Domain.Entities;
 
 public class Customer : ICommon, IIdentifiable, IProtectable
 {
-    //ICommon
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-
-    //IIdentifiable
-    public Guid Id { get; set; }
-
-    //IProtectable
-    public string PasswordHash { get; private set; }
-    public string PhoneNumber { get; set; }
-    public string Email { get; set; }
-    public DateTime LastSession { get; set; }
-
-    public bool Active { get; private set; }
-    public string FirstName { get; set; }
-
-    public string LastName { get; set; }
-
-    // public string? Locale { get; set; } = string.Empty;
-    public string Username { get; set; }
-    public string[] Authorities { get; set; }
-
-    public BillingAddress BillingAddress { get; set; }
-    public List<CardDetail> CardDetails { get; set; }
-
-
     public Customer()
     {
     }
@@ -58,26 +32,65 @@ public class Customer : ICommon, IIdentifiable, IProtectable
         Active = true;
     }
 
+    public bool Active { get; private set; }
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
+
+    // public string? Locale { get; set; } = string.Empty;
+    public string Username { get; set; }
+    public string[] Authorities { get; set; }
+
+    public BillingAddress BillingAddress { get; set; }
+
+    public List<CardDetail> CardDetails { get; set; }
+
+    //ICommon
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
+    public DateTime LastSession { get; set; }
+
+    //IIdentifiable
+    public Guid Id { get; set; }
+
+    //IProtectable
+    public string PasswordHash { get; private set; }
+    public string PhoneNumber { get; set; }
+    public string Email { get; set; }
+
     public static Customer Create(Guid id, string phoneNumber, string email, string firstName, string lastName,
-        string username) => new(id, phoneNumber, email, firstName, lastName, username);
+        string username)
+    {
+        return new(id, phoneNumber, email, firstName, lastName, username);
+    }
 
     public void SetPassword(string password, IPasswordHasher<Customer> passwordHasher)
     {
         if (string.IsNullOrWhiteSpace(password))
-            throw new AuthException(Codes.InvalidPassword, $"Password can't be empty.");
+            throw new AuthException(Codes.InvalidPassword, "Password can't be empty.");
 
 
         PasswordHash = passwordHasher.HashPassword(this, password);
     }
 
-    public TokenRequest ToTokenRequest() => new(Id, Email, PhoneNumber, FirstName, LastName, Roles.Customer.ToString());
+    public TokenRequest ToTokenRequest()
+    {
+        return new(Id, Email, PhoneNumber, FirstName, LastName, Roles.Customer.ToString());
+    }
 
-    public void ChangeStatus() => Active = !Active;
+    public void ChangeStatus()
+    {
+        Active = !Active;
+    }
 
 
     private static bool PhoneNumberValidate(string input)
-        => Regexs.NumberRegex.IsMatch(input);
+    {
+        return Regexs.NumberRegex.IsMatch(input);
+    }
 
     public bool ValidatePassword(string password, IPasswordHasher<Customer> passwordHasher)
-        => passwordHasher.VerifyHashedPassword(this, PasswordHash, password) != PasswordVerificationResult.Failed;
+    {
+        return passwordHasher.VerifyHashedPassword(this, PasswordHash, password) != PasswordVerificationResult.Failed;
+    }
 }

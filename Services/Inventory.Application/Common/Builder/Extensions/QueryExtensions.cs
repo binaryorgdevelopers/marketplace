@@ -18,7 +18,7 @@ public static class QueryExtensions
         var result = source;
 
         if (queryOptions.SearchOptions != null) result = result.ApplySearching(queryOptions.SearchOptions);
-        return result;  
+        return result;
     }
 
     #endregion
@@ -27,7 +27,7 @@ public static class QueryExtensions
     #region Searching
 
     /// <summary>
-    /// Creates expression from filter options
+    ///     Creates expression from filter options
     /// </summary>
     /// <param name="searchOptions">Filters</param>
     /// <typeparam name="TSource">Query source type</typeparam>
@@ -61,7 +61,7 @@ public static class QueryExtensions
     }
 
     /// <summary>
-    /// Applies given searching options to query source
+    ///     Applies given searching options to query source
     /// </summary>
     /// <param name="source">Query source</param>
     /// <param name="searchOptions">Search options</param>
@@ -118,7 +118,7 @@ public static class QueryExtensions
     }
 
     /// <summary>
-    /// Applies given searching options to query source
+    ///     Applies given searching options to query source
     /// </summary>
     /// <param name="source">Query source</param>
     /// <param name="searchOptions">Search options</param>

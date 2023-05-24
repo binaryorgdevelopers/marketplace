@@ -28,7 +28,7 @@ public class DiscountRepository : IDiscountRepository
         await using var connection =
             new NpgsqlConnection(Configuration.GetValue<string>("ConnectionStrings:Postgres"));
         var result = await connection.ExecuteAsync("DELETE FROM Coupon WHERE productId=@productId",
-            new { productId = productId });
+            new { productId });
         return result >= 0;
     }
 
@@ -38,7 +38,7 @@ public class DiscountRepository : IDiscountRepository
             new NpgsqlConnection(Configuration.GetValue<string>("ConnectionStrings:Postgres"));
         var coupon = await connection.QueryFirstOrDefaultAsync<CouponModel>
             ("Select * from Coupon WHERE Id=@ProductId", new { ProductId = productId });
-        return coupon ?? new CouponModel()
+        return coupon ?? new CouponModel
             { ProductName = "No Discount", Amount = 0, Description = "No Discount description" };
     }
 

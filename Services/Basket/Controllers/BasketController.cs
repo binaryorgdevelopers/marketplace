@@ -1,7 +1,8 @@
-﻿using Basket.Entities;
+﻿using Authentication.Attributes;
+using Authentication.Enum;
+using Basket.Entities;
 using Basket.Repositories;
 using IdentityModel.Client;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Basket.Controllers;
@@ -19,17 +20,22 @@ public class BasketController : ControllerBase
         _httpClientFactory = httpClientFactory;
     }
 
-    [Authorize]
+    [AddRoles(Roles.Admin)]
     [HttpGet("{username}", Name = "GetBasket")]
     public async Task<ActionResult<ShoppingCart>> GetBasket(Guid username)
-        => Ok(await _basketRepository.GetBasketAsync(username.ToString()));
+    {
+        return Ok(await _basketRepository.GetBasketAsync(username.ToString()));
+    }
 
-    [Authorize]
+    [AddRoles(Roles.Admin)]
     [HttpDelete("{userName}", Name = "DeleteBasket")]
     public async Task<ActionResult> Delete(Guid userName)
-        => Ok(await _basketRepository.DeleteBasketAsync(userName.ToString()));
+    {
+        return Ok(await _basketRepository.DeleteBasketAsync(userName.ToString()));
+    }
 
-    [Authorize]
+    [AddRoles(Roles.Admin)]
+
     [HttpPost(Name = "UpdateBasket")]
     public async Task<ActionResult<ShoppingCart>> UpdateBasket(ShoppingCart basket)
     {
@@ -65,11 +71,14 @@ public class BasketController : ControllerBase
         });
     }
 
-    [Authorize]
+    [AddRoles(Roles.Admin)]
     [HttpGet("check")]
-    public ActionResult CheckAuth() => Ok(new
+    public ActionResult CheckAuth()
     {
-        code = 200,
-        message = "Api responding"
-    });
+        return Ok(new
+        {
+            code = 200,
+            message = "Api responding"
+        });
+    }
 }

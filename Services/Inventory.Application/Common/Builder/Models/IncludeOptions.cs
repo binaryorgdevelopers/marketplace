@@ -3,7 +3,7 @@
 namespace Marketplace.Application.Common.Builder.Models;
 
 /// <summary>
-/// Represents including options
+///     Represents including options
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
 public class IncludeOptions<TEntity> where TEntity : class, IIdentifiable

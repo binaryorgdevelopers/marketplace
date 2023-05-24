@@ -1,4 +1,5 @@
 ﻿using Shared.BaseEntity;
+using Shared.Extensions;
 
 namespace Identity.Domain.Entities;
 
@@ -6,6 +7,14 @@ public class Role : BaseEntity
 {
     public string Name { get; set; }
 
-    public Guid? UserId { get; set; }
-    public User? User { get; set; }
+    public List<User> User { get; set; }
+
+    public Role(string name)
+    {
+        Name = name;
+        CreatedAt = DateTime.Now.SetKindUtc();
+        UpdatedAt = DateTime.Now.SetKindUtc();
+        LastUsed = DateTime.Now.SetKindUtc();
+        IsActive = true;
+    }
 }

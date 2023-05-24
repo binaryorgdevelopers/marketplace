@@ -1,7 +1,7 @@
 using System.Net;
 using Authentication.Extensions;
+using Identity.Services;
 using IntegrationEventLogEF;
-using Marketplace.Ordering.Ordering.API;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Options;
 using Ordering.API.Extensions;
@@ -23,14 +23,15 @@ builder
     .AddEventBus()
     .AddQueries()
     .AddServices()
+    .AddCustomGrpcClient<AuthService.AuthServiceClient>()
+    .AddCustomGrpcServer<OrderingGrpcService>()
     .Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .RegisterMassTransitServices(builder.Configuration)
     .AddDatabase(builder.Configuration)
-    .AddCustomGrpcClient<AuthService.AuthServiceClient>(builder.Configuration)
-    .AddCustomGrpcServer<OrderingGrpcService>()
     .AddControllers();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -58,9 +59,9 @@ try
 
     app.Services.MigrateDbContext<OrderingContext>((context, services) =>
     {
-        var env = ServiceProviderServiceExtensions.GetService<IWebHostEnvironment>(services);
-        var settings = ServiceProviderServiceExtensions.GetService<IOptions<OrderingSettings>>(services);
-        var logger = ServiceProviderServiceExtensions.GetService<ILogger<OrderingContextSeed>>(services);
+        var env = services.GetService<IWebHostEnvironment>();
+        var settings = services.GetService<IOptions<OrderingSettings>>();
+        var logger = services.GetService<ILogger<OrderingContextSeed>>();
 
         new OrderingContextSeed()
             .SeedAsync(context, env, settings, logger)

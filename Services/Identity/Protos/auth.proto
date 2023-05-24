@@ -1,9 +1,8 @@
-syntax = "proto3";
-package Marketplace.Ordering.Ordering.API;
+﻿syntax = "proto3";
+package Identity.Services;
 import "google/protobuf/wrappers.proto";
 
-
-message UserToken{
+message GrpcToken{
   string Token = 1;
 }
 message User{
@@ -13,11 +12,10 @@ message User{
   string Role = 4;
   string Email = 5;
 }
-message Result{
+message GrpcResult{
   int32 Code = 1;
   User User = 2;
 }
-
 service AuthService{
-  rpc ValidateToken(UserToken) returns (Result);
+  rpc ValidateToken(GrpcToken) returns (GrpcResult);
 }

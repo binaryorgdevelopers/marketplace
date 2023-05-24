@@ -7,9 +7,9 @@ namespace Basket.Repositories;
 
 public class BasketRepository : IBasketRepository
 {
+    private readonly IDatabase _database;
     private readonly ILogger<BasketRepository> _logger;
     private readonly ConnectionMultiplexer _redis;
-    private readonly IDatabase _database;
 
     public BasketRepository(ILoggerFactory loggerFactory, ConnectionMultiplexer redis)
     {
@@ -36,10 +36,7 @@ public class BasketRepository : IBasketRepository
     {
         var data = await _database.StringGetAsync(customerId);
 
-        if (data.IsNullOrEmpty)
-        {
-            return null;
-        }
+        if (data.IsNullOrEmpty) return null;
 
         return JsonSerializer.Deserialize<ShoppingCart>(data, new JsonSerializerOptions
         {
