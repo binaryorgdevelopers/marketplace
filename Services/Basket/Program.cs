@@ -3,6 +3,7 @@ using Basket;
 using Identity.Services;
 using Shared.Extensions;
 using Shared.Serilog;
+using Shared.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,9 @@ builder
     .AddCustomLogging()
     .AddCustomGrpcClient<AuthService.AuthServiceClient>()
     .AddRedis()
+    .AddCustomSwagger()
     .Services
     .AddEndpointsApiExplorer()
-    .AddSwaggerGen()
     .AddControllers();
 
 

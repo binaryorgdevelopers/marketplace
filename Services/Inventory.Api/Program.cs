@@ -1,5 +1,4 @@
-using Authentication.Exceptions;
-using Authentication.Middleware;
+using Authentication.Extensions;
 using Marketplace.Application;
 using Marketplace.Infrastructure;
 using Shared.Extensions;
@@ -22,7 +21,6 @@ builder
     .Services
     .AddInfrastructure(builder.Configuration)
     .AddApplication()
-    .AddSwaggerGen()
     .AddDatabase(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -38,9 +36,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseResponseCaching();
-
-app.UseMiddleware<JwtMiddleware>();
-app.UseMiddleware<ErrorHandlerMiddleware>();
+app.UseCustomMiddlewares();
 app.MapControllers();
 
 app.Run();

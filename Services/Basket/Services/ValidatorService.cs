@@ -16,7 +16,7 @@ public class ValidatorService : ITokenValidator
     public Task<UserDto?> ValidateToken(UserToken user) =>
         Task.Run(() =>
         {
-            var userToken = new GrpcToken()
+            var userToken = new GrpcToken
             {
                 Token = user.Token
             };

@@ -16,13 +16,12 @@ public class ValidatorService : ITokenValidator
     public Task<UserDto?> ValidateToken(UserToken user) =>
         Task.Run(() =>
         {
-            var userToken = new GrpcToken()
+            var userToken = new GrpcToken
             {
                 Token = user.Token
             };
             var result = _authServiceClient.ValidateToken(userToken);
-            if (result.Code == 400) return null;
-            if (result.User is null) return null;
+            if (result.Code == 404 || result.User is null) return null;
             Guid.TryParse(result.User.Id, out var guid);
 
             return new UserDto(guid, result.User.FirstName, result.User.LastName, result.User.Email, result.User.Role);

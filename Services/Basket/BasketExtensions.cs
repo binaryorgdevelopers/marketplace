@@ -7,7 +7,7 @@ using StackExchange.Redis;
 
 namespace Basket;
 
-public static class ServiceRegistrationExtension
+public static class BasketExtensions
 {
     public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder)
     {

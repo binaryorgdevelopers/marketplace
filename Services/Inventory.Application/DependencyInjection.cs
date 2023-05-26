@@ -1,8 +1,4 @@
-﻿using System.Reflection;
-using FluentValidation;
-using Mapster;
-using Marketplace.Application.Common;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Marketplace.Application;
 
@@ -14,15 +10,15 @@ public static class DependencyInjection
         services.AddMediatR(configuration =>
             configuration.RegisterServicesFromAssemblies(assembly));
 
-        services.AddValidatorsFromAssembly(assembly).AddMapster();
+        // services.AddValidatorsFromAssembly(assembly).AddMapster();
 
         return services;
     }
-
-    private static void AddMapster(this IServiceCollection services)
-    {
-        var typeAdapterConfigs = TypeAdapterConfig.GlobalSettings;
-        Assembly applicationAssembly = typeof(BaseDto<,>).Assembly;
-        typeAdapterConfigs.Scan(applicationAssembly);
-    }
+    //
+    // private static void AddMapster(this IServiceCollection services)
+    // {
+    //     var typeAdapterConfigs = TypeAdapterConfig.GlobalSettings;
+    //     Assembly applicationAssembly = typeof(BaseDto<,>).Assembly;
+    //     typeAdapterConfigs.Scan(applicationAssembly);
+    // }
 }

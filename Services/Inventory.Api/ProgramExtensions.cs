@@ -1,9 +1,7 @@
 ﻿using Authentication;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Infrastructure.Services;
-using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using Serilog;
 using Shared.Models;
 using StackExchange.Redis;
 
