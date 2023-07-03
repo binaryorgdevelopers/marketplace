@@ -5,18 +5,18 @@ namespace Marketplace.Application.Common.Builder.Models;
 public class PredicateBuilder<TSource> where TSource : class
 {
     /// <summary>
-    /// Initial true expression
+    ///     Initial true expression
     /// </summary>
     public static Expression<Func<TSource, bool>> True = entity => true;
 
     /// <summary>
-    /// Initial false expression
+    ///     Initial false expression
     /// </summary>
     public static Expression<Func<TSource, bool>> False = entity => false;
 
 
     /// <summary>
-    /// Joins to expression with OR logic
+    ///     Joins to expression with OR logic
     /// </summary>
     /// <param name="left">Left expression</param>
     /// <param name="right">Right expression</param>
@@ -33,7 +33,7 @@ public class PredicateBuilder<TSource> where TSource : class
 
 
     /// <summary>
-    /// Joins to expression with AND logic
+    ///     Joins to expression with AND logic
     /// </summary>
     /// <param name="left">Left expression</param>
     /// <param name="right">Right expression</param>
@@ -44,7 +44,7 @@ public class PredicateBuilder<TSource> where TSource : class
         ArgumentNullException.ThrowIfNull(left);
         ArgumentNullException.ThrowIfNull(right);
 
-        var invokeExpr = Expression.Invoke(right, left.Parameters.Cast<Expression>());
+        var invokeExpr = Expression.Invoke(right, left.Parameters);
         return Expression.Lambda<Func<TSource, bool>>(Expression.AndAlso(left.Body, invokeExpr), left.Parameters);
     }
 }

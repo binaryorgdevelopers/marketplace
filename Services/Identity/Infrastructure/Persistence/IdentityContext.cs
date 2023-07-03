@@ -1,5 +1,6 @@
 ﻿using Identity.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Shared.Extensions;
 
 namespace Identity.Infrastructure.Persistence;
 
@@ -9,12 +10,12 @@ internal class IdentityContext : DbContext
     {
     }
 
-    public DbSet<User?> Users { get; set; }
-    public DbSet<Role> Roles { get; set; }
-
     public IdentityContext()
     {
     }
+
+    public DbSet<User?> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,15 +24,21 @@ internal class IdentityContext : DbContext
             builder.ToTable("users");
             builder
                 .HasOne(c => c.Role)
-                .WithOne(c => c.User);
+                .WithMany(c => c.User)
+                .HasForeignKey(x=>x.RoleId);
+            // .WithOne(c => c.User);
+            builder
+                .Property(e => e.Authorities)
+                .HasConversion(v => string.Join(",", v),
+                    c => c.ToStringList());
         });
         modelBuilder.Entity<Role>(builder =>
         {
             builder.ToTable("roles");
             builder
-                .HasOne(c => c.User)
-                .WithOne(u => u.Role);
+                .HasMany(c => c.User).WithOne(c => c.Role);
         });
+
         base.OnModelCreating(modelBuilder);
     }
 }

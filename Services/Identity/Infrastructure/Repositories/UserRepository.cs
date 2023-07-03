@@ -1,4 +1,5 @@
-﻿using Authentication;
+﻿using System.Linq.Expressions;
+using Authentication;
 using Identity.Domain.Entities;
 using Identity.Infrastructure.Persistence;
 using Identity.Models;
@@ -19,33 +20,33 @@ internal class UserRepository : IUserRepository
         _passwordHasher = passwordHasher;
     }
 
-    public async ValueTask<User?> GetUserAsync(Func<User, bool> predicate,
+    public async ValueTask<User?> GetUserAsync(Expression<Func<User, bool>> predicate,
         CancellationToken cancellationToken = default)
-        => await _context.Users
+    {
+        return await _context.Users
             .Include(u => u.Role)
-            .FirstOrDefaultAsync(c => c.Id == Guid.Empty, cancellationToken);
+            .FirstOrDefaultAsync(predicate, cancellationToken);
+    }
 
     public User? UpdateUser(User user)
     {
         var userToFind = _context.Users.FirstOrDefault(c => c.Id == user.Id);
         if (userToFind is null) throw new AuthException(Codes.UserNotFound, $"User with Id: '{user.Id}' not found");
         var userToUpdate = _context.Users.Update(user);
+
+        _context.SaveChanges();
         return userToUpdate.Entity;
     }
 
     public async Task<User?> AddAsync(UserCreateCommand user, CancellationToken cancellationToken = default)
     {
-        var isExists = _context.Users.Any(c => c.Email == user.Email);
-        if (isExists)
-            throw new AuthException(Codes.InvalidCredential, $"User with given email:''{user.Email} not found");
-
-        User userToCreate = new User(user.Firstname, user.Lastname, user.Email, user.PhoneNumber);
+        var userToCreate = new User(user.Firstname, user.Lastname, user.Email, user.PhoneNumber,user.RoleId.Value);
         userToCreate.SetPassword(user.Password, _passwordHasher);
         userToCreate.Activate();
 
         var result = await _context.Users.AddAsync(userToCreate, cancellationToken);
-        
-        return result.Entity;
+        await _context.SaveChangesAsync(cancellationToken);
+        return await GetUserAsync(c => c.Email == result.Entity.Email, cancellationToken);
     }
 
     public async ValueTask<bool> DeactivateUser(User user, CancellationToken cancellationToken = default)
@@ -60,12 +61,21 @@ internal class UserRepository : IUserRepository
         var updateCount = await _context.SaveChangesAsync(cancellationToken);
         return updateCount > 0;
     }
+
+    public async ValueTask<bool> ExistsAsync(Expression<Func<User, bool>> predicate,
+        CancellationToken cancellationToken = default)
+        => await _context.Users.AnyAsync(predicate, cancellationToken: cancellationToken);
 }
 
 public interface IUserRepository
 {
-    public ValueTask<User?> GetUserAsync(Func<User, bool> predicate, CancellationToken cancellationToken = default);
+    public ValueTask<User?> GetUserAsync(Expression<Func<User, bool>> predicate,
+        CancellationToken cancellationToken = default);
+
     public User? UpdateUser(User user);
     public Task<User?> AddAsync(UserCreateCommand user, CancellationToken cancellationToken = default);
     public ValueTask<bool> DeactivateUser(User user, CancellationToken cancellationToken = default);
+
+    public ValueTask<bool> ExistsAsync(Expression<Func<User, bool>> predicate,
+        CancellationToken cancellationToken = default);
 }

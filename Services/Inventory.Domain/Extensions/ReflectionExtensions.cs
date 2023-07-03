@@ -1,7 +1,7 @@
 ﻿namespace Inventory.Domain.Extensions;
 
 /// <summary>
-/// Provides    methods for reflection operations
+///     Provides    methods for reflection operations
 /// </summary>
 public static class ReflectionExtensions
 {

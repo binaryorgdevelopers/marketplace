@@ -1,9 +1,11 @@
-﻿using Identity.Domain.Entities;
+﻿using Authentication;
+using Identity.Domain.Entities;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Repositories;
 using Identity.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shared.Models;
 
 namespace Identity;
 
@@ -26,8 +28,17 @@ public static class IdentityExtensions
     public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<UserManagerService>();
+        builder.Services.AddScoped<RoleManagerService>();
+        builder.Services.AddScoped<ITokenValidator, TokenValidator>();
         builder.Services.AddScoped<ITokenProvider, TokenProvider>();
-        builder.Services.AddScoped<IPasswordHasher<User>,PasswordHasher<User>>();
+        builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddOptions(this WebApplicationBuilder builder)
+    {
+        var jwtOptions = builder.Configuration.GetSection("JwtSettings");
+        builder.Services.Configure<JwtOptions>(jwtOptions);
         return builder;
     }
 }

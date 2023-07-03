@@ -16,7 +16,7 @@ public class CategoryByIdQueryHandler : ICommandHandler<CategoryByIdQuery>
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<Result> Handle(CategoryByIdQuery request, CancellationToken cancellationToken)
+    public async ValueTask<Result> HandleAsync(CategoryByIdQuery request, CancellationToken cancellationToken)
     {
         var category = _categoryRepository
             .GetWithSelect< CategoryDto>(

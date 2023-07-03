@@ -12,10 +12,10 @@ namespace Marketplace.Application.Commands.Command.Authentication;
 
 public class SellerCreateCommandHandler : ICommandHandler<SellerCreate, AuthResult>
 {
-    private readonly IGenericRepository<Seller> _genericRepository;
-    private readonly IJwtTokenGenerator _tokenGenerator;
-    private readonly IPasswordHasher<Seller> _passwordHasher;
     private readonly ICloudUploaderService _cloudUploaderService;
+    private readonly IGenericRepository<Seller> _genericRepository;
+    private readonly IPasswordHasher<Seller> _passwordHasher;
+    private readonly IJwtTokenGenerator _tokenGenerator;
 
     public SellerCreateCommandHandler(IGenericRepository<Seller> genericRepository, IJwtTokenGenerator tokenGenerator,
         IPasswordHasher<Seller> passwordHasher, ICloudUploaderService cloudUploaderService)
@@ -26,14 +26,14 @@ public class SellerCreateCommandHandler : ICommandHandler<SellerCreate, AuthResu
         _cloudUploaderService = cloudUploaderService;
     }
 
-    public async Task<Result<AuthResult>> Handle(SellerCreate request, CancellationToken cancellationToken)
+    public async ValueTask<Result<AuthResult>> HandleAsync(SellerCreate request, CancellationToken cancellationToken)
     {
         var isExist = await _genericRepository.ExistsAsync(c => c.Username == request.Username);
         if (isExist)
             return Result.Failure<AuthResult>(new Error("400",
                 $"Seller with username:'{request.Username}' is already exists"));
 
-        Seller seller = new Seller(Guid.NewGuid(), request.PhoneNumber, request.Email, request.Title,
+        var seller = new Seller(Guid.NewGuid(), request.PhoneNumber, request.Email, request.Title,
             request.Description, request.Info, request.Username, request.FirstName,
             request.LastName, null,
             await _cloudUploaderService.Upload(request.Banner, request.Banner.FileName),

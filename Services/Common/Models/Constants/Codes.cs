@@ -11,4 +11,5 @@ public static class Codes
     public static string UserNotFound => "user_not_found";
     public static string CategoryAlreadyExists => "category_already_exists";
     public static string EntityNotExists => "entity_not_exists";
+    public static string ServerError => "internal_server_error";
 }

@@ -25,8 +25,9 @@ public class CustomerSignInQueryHandler : ICommandHandler<CustomerSignInCommand,
         _passwordHasher = passwordHasher;
         _tokenGenerator = tokenGenerator;
     }
+    
 
-    public async Task<Result<AuthResult>> Handle(CustomerSignInCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result<AuthResult>> HandleAsync(CustomerSignInCommand request, CancellationToken cancellationToken)
     {
         var user = await _customer.GetAsync(c => c.Email == request.Email);
         if (user is null)

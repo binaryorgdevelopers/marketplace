@@ -1,9 +1,7 @@
 ﻿namespace Marketplace.Application.Common.Builder.Models;
 
-
-
 /// <summary>
-/// Represents pagination options
+///     Represents pagination options
 /// </summary>
 public class PaginationOptions
 {
@@ -11,7 +9,7 @@ public class PaginationOptions
     private int _pageToken;
 
     /// <summary>
-    /// Current page size
+    ///     Current page size
     /// </summary>
     /// <exception cref="ArgumentException">If value is invalid</exception>
     public int PageSize
@@ -26,7 +24,7 @@ public class PaginationOptions
     }
 
     /// <summary>
-    /// Current page token
+    ///     Current page token
     /// </summary>
     /// <exception cref="ArgumentException">If value is invalid</exception>
     public int PageToken

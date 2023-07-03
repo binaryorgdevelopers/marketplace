@@ -15,7 +15,7 @@ public class ClientByIdQueryHandler : ICommandHandler<ClientByIdQuery,Clients>
         _clientRepository = clientRepository;
     }
 
-    public async Task<Result<Clients>> Handle(ClientByIdQuery request, CancellationToken cancellationToken)
+    public async ValueTask<Result<Clients>> HandleAsync(ClientByIdQuery request, CancellationToken cancellationToken)
     {
         var client = await _clientRepository.GetAsync(c => c.Id == request.Id);
         return Result.Success(client);

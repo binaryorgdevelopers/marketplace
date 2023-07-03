@@ -1,16 +1,16 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Shared.Extensions;
 
 public static class ClientConfiguration
 {
-    public static IServiceCollection AddCustomGrpcClient<T>(this IServiceCollection services,
-        IConfiguration configuration)
+    public static WebApplicationBuilder AddCustomGrpcClient<T>(this WebApplicationBuilder builder)
         where T : class
     {
-        var url = new Uri(configuration.GetValue<string>("Grpc:Host")!);
-        services.AddGrpcClient<T>(options => options.Address = url);
-        return services;
+        var url = new Uri(builder.Configuration.GetValue<string>("Grpc:Host")!);
+        builder.Services.AddGrpcClient<T>(options => options.Address = url);
+        return builder;
     }
 }

@@ -15,7 +15,7 @@ public partial class CategoryReadQueryHandler : ICommandHandler<CategoryReadQuer
     }
 
 
-    public async Task<Result> Handle(CategoryReadQuery request, CancellationToken cancellationToken)
+    public async ValueTask<Result> HandleAsync(CategoryReadQuery request, CancellationToken cancellationToken)
     {
         // var categories = _categoryRepository
         //     .GetWithInclude(

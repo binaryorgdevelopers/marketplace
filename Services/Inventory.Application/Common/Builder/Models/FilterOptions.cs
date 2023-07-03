@@ -1,7 +1,7 @@
 ﻿namespace Marketplace.Application.Common.Builder.Models;
 
 /// <summary>
-/// Represents filtering options
+///     Represents filtering options
 /// </summary>
 /// <typeparam name="TSource"></typeparam>
 public class FilterOptions<TSource> where TSource : class

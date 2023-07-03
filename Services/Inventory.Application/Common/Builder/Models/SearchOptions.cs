@@ -3,12 +3,12 @@
 public class SearchOptions<TSource> where TSource : class
 {
     /// <summary>
-    /// Search Keyword
+    ///     Search Keyword
     /// </summary>
     public string Keyword { get; set; } = null!;
 
     /// <summary>
-    /// Determines whether to search from direct children
+    ///     Determines whether to search from direct children
     /// </summary>
     public bool IncludeChildren { get; set; }
 }

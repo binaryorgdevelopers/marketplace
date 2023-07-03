@@ -1,5 +1,4 @@
-﻿using Authentication.Enum;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -9,9 +8,9 @@ namespace Authentication.Attributes
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AddRolesAttribute : Attribute, IAuthorizationFilter
     {
-        private readonly IList<Roles> _roles;
+        private readonly IList<string> _roles;
 
-        public AddRolesAttribute(params Roles[] roles)
+        public AddRolesAttribute(params string[] roles)
         {
             _roles = roles;
         }
@@ -34,9 +33,6 @@ namespace Authentication.Attributes
                 return;
             }
 
-            _ = user.Role;
-            // _ = System.Enum.TryParse(user.Role, out Roles role);
-            // Roles role = (Roles)System.Enum.Parse(typeof(Roles), user.Role);
             var isExist = _roles.Contains(user.Role);
             if (_roles.Any() && !isExist)
             {

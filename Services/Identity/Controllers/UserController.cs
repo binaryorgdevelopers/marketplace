@@ -22,9 +22,24 @@ public class UserController : ControllerBase
         var result = await Result
             .Create(createCommand)
             .Bind(c => _userManagerService.Register(c));
-        return Ok(result.Value);
+        return Ok(result);
     }
 
-    [HttpGet]
-    public ActionResult Get() => Ok("vmdjsf");
+    [HttpPost("login")]
+    public async ValueTask<ActionResult> Login(UserSignInCommand signInCommand)
+    {
+        var result = await Result
+            .Create(signInCommand)
+            .Bind(c => _userManagerService.Login(c));
+        return Ok(result);
+    }
+
+    [HttpPost("change-password")]
+    public async ValueTask<ActionResult> ChangePassword(ChangePasswordCommand changePasswordCommand)
+    {
+        var result = await Result
+            .Create(changePasswordCommand)
+            .Bind(c => _userManagerService.ChangePassword(c));
+        return Ok(result);
+    }
 }

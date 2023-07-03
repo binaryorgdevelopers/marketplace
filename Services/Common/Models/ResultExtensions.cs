@@ -20,6 +20,18 @@ public static class ResultExtensions
         Func<TIn, TOut> mappingFunc) where TOut : class =>
         result.IsSuccess ? Result.Success(mappingFunc(result.Value)) : Result.Failure<TOut>(result.Error);
 
+    public static async ValueTask<Result> Bind<TIn>(
+        this Result<TIn> result,
+        Func<TIn, ValueTask<Result>> func)
+    {
+        if (result.IsFailure)
+        {
+            return Result.Failure(result.Error);
+        }
+
+        return await func(result.Value);
+    }
+
     public static async Task<Result> Bind<TIn>(
         this Result<TIn> result,
         Func<TIn, Task<Result>> func)
@@ -32,9 +44,9 @@ public static class ResultExtensions
         return await func(result.Value);
     }
 
-    public static async Task<Result> Bind<TIn>(
+    public static async Task<Result> Bind<TIn,TOut>(
         this Result<TIn> result,
-        Func<TIn, Task<Result<TIn>>> func) where TIn : class
+        Func<TIn, ValueTask<Result<TOut>>> func) where TIn : class
     {
         if (result.IsFailure)
         {

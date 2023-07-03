@@ -17,14 +17,15 @@ public class CardByUserIdQueryHandler : ICommandHandler<CardByUserIdCommand, Car
         _cardRepository = cardRepository;
     }
 
-    public Task<Result<CardByByUserIdDto>> Handle(CardByUserIdCommand request,
-        CancellationToken cancellationToken) =>
-        Task.Run(() =>
-        {
-            var cards = _cardRepository.Get(c => c.CustomerId == request.UserId);
-            if (cards is null)
-                return Result.Failure<CardByByUserIdDto>(new Error(Codes.InvalidCredential, "User doesn't have cards"));
-            return Result.Success(new CardByByUserIdDto(request.UserId,
-                cards.Select(c => CardDetailsDto.FromCardDetails(c)).ToList()));
-        }, cancellationToken);
+    public async ValueTask<Result<CardByByUserIdDto>> HandleAsync(CardByUserIdCommand request,
+        CancellationToken cancellationToken)
+
+    {
+        await Task.CompletedTask;
+        var cards = _cardRepository.Get(c => c.CustomerId == request.UserId);
+        if (cards is null)
+            return Result.Failure<CardByByUserIdDto>(new Error(Codes.InvalidCredential, "User doesn't have cards"));
+        return Result.Success(new CardByByUserIdDto(request.UserId,
+            cards.Select(c => CardDetailsDto.FromCardDetails(c)).ToList()));
+    }
 }

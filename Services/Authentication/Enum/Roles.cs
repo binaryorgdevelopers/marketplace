@@ -1,9 +1,9 @@
 ﻿namespace Authentication.Enum;
 
-public enum Roles
+public  class Roles
 {
-    Admin,
-    User,
-    Customer,
-    Seller
+    public const string Admin = "Admin";
+    public const string User = "User";
+    public const string Seller = "Seller";
+    public const string Customer = "Customer";
 }

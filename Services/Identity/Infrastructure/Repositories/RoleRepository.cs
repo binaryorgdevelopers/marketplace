@@ -18,28 +18,37 @@ internal class RoleRepository : IRoleRepository
 
     public Task<Role?> GetRoleAsync(Expression<Func<Role, bool>> predicate,
         CancellationToken cancellationToken = default)
-        => _identityContext.Roles.FirstOrDefaultAsync(predicate, cancellationToken);
+    {
+        return _identityContext.Roles.FirstOrDefaultAsync(predicate, cancellationToken);
+    }
 
     public Role? UpdateRole(Role role, CancellationToken cancellationToken = default)
     {
         var roleToFind = _identityContext.Roles.FirstOrDefault(c => c.Id == role.Id || c.Name == role.Name);
-        if (roleToFind is null) throw new AuthException(Codes.InvalidRole, $"Role with given credentials not found");
+        if (roleToFind is null) throw new AuthException(Codes.InvalidRole, "Roles with givenx credentials not found");
         var roleToUpdate = _identityContext.Roles.Update(role);
+        _identityContext.SaveChanges();
         return roleToUpdate.Entity;
     }
 
-    public Task<Role?> AddRoleAsync(Role user, CancellationToken cancellationToken = default)
+    public async Task<Role?> AddRoleAsync(Role role, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var entityEntry = await _identityContext.Roles.AddAsync(role, cancellationToken);
+        await _identityContext.SaveChangesAsync(cancellationToken);
+        return entityEntry.Entity;
     }
 
     public ValueTask<bool> DeactivateRole(Role user, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
+
+    public async ValueTask<bool> ExistsAsync(Expression<Func<Role, bool>> predicate,
+        CancellationToken cancellationToken = default) =>
+        await _identityContext.Roles.AnyAsync(predicate, cancellationToken: cancellationToken);
 }
 
-internal interface IRoleRepository
+public interface IRoleRepository
 {
     public Task<Role?> GetRoleAsync(Expression<Func<Role, bool>> predicate,
         CancellationToken cancellationToken = default);
@@ -47,4 +56,7 @@ internal interface IRoleRepository
     public Role? UpdateRole(Role user, CancellationToken cancellationToken = default);
     public Task<Role?> AddRoleAsync(Role user, CancellationToken cancellationToken = default);
     public ValueTask<bool> DeactivateRole(Role user, CancellationToken cancellationToken = default);
+
+    public ValueTask<bool> ExistsAsync(Expression<Func<Role, bool>> predicate,
+        CancellationToken cancellationToken = default);
 }

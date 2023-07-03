@@ -12,27 +12,27 @@ public class KafkaProducerService : IHostedService
 
     public KafkaProducerService(IOptions<KafkaConfiguration> options, ILogger<KafkaProducerService> logger)
     {
-        _logger = logger;
-        var config = new ProducerConfig
-        {
-            BootstrapServers = options.Value.Host
-        };
-        _producer = new ProducerBuilder<Null, string>(config).Build();
+        // _logger = logger;
+        // var config = new ProducerConfig
+        // {
+        //     BootstrapServers = options.Value.Host
+        // };
+        // _producer = new ProducerBuilder<Null, string>(config).Build();
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        for (int i = 0; i < 2; i++)
-        {
-            var value = $"Hello world {i}";
-            _logger.LogInformation(value);
-            await _producer.ProduceAsync("notification", new Message<Null, string>()
-            {
-                Value = value
-            }, cancellationToken);
-        }
-
-        _producer.Flush(TimeSpan.FromSeconds(10));
+        // for (int i = 0; i < 2; i++)
+        // {
+        //     var value = $"Hello world {i}";
+        //     _logger.LogInformation(value);
+        //     await _producer.ProduceAsync("notification", new Message<Null, string>()
+        //     {
+        //         Value = value
+        //     }, cancellationToken);
+        // }
+        //
+        // _producer.Flush(TimeSpan.FromSeconds(10));
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

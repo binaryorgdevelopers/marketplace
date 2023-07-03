@@ -23,13 +23,11 @@ public class ProductCreateCommandHandler : ICommandHandler<ProductCreateCommand,
 
     #region ProductCreate Handler
 
-    public async Task<Result<ProductDto>> Handle(ProductCreateCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result<ProductDto>> HandleAsync(ProductCreateCommand request, CancellationToken cancellationToken)
     {
         List<Blob> blob = new();
         foreach (var b in request.Photos)
-        {
             blob.Add(Blob.Create(await _uploaderService.Upload(b.file, string.Empty), b.Extras));
-        }
 
         var product = Inventory.Domain.Entities.Product.Create(
             request.Title,

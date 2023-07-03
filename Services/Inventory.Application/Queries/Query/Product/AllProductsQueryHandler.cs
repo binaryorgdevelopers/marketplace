@@ -15,7 +15,7 @@ public class ProductReadQueryHandler : ICommandHandler<ProductReadQuery>
         _productRepository = productRepository;
     }
 
-    public async Task<Result> Handle(ProductReadQuery request, CancellationToken cancellationToken)
+    public async ValueTask<Result> HandleAsync(ProductReadQuery request, CancellationToken cancellationToken)
     {
         var product = await _productRepository.GetAsync(c => c.Id == request.Id);
         IEnumerable<BadgeDto> badges = product.Badges.Select(c =>

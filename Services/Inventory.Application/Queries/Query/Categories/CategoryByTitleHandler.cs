@@ -17,7 +17,7 @@ public class CategoryByTitleHandler : ICommandHandler<CategoryFilterQuery, Categ
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<Result<CategoryDto>> Handle(CategoryFilterQuery request, CancellationToken cancellationToken)
+    public async ValueTask<Result<CategoryDto>> HandleAsync(CategoryFilterQuery request, CancellationToken cancellationToken)
     {
         var category = _categoryRepository
             .GetWithSelect<CategoryDto>(
