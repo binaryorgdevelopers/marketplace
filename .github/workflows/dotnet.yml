@@ -21,16 +21,16 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore Presentation Dependencies
-      working-directory: ./Backend/Marketplace.Api
+      working-directory: ./Services/Marketplace.Api
       run: dotnet restore
     - name: Restore Application Dependencies
-      working-directory:  ./Backend/Marketplace.Application
+      working-directory:  ./Services/Marketplace.Application
       run: dotnet restore
     - name: Restore Infrastructure Dependencies
-      working-directory:  ./Backend/Marketplace.Infrastructure
+      working-directory:  ./Services/Marketplace.Infrastructure
       run: dotnet restore
     - name: Build
-      working-directory:  ./Backend/Marketplace.Api
+      working-directory:  ./Services/Marketplace.Api
       run: dotnet build --no-restore
     # - name: Build Test 
     #   working-directory:  ./Backend/Marketplace.Test
