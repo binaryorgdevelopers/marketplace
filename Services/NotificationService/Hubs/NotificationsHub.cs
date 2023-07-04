@@ -7,6 +7,12 @@ namespace NotificationService.Hubs;
 
 public class NotificationsHub : Hub, IHubWrapper
 {
+    private readonly IHubContext<NotificationsHub> _hubContext;
+
+    public NotificationsHub(IHubContext<NotificationsHub> hubContext)
+    {
+        _hubContext = hubContext;
+    }
 
     public override async Task OnConnectedAsync()
     {
@@ -17,5 +23,8 @@ public class NotificationsHub : Hub, IHubWrapper
     public async Task PublishToUserAsync(Guid userId, string message, object data) =>
         await Clients.Group(userId.ToUserGroup()).SendAsync(message, data);
 
-    public async Task PublishToAllAsync(string message, object data) => await Clients.All.SendAsync(message, data);
+    public async Task PublishToAllAsync(string message, object data)
+    {
+        await _hubContext.Clients.All.SendAsync("all", new {message,data});
+    }
 }

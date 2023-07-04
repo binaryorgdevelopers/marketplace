@@ -16,7 +16,7 @@ public static class Extensions
 {
     public static WebApplicationBuilder AddSignalR(this WebApplicationBuilder builder)
     {
-        // builder.Services.AddScoped<IHubService, HubService>();
+        builder.Services.AddScoped<IHubWrapper,NotificationsHub>();
         builder.Services.AddCors(setup =>
         {
             setup.AddDefaultPolicy(policy =>

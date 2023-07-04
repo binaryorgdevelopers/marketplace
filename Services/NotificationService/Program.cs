@@ -3,6 +3,7 @@ using NotificationService.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
 builder
     .AddSignalR()
     .AddDatabase()
@@ -14,6 +15,9 @@ app.UseCors();
 app.MapHub<NotificationsHub>("/marketplace");
 app.MapGet("/", () => "Notification service");
 app.ConfigureEventBus();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 app.Run();
 
 namespace NotificationService
