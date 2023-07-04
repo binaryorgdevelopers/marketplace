@@ -28,7 +28,7 @@ jobs:
       working-directory:  ./Services/Basket
       run: dotnet restore
     - name: Restore NotificationService dependencies 
-      working-directory:  ./Backend/NotificationService
+      working-directory:  ./Services/NotificationService
       run: dotnet restore
   
   build:
