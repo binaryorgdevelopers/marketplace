@@ -10,10 +10,8 @@ on:
     branches: [ "backend" ]
 
 jobs:
-  build:
-
+  restore:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -23,18 +21,32 @@ jobs:
     - name: Restore AuthService Dependencies
       working-directory: ./Services/Identity
       run: dotnet restore
-#     - name: Restore Application Dependencies
-#       working-directory:  ./Services/Marketplace.Application
-#       run: dotnet restore
-#     - name: Restore Infrastructure Dependencies
-#       working-directory: ./Services/Marketplace.Infrastructure
-#       run: dotnet restore
-#     - name: Build
-#       working-directory:  /Services/Marketplace.Api
-#       run: dotnet build --no-restore
-    # - name: Build Test 
-    #   working-directory:  ./Backend/Marketplace.Test
-    #   run: dotnet build --no-restore
+    - name: Restore Inventory Dependencies
+      working-directory:  ./Services/Inventory.Api
+      run: dotnet restore
+    - name: Restore Basket dependencies
+      working-directory:  ./Services/Basket
+      run: dotnet restore
+    - name: Restore NotificationService dependencies 
+      working-directory:  ./Backend/NotificationService
+      run: dotnet restore
+  
+  build:
+   runs-on: ubuntu-latest
+   steps:
+    - name: Build AuthService
+      working-directory: ./Services/Identity
+      run: dotnet build
+    - name: Build InventoryService
+      working-directory: ./Services/Inventory.Api
+      run: dotnet build
+    - name: Build BasketService
+      working-directory: ./Services/Basket
+      run: dotnet build
+    - name: Build NotificationService
+      working-directory: ./Services/NotificationService
+      run: dotnet build
+  
   # test:
   #   needs: build
   #   runs-on: ubuntu-latest
