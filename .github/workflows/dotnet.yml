@@ -36,16 +36,16 @@ jobs:
    runs-on: ubuntu-latest
    steps:
     - name: Build AuthService
-      working-directory: ./Services/Identity
+      working-directory: Services/Identity
       run: dotnet build
     - name: Build InventoryService
-      working-directory: ./Services/Inventory.Api
+      working-directory: Services/Inventory.Api
       run: dotnet build
     - name: Build BasketService
-      working-directory: ./Services/Basket
+      working-directory: Services/Basket
       run: dotnet build
     - name: Build NotificationService
-      working-directory: ./Services/NotificationService
+      working-directory: Services/NotificationService
       run: dotnet build
   
   # test:
