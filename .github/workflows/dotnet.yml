@@ -10,29 +10,7 @@ on:
     branches: [ "backend" ]
 
 jobs:
-  restore:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-    - name: Restore AuthService Dependencies
-      working-directory: ./Services/Identity
-      run: dotnet restore
-    - name: Restore Inventory Dependencies
-      working-directory:  ./Services/Inventory.Api
-      run: dotnet restore
-    - name: Restore Basket dependencies
-      working-directory:  ./Services/Basket
-      run: dotnet restore
-    - name: Restore NotificationService dependencies 
-      working-directory:  ./Services/NotificationService
-      run: dotnet restore
-  
   build:
-   needs: restore
    runs-on: ubuntu-latest
    steps:
     - uses: actions/checkout@v3
