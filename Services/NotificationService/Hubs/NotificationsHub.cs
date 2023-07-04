@@ -8,17 +8,11 @@ namespace NotificationService.Hubs;
 public class NotificationsHub : Hub, IHubWrapper
 {
 
-    private readonly IRequestHandler<NotificationRequest, Notification> _notificationRequestHandler;
-
-
-    public NotificationsHub(IRequestHandler<NotificationRequest, Notification> notificationRequestHandler)
+    public override async Task OnConnectedAsync()
     {
-        _notificationRequestHandler = notificationRequestHandler;
+        await Clients.All.SendAsync("Initialized",$"Client with Id:'{Context.ConnectionId}' connected");
+
     }
-
-
-    private async Task ConnectAsync() => await Clients.Client(Context.ConnectionId).SendAsync("connected");
-    private async Task DisconnectAsync() => await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
 
     public async Task PublishToUserAsync(Guid userId, string message, object data) =>
         await Clients.Group(userId.ToUserGroup()).SendAsync(message, data);
