@@ -35,6 +35,11 @@ jobs:
    needs: restore
    runs-on: ubuntu-latest
    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
     - name: Build AuthService 
       working-directory: ./Services/Identity
       run: dotnet build
