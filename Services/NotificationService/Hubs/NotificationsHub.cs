@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using NotificationService.Persistence.Entities;
-using Shared.Abstraction.MediatR;
 using Shared.Extensions;
 
 namespace NotificationService.Hubs;
@@ -16,8 +14,7 @@ public class NotificationsHub : Hub, IHubWrapper
 
     public override async Task OnConnectedAsync()
     {
-        await Clients.All.SendAsync("Initialized",$"Client with Id:'{Context.ConnectionId}' connected");
-
+        await Clients.All.SendAsync("Initialized", $"Client with Id:' {Context.ConnectionId} ' connected");
     }
 
     public async Task PublishToUserAsync(Guid userId, string message, object data) =>
@@ -25,6 +22,11 @@ public class NotificationsHub : Hub, IHubWrapper
 
     public async Task PublishToAllAsync(string message, object data)
     {
-        await _hubContext.Clients.All.SendAsync("all", new {message,data});
+        await _hubContext.Clients.All.SendAsync("all", new { message, data });
+    }
+
+    public override Task OnDisconnectedAsync(Exception? exception)
+    {
+        return base.OnDisconnectedAsync(exception);
     }
 }

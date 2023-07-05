@@ -1,0 +1,16 @@
+{
+  "name": "notificationhandler",
+  "version": "1.0.0",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dilshod Hamidov",
+  "license": "ISC",
+  "keywords": [],
+  "description": "",
+  "dependencies": {
+    "@microsoft/signalr": "^7.0.7",
+    "bootstrap": "^5.3.0"
+  }
+}
