@@ -4,13 +4,22 @@ using Serilog;
 
 namespace Shared.Serilog;
 
-public static class SerilogExtensions
+public static partial class Extensions
 {
     public static WebApplicationBuilder AddCustomLogging(this WebApplicationBuilder builder)
     {
-        builder.Logging.ClearProviders();
-        var logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
-        builder.Host.UseSerilog(logger);
+        builder
+            .Logging
+            .ClearProviders();
+
+        var logger = new LoggerConfiguration()
+            .ReadFrom
+            .Configuration(builder.Configuration)
+            .CreateLogger();
+
+        builder
+            .Host
+            .UseSerilog(logger);
         return builder;
     }
 }

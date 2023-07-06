@@ -2,6 +2,7 @@ using Authentication.Extensions;
 using Basket;
 using Identity.Services;
 using Shared.Extensions;
+using Shared.Redis;
 using Shared.Serilog;
 using Shared.Swagger;
 

@@ -1,6 +1,10 @@
-﻿using Identity.Infrastructure.Services;
+﻿using Authentication.Attributes;
+using Authentication.Enum;
+using Identity.Domain.Entities;
+using Identity.Infrastructure.Services;
 using Identity.Models;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Extensions;
 using Shared.Models;
 
 namespace Identity.Controllers;
@@ -42,4 +46,6 @@ public class UserController : ControllerBase
             .Bind(c => _userManagerService.ChangePassword(c));
         return Ok(result);
     }
+
+   
 }

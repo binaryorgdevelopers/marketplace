@@ -19,7 +19,7 @@ public static class ProgramExtensions
     {
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Result).Assembly));
-        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CustomerCreateCommand).Assembly));
+        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(ProductCreateCommand).Assembly));
 
         return builder;
     }

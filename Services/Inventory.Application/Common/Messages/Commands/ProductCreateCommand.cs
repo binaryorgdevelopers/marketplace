@@ -4,7 +4,7 @@ using Shared.Abstraction.Messaging;
 namespace Marketplace.Application.Common.Messages.Commands;
 
 public record ProductCreateCommand(
-    Guid SellerId,
+    Guid UserId,
     Guid CategoryId,
     string Title,
     decimal Price,

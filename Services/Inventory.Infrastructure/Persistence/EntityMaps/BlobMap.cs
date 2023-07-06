@@ -10,10 +10,6 @@ internal class BlobMap : IEntityTypeConfiguration<Blob>
     {
         builder.ToTable(nameof(Blob));
 
-        builder
-            .HasOne(c => c.User)
-            .WithMany(c => c.Files)
-            .HasForeignKey(c => c.UserId);
 
         builder
             .HasOne<Product>(c => c.Product)

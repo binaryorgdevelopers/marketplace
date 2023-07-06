@@ -16,6 +16,34 @@ message GrpcResult{
   int32 Code = 1;
   User User = 2;
 }
+
 service AuthService{
   rpc ValidateToken(GrpcToken) returns (GrpcResult);
+}
+
+
+service UserService{
+  rpc CardByUserId(UserId) returns(CardGrpcResult);
+  rpc UserById(UserId) returns (GrpcResult);
+}
+
+message UserId{
+  string Id = 1;
+}
+
+message CardGrpcResult{
+  int32 Code = 1;
+  repeated CardResult Cards = 2;
+}
+
+
+message CardResult{
+  string Id = 1;
+  string Cn = 2;
+  string Em = 3;
+  string Ey = 4;
+  string Cv = 5;
+  string Chn = 6;
+  User User = 7;
+  string UserId = 8;
 }

@@ -18,17 +18,16 @@ public class CategoryCreateCommandHandler : ICommandHandler<CategoryCreateComman
 
     public async Task<Result> Handle(CategoryCreateCommand request, CancellationToken cancellationToken)
     {
-        var foundC = await _categoryRepository.GetAsync(c => c.Title == request.Title);
+        var foundC = await _categoryRepository.GetAsync(c => c.Title == request.Title, cancellationToken);
         if (foundC is not null)
             return Result.Failure(new Error(Codes.CategoryAlreadyExists,
                 $"Category with Title:'{request.Title} is already exist'"));
 
-        var parent = await _categoryRepository.GetAsync(c => c.Id == request.ParentId);
-        Console.WriteLine(parent);
+        var parent = await _categoryRepository.GetAsync(c => c.Id == request.ParentId, cancellationToken);
 
         var category = new Inventory.Domain.Entities.Category(request.Title, parent);
 
-        await _categoryRepository.AddAsync(category);
+        await _categoryRepository.AddAsync(category, cancellationToken);
 
         return Result.Success(CategoryDto.FromEntity(category));
     }

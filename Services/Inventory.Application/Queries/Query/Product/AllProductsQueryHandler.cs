@@ -23,16 +23,12 @@ public class ProductReadQueryHandler : ICommandHandler<ProductReadQuery>
 
         CategoryDto categories = new CategoryDto(product.Category.Id, product.Category.Title,
             product.Category.ProductAmount, ArraySegment<ProductDto>.Empty, null);
-        SellerDto sellerDto = new SellerDto(product.Seller.Id, product.Seller.Title, product.Seller.Description,
-            product.Seller.Info,
-            product.Seller.Username, product.Seller.FirstName, product.Seller.LastName, product.Seller.Banner,
-            product.Seller.Avatar, product.Seller.Link);
         IEnumerable<BlobDto> photos = product.Photos.Select(c => new BlobDto(c.Id, c.Title, c.Extras));
         IEnumerable<CharacteristicsDto> characteristics = product.Characteristics.Select(c =>
             new CharacteristicsDto(c.Id, c.Title, c.Values.Select(x => new ColorRead(x.Id, x.Title, x.Value))));
 
         ProductDto productDto = new ProductDto(product.Id, product.Attributes, badges, product.Synonyms,
-            product.Title, product.Description, categories, sellerDto, photos, characteristics);
+            product.Title, product.Description, categories, photos, characteristics);
 
         return Result.Success(productDto);
     }

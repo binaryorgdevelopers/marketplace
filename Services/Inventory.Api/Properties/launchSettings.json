@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Marketplace.Api": {
+    "Inventory.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,

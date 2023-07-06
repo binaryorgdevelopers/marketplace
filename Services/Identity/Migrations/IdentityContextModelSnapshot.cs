@@ -22,7 +22,43 @@ namespace Identity.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Identity.Domain.Entities.Roles", b =>
+            modelBuilder.Entity("Identity.Domain.Entities.CardDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Chn")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Cn")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Cv")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Em")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Ey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("cards", (string)null);
+                });
+
+            modelBuilder.Entity("Identity.Domain.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,20 +141,36 @@ namespace Identity.Migrations
                     b.ToTable("users", (string)null);
                 });
 
+            modelBuilder.Entity("Identity.Domain.Entities.CardDetail", b =>
+                {
+                    b.HasOne("Identity.Domain.Entities.User", "User")
+                        .WithMany("Cards")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Identity.Domain.Entities.User", b =>
                 {
-                    b.HasOne("Identity.Domain.Entities.Roles", "Roles")
+                    b.HasOne("Identity.Domain.Entities.Role", "Role")
                         .WithMany("User")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Roles");
+                    b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Identity.Domain.Entities.Roles", b =>
+            modelBuilder.Entity("Identity.Domain.Entities.Role", b =>
                 {
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Identity.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Cards");
                 });
 #pragma warning restore 612, 618
         }

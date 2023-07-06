@@ -8,7 +8,7 @@ public class BillingAddress : IIdentifiable
 {
     private BillingAddress(
         string firstName, string lastName, string streetAddress, string city,
-        string state, string zipCode, string country, Guid customerId)
+        string state, string zipCode, string country, Guid userId)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -17,7 +17,7 @@ public class BillingAddress : IIdentifiable
         State = state;
         ZipCode = zipCode;
         Country = country;
-        CustomerId = customerId;
+        UserId = userId;
     }
 
     public BillingAddress()
@@ -32,14 +32,13 @@ public class BillingAddress : IIdentifiable
     public string ZipCode { get; set; }
     public string Country { get; set; }
 
-    public Guid CustomerId { get; set; }
+    public Guid UserId { get; set; }
 
-    public Customer Customer { get; set; }
     public Guid Id { get; set; }
 
     public static BillingAddress Create(
         string firstName, string lastName, string streetAddress, string city, string state, string zipCode,
-        string country, Guid customerId)
+        string country, Guid userId)
     {
         return new(
             firstName,
@@ -49,7 +48,7 @@ public class BillingAddress : IIdentifiable
             state,
             zipCode,
             country,
-            customerId
+            userId
         );
     }
 }

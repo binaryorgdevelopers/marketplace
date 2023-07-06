@@ -32,8 +32,8 @@
         <ProjectReference Include="..\Common\Common.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <None Remove="Protos\auth.proto"/>
-        <Protobuf Include="Protos\auth.proto" GrpcService="Server"/>
+        <None Remove="Protos\auth.proto" />
+        <Protobuf Include="Protos\auth.proto" GrpcService="Server" />
     </ItemGroup>
 
 </Project>

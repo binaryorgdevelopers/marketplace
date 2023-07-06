@@ -20,10 +20,7 @@ public static class InfrastructureExtension
     {
         services
             .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
-            .AddCloudStorage(configuration)
-            .AddScoped<IPasswordHasher<User>, PasswordHasher<User>>()
-            .AddScoped<IPasswordHasher<Seller>, PasswordHasher<Seller>>()
-            .AddScoped<IPasswordHasher<Customer>, PasswordHasher<Customer>>();
+            .AddCloudStorage(configuration);
         return services;
     }
 

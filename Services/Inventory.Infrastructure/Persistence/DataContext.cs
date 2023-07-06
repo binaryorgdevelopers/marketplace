@@ -16,7 +16,6 @@ public class DataContext : DbContext
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Characteristics> Characteristics => Set<Characteristics>();
-    public DbSet<Clients> Clients => Set<Clients>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,9 +24,7 @@ public class DataContext : DbContext
             .ApplyConfiguration(new CategoryMap())
             .ApplyConfiguration(new CharacteristicsMap())
             .ApplyConfiguration(new ColorMap())
-            .ApplyConfiguration(new CustomerMap())
-            .ApplyConfiguration(new ProductMap())
-            .ApplyConfiguration(new UserMap());
+            .ApplyConfiguration(new ProductMap());
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
@@ -52,13 +49,13 @@ public class DataContext : DbContext
 
     public override int SaveChanges()
     {
-        var entries = ChangeTracker
-            .Entries()
-            .Where(e => e is { Entity: User, State: EntityState.Modified });
-        foreach (var entity in entries)
-        {
-            ((User)entity.Entity).UpdatedAt = DateTime.Now.SetKindUtc();
-        }
+        // var entries = ChangeTracker
+        //     .Entries()
+        //     .Where(e => e is { Entity: User, State: EntityState.Modified });
+        // foreach (var entity in entries)
+        // {
+        //     ((User)entity.Entity).UpdatedAt = DateTime.Now.SetKindUtc();
+        // }
 
         return base.SaveChanges();
     }

@@ -14,11 +14,10 @@ public class Category : IIdentifiable, ICommon
     {
     }
 
-    public Category(string title, Category parent)
+    public Category(string title, Category? parent)
     {
         Title = title;
-        // Parent = parent;
-        ParentId = parent.Id;
+        ParentId = parent?.Id;
     }
 
     public string Title { get; set; }

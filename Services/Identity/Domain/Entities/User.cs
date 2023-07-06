@@ -33,7 +33,7 @@ public class User : Protectable
 
     public string[] Authorities { get; set; }
     public string Locale { get; set; }
-
+public List<CardDetail> Cards { get; set; }
     public void SetPassword(string password, IPasswordHasher<User> passwordHasher)
     {
         if (string.IsNullOrWhiteSpace(password))

@@ -1,10 +1,13 @@
 ﻿using Identity.Domain.Entities;
 using Identity.Infrastructure.Repositories;
 using Identity.Models;
+using Identity.Models.Messages;
+using Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Shared.Messages;
 using Shared.Models;
 using Shared.Models.Constants;
+using User = Identity.Domain.Entities.User;
 
 namespace Identity.Infrastructure.Services;
 
@@ -36,7 +39,6 @@ public class UserManagerService
             return Result.Failure<AuthResult>(new Error(Codes.InvalidRole, "Invalid Roles"));
         var newUser = createCommand with { RoleId = role.Id };
 
-
         var saveResult = await _repository.AddAsync(newUser, new CancellationTokenSource().Token);
 
         if (saveResult is null)
@@ -51,10 +53,11 @@ public class UserManagerService
 
     public async ValueTask<Result<AuthResult>> Login(UserSignInCommand command)
     {
-        var user = await _repository.GetUserAsync(c => c.Email == command.Email);
+        var user = await _repository.GetUserAsync(u => u.Email == command.Email);
+
         if (user is null)
-            return Result.Failure<AuthResult>(new Error(Codes.InvalidCredential,
-                $"User with email:'{command.Email} not found'"));
+            return Result.Failure<AuthResult>(new Error(Codes.UserNotFound,
+                $"User with email:'{command.Email}' not found"));
 
         if (!user.ValidatePassword(command.Password, _passwordHasher))
             return Result.Failure<AuthResult>(new Error(Codes.InvalidPassword, "Invalid password."));
@@ -86,5 +89,46 @@ public class UserManagerService
         return saveResult is null
             ? Result.Failure(new Error(Codes.ServerError, "Error while saving entity, see inner exception"))
             : Result.Success("User password updated");
+    }
+
+    public async Task<Result<UserCards>> BindCardToUser(BindCardToUserCommand command)
+    {
+        var user = await _repository.GetUserAsync(u => u.Id == command.UserId);
+
+        if (user is null)
+            return Result.Failure<UserCards>(
+                new Error(Codes.UserNotFound, $"User with Id:'{command.UserId}' not found"));
+        var card = CardDetail.FromDto(command.Card, command.UserId);
+        if (user.Cards is null)
+        {
+            user.Cards = new List<CardDetail> { card };
+        }
+        else
+        {
+            user.Cards.Add(card);
+        }
+
+        _repository.UpdateUser(user);
+
+        return Result.Success(new UserCards(user.Id, user.Cards.Select(c => c.ToDto())));
+    }
+
+    public async Task<Result<UserCards>> CardByUserId(UserById userById)
+    {
+        var user = await _repository.GetUserAsync(u => u.Id == userById.UserId);
+
+        if (user is null)
+            return Result.Failure<UserCards>(
+                new Error(Codes.UserNotFound, $"User with Id:'{userById.UserId}' not found"));
+
+        var result = await _repository.GetUserWithCardsAsync(c => c.Id == userById.UserId);
+        
+        var userCards = new UserCards(userById.UserId, new List<CardReadDto>());
+        if (result.Cards.Any())
+        {
+            userCards = userCards with { Cards = result.Cards.Select(c => c.ToDto()) };
+        }
+
+        return Result.Success(userCards);
     }
 }

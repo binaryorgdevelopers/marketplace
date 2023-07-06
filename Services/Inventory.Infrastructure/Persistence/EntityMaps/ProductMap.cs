@@ -25,11 +25,6 @@ internal class ProductMap : IEntityTypeConfiguration<Product>
             .HasForeignKey(c => c.ProductId);
 
         builder
-            .HasOne<Seller>(c => c.Seller)
-            .WithMany(c => c.Products)
-            .HasForeignKey(c => c.SellerId);
-
-        builder
             .HasOne<Category>(c => c.Category)
             .WithMany(c => c.Products)
             .HasForeignKey(c => c.CategoryId);

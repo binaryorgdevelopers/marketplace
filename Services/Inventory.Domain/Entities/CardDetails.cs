@@ -21,7 +21,7 @@ public class CardDetail : IIdentifiable
         Ey = expiryYear;
         Cv = cvv;
         Chn = cardHolderName;
-        CustomerId = userId;
+        UserId = userId;
     }
 
     /// <summary>
@@ -53,8 +53,7 @@ public class CardDetail : IIdentifiable
     public string Chn { get; set; }
 
 
-    public Guid CustomerId { get; set; }
-    public Customer Customer { get; set; }
+    public Guid UserId { get; set; }
     public Guid Id { get; set; }
 
 
@@ -64,6 +63,7 @@ public class CardDetail : IIdentifiable
         return new(cardNumber, expiryMonth, expiryYear, cvv, cardHolderName, userId);
     }
 
+    [Obsolete("Obsolete")]
     public static string Encrypt(string text)
     {
         byte[] encryptedBytes;
@@ -86,6 +86,7 @@ public class CardDetail : IIdentifiable
         return Convert.ToBase64String(encryptedBytes);
     }
 
+    [Obsolete("Obsolete")]
     public static string Decrypt(string encryptedText)
     {
         byte[] decryptedBytes;

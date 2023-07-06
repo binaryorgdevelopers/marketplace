@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Identity.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,6 +56,34 @@ namespace Identity.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "cards",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Cn = table.Column<string>(type: "text", nullable: false),
+                    Em = table.Column<string>(type: "text", nullable: false),
+                    Ey = table.Column<string>(type: "text", nullable: false),
+                    Cv = table.Column<string>(type: "text", nullable: false),
+                    Chn = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_cards_users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cards_UserId",
+                table: "cards",
+                column: "UserId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_users_RoleId",
                 table: "users",
@@ -65,6 +93,9 @@ namespace Identity.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "cards");
+
             migrationBuilder.DropTable(
                 name: "users");
 

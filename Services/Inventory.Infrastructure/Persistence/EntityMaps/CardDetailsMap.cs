@@ -10,10 +10,6 @@ public class CardDetailsMap : IEntityTypeConfiguration<CardDetail>
     {
         builder.ToTable("CardDetails");
 
-        builder
-            .HasOne(c => c.Customer)
-            .WithMany(c => c.CardDetails);
-
         // builder.Property(c => c.Cn)
         //     .HasConversion(
         //         set => CardDetail.Encrypt(set),

@@ -18,7 +18,7 @@ public class Product : IIdentifiable, ICommon
     }
 
     private Product(IEnumerable<Badge> badges, string title, decimal price, int count,
-        string description, Guid categoryId, Guid sellerId, IEnumerable<Blob> photos,
+        string description, Guid categoryId,Guid userId, IEnumerable<Blob> photos,
         IEnumerable<Characteristics> characteristics)
     {
         NullException.ThrowIfNull(title);
@@ -32,11 +32,11 @@ public class Product : IIdentifiable, ICommon
         Description = description;
 
         CategoryId = categoryId;
-        SellerId = sellerId;
 
         Badges = badges.ToList();
         Photos = photos.ToList();
         Characteristics = characteristics.ToList();
+        UserId = userId;
     }
 
     public string[]? Attributes { get; set; }
@@ -48,13 +48,12 @@ public class Product : IIdentifiable, ICommon
 
     public string Description { get; set; }
     public Category Category { get; set; }
-    public Seller Seller { get; set; }
+    public Guid UserId { get; set; }
 
     [JsonIgnore] public ICollection<Badge> Badges { get; set; }
     [JsonIgnore] public ICollection<Blob> Photos { get; set; }
     [JsonIgnore] public ICollection<Characteristics> Characteristics { get; set; }
 
-    public Guid SellerId { get; set; }
     public Guid CategoryId { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now.SetKindUtc();
     public DateTime UpdatedAt { get; set; } = DateTime.Now.SetKindUtc();
@@ -69,16 +68,16 @@ public class Product : IIdentifiable, ICommon
     /// <param name="count"></param>
     /// <param name="description"></param>
     /// <param name="categoryId"></param>
-    /// <param name="sellerId"></param>
+    /// <param name="userId"></param>
     /// <param name="photos"></param>
     /// <param name="characteristics"></param>
     /// <param name="badges"></param>
     /// <returns></returns>
     public static Product Create(string title, decimal price, int count, string description, Guid categoryId,
-        Guid sellerId, IEnumerable<Blob> photos, IEnumerable<Characteristics> characteristics,
+        Guid userId, IEnumerable<Blob> photos, IEnumerable<Characteristics> characteristics,
         IEnumerable<Badge> badges)
     {
-        return new(badges, title, price, count, description, categoryId, sellerId, photos, characteristics);
+        return new(badges, title, price, count, description, categoryId,userId, photos, characteristics);
     }
 
     /// <summary>

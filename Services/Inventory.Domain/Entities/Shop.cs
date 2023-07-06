@@ -47,7 +47,6 @@ public class Shop : IIdentifiable
     public Guid FileId { get; set; }
 
 
-    public User User { get; set; }
     public List<Blob> Files { get; set; }
     public Guid Id { get; set; }
 }
