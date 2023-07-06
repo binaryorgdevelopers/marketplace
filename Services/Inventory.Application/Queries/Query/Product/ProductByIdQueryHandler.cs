@@ -15,7 +15,7 @@ public class ProductByIdQueryHandler : ICommandHandler<ProductByIdQuery>
         _productRepository = productRepository;
     }
 
-    public async ValueTask<Result> HandleAsync(ProductByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ProductByIdQuery request, CancellationToken cancellationToken)
     {
         var product = _productRepository.GetWithSelect<ProductDto>(
             c => c.Id == request.Id,

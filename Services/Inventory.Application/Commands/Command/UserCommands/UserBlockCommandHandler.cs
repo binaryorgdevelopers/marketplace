@@ -16,33 +16,9 @@ public class UserBlockCommandHandler : ICommandHandler<UserBlockCommand>
         _repository = repository;
     }
 
-    public async ValueTask<Result> HandleAsync(UserBlockCommand request, CancellationToken cancellationToken)
-    {
-        // var commandHandlerTypes = AppDomain.CurrentDomain.GetAssemblies()
-        //     .SelectMany(x => x.GetTypes())
-        //     .Where(x => x.GetInterfaces()
-        //         .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<>)))
-        //     .ToList();
-        //
-        // var handlerTypeMap = new Dictionary<string, Type>();
-        // foreach (var commandHandlerType in commandHandlerTypes)
-        // {
-        //     var interfaceType = commandHandlerType.GetInterfaces()
-        //         .Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<>));
-        //     var commandType = interfaceType.GetGenericArguments().Single();
-        //     var handlerTypeName = commandType.Name + "Handler";
-        //     handlerTypeMap[handlerTypeName] = commandHandlerType;
-        // }
-        //
-        // if (handlerTypeMap.TryGetValue(request.HandlerType, out var handlerType))
-        // {
-        //     var handler = Activator.CreateInstance(handlerType);
-        //     var method = handler.GetType().GetMethod("HandleAsync");
-        //     await (Task)method.Invoke(handler, new object[] { request });
-        // }
-        //
-        // return Result.Create("Unknown Handler");
 
+    public async Task<Result> Handle(UserBlockCommand request, CancellationToken cancellationToken)
+    {
         var findCustomer = await _repository.GetAsync(c => c.Id == request.UserId);
         if (findCustomer is null)
             return Result.Failure(new Error(Codes.InvalidCredential, $"Customer with Id:'{request.UserId}' not found"));

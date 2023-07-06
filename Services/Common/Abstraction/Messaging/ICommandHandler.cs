@@ -1,4 +1,4 @@
-﻿using Shared.Abstraction.MediatR;
+﻿using MediatR;
 using Shared.Models;
 
 namespace Shared.Abstraction.Messaging;

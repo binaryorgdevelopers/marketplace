@@ -14,7 +14,4 @@
         <ProjectReference Include="..\Common\Common.csproj" />
         <ProjectReference Include="..\Inventory.Domain\Inventory.Domain.csproj" />
     </ItemGroup>
-    <ItemGroup>
-        <Folder Include="Abstractions" />
-    </ItemGroup>
 </Project>

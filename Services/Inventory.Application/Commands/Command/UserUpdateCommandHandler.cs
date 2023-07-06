@@ -20,7 +20,7 @@ public class UserUpdateCommand : ICommandHandler<UpdateUserCommand>
         _passwordHasher = passwordHasher;
     }
 
-    public async ValueTask<Result> HandleAsync(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _repository.GetAsync(c => c.Email == request.Email);
 

@@ -11,11 +11,6 @@ public class DataContext : DbContext
     {
     }
 
-
-    public DbSet<User> Users => Set<User>();
-    public DbSet<Seller> Sellers => Set<Seller>();
-    public DbSet<Customer> Customers => Set<Customer>();
-
     public DbSet<Color> Colors => Set<Color>();
     public DbSet<Blob> Blobs => Set<Blob>();
     public DbSet<Product> Products => Set<Product>();

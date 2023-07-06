@@ -4,6 +4,7 @@ using Amazon.S3.Model;
 using Inventory.Domain.Abstractions;
 using Inventory.Domain.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Shared.Models;
 
@@ -11,15 +12,15 @@ namespace Marketplace.Infrastructure.Services;
 
 public class CloudUploaderService : ICloudUploaderService
 {
-    private readonly ILoggingBroker _logger;
     private readonly AWSCredentials _options;
     private readonly IAmazonS3 _s3;
+    private readonly ILogger<CloudUploaderService> _logger;
 
 
-    public CloudUploaderService(ILoggingBroker logger, IOptions<AWSCredentials> options, IAmazonS3 s3)
+    public CloudUploaderService( IOptions<AWSCredentials> options, IAmazonS3 s3,ILogger<CloudUploaderService> logger)
     {
-        _logger = logger;
         _s3 = s3;
+        _logger = logger;
         _options = options.Value;
     }
 

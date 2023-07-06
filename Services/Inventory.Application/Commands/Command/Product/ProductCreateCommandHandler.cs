@@ -21,9 +21,10 @@ public class ProductCreateCommandHandler : ICommandHandler<ProductCreateCommand,
         _uploaderService = uploaderService;
     }
 
+
     #region ProductCreate Handler
 
-    public async ValueTask<Result<ProductDto>> HandleAsync(ProductCreateCommand request, CancellationToken cancellationToken)
+    public async Task<Result<ProductDto>> Handle(ProductCreateCommand request, CancellationToken cancellationToken)
     {
         List<Blob> blob = new();
         foreach (var b in request.Photos)

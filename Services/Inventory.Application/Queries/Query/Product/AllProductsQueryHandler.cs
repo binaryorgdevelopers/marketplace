@@ -15,14 +15,14 @@ public class ProductReadQueryHandler : ICommandHandler<ProductReadQuery>
         _productRepository = productRepository;
     }
 
-    public async ValueTask<Result> HandleAsync(ProductReadQuery request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ProductReadQuery request, CancellationToken cancellationToken)
     {
         var product = await _productRepository.GetAsync(c => c.Id == request.Id);
         IEnumerable<BadgeDto> badges = product.Badges.Select(c =>
             new BadgeDto(c.Id, c.Text, c.TextColor, c.BackgroundColor, c.Description, c.Type));
 
         CategoryDto categories = new CategoryDto(product.Category.Id, product.Category.Title,
-            product.Category.ProductAmount, ArraySegment<ProductDto>.Empty,null);
+            product.Category.ProductAmount, ArraySegment<ProductDto>.Empty, null);
         SellerDto sellerDto = new SellerDto(product.Seller.Id, product.Seller.Title, product.Seller.Description,
             product.Seller.Info,
             product.Seller.Username, product.Seller.FirstName, product.Seller.LastName, product.Seller.Banner,

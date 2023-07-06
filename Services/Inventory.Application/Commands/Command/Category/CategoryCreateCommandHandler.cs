@@ -16,7 +16,7 @@ public class CategoryCreateCommandHandler : ICommandHandler<CategoryCreateComman
         _categoryRepository = categoryRepository;
     }
 
-    public async ValueTask<Result> HandleAsync(CategoryCreateCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CategoryCreateCommand request, CancellationToken cancellationToken)
     {
         var foundC = await _categoryRepository.GetAsync(c => c.Title == request.Title);
         if (foundC is not null)

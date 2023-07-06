@@ -2,7 +2,7 @@
 using EventBus.Models;
 using Identity.Services;
 
-namespace Marketplace.Infrastructure.Services;
+namespace Inventory.Api;
 
 public class ValidatorService : ITokenValidator
 {

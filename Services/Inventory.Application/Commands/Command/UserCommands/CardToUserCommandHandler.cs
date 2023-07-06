@@ -19,7 +19,7 @@ public class CardToUserCommandHandler : ICommandHandler<BindCardToUserCommand>
         _customerRepository = customerRepository;
     }
 
-    public async ValueTask<Result> HandleAsync(BindCardToUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(BindCardToUserCommand request, CancellationToken cancellationToken)
     {
         var customer = await _customerRepository.GetAsync(c => c.Id == request.UserId, cancellationToken);
         if (customer is null)

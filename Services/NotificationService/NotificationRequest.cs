@@ -1,5 +1,5 @@
-﻿using NotificationService.Persistence.Entities;
-using Shared.Abstraction.MediatR;
+﻿using MediatR;
+using NotificationService.Persistence.Entities;
 
 namespace NotificationService;
 

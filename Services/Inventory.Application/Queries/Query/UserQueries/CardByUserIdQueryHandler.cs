@@ -17,9 +17,8 @@ public class CardByUserIdQueryHandler : ICommandHandler<CardByUserIdCommand, Car
         _cardRepository = cardRepository;
     }
 
-    public async ValueTask<Result<CardByByUserIdDto>> HandleAsync(CardByUserIdCommand request,
+    public async Task<Result<CardByByUserIdDto>> Handle(CardByUserIdCommand request,
         CancellationToken cancellationToken)
-
     {
         await Task.CompletedTask;
         var cards = _cardRepository.Get(c => c.CustomerId == request.UserId);
