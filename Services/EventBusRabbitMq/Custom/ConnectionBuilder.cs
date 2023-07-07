@@ -1,39 +1,35 @@
 ﻿using System.Net.Sockets;
+using System.Security;
 using Microsoft.Extensions.Logging;
 using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 
-namespace EventBusRabbitMq;
+namespace EventBusRabbitMq.Custom;
 
-public class DefaultRabbitMqPersistentConnection : IRabbitMqPersistentConnection
+public class ConnectionBuilder : IConnectionBuilder
 {
     private readonly IConnectionFactory _connectionFactory;
-    private readonly ILogger<DefaultRabbitMqPersistentConnection> _logger;
-    private readonly int _retryCount;
+    private readonly ILogger<ConnectionBuilder> _logger;
     private IConnection _connection;
-    public bool Disposed;
+    private readonly int _retryCount;
+    private bool Disposed;
 
-    readonly object _syncRoot = new();
+    private object _syncRoot = default;
 
-    public DefaultRabbitMqPersistentConnection(IConnectionFactory connectionFactory,
-        ILogger<DefaultRabbitMqPersistentConnection> logger, int retryCount = 5)
+    public ConnectionBuilder(IConnectionFactory connectionFactory, ILogger<ConnectionBuilder> logger,
+        int retryCount = 5)
     {
-        _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _connectionFactory = connectionFactory;
+        _logger = logger;
         _retryCount = retryCount;
     }
-
-    public bool IsConnected => _connection is { IsOpen: true } && !Disposed;
 
     public IModel CreateModel()
     {
         if (!IsConnected)
-        {
-            throw new InvalidOperationException("No RabbitMQ connections are available to perform this action");
-        }
-
+            throw new InvalidOperationException("No RabbitMQ connection are available to perform this action");
         return _connection.CreateModel();
     }
 
@@ -54,20 +50,23 @@ public class DefaultRabbitMqPersistentConnection : IRabbitMqPersistentConnection
         }
     }
 
+    public bool IsConnected => _connection is { IsOpen: true } && !Disposed;
 
     public bool TryConnect()
     {
-        _logger.LogInformation("RabbitMQ Client is trying to connect");
+        _logger.LogInformation("RabbitMQ is trying to ReConnect");
 
         lock (_syncRoot)
         {
             var policy = Policy.Handle<SocketException>()
                 .Or<BrokerUnreachableException>()
-                .WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
-                    (ex, time) =>
+                .WaitAndRetry(
+                    _retryCount,
+                    retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                    (exception, span) =>
                     {
-                        _logger.LogWarning("RabbitMQ Client could not connect after {TimeOut}s ({ExceptionMessage})",
-                            $"{time.TotalSeconds:n1}", ex.Message);
+                        _logger.LogInformation("RabbitMQ client couldn't connect after {TimeOut}s ({ExceptionMessage})",
+                            $"{span.TotalSeconds:N1}", exception.Message);
                     });
 
             policy.Execute(() => _connection = _connectionFactory.CreateConnection());
@@ -92,6 +91,7 @@ public class DefaultRabbitMqPersistentConnection : IRabbitMqPersistentConnection
             }
         }
     }
+
 
     private void OnConnectionBlocked(object sender, ConnectionBlockedEventArgs e)
     {
@@ -119,4 +119,11 @@ public class DefaultRabbitMqPersistentConnection : IRabbitMqPersistentConnection
 
         TryConnect();
     }
+}
+
+public interface IConnectionBuilder
+{
+    IModel CreateModel();
+    bool IsConnected { get; }
+    bool TryConnect();
 }

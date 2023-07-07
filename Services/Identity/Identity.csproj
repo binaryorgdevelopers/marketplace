@@ -30,6 +30,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Authentication\Authentication.csproj" />
         <ProjectReference Include="..\Common\Common.csproj" />
+        <ProjectReference Include="..\EventBusRabbitMq\EventBusRabbitMq.csproj" />
     </ItemGroup>
     <ItemGroup>
         <None Remove="Protos\auth.proto" />

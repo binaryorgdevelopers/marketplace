@@ -38,14 +38,17 @@ public class UserController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("change-password")]
-    public async ValueTask<ActionResult> ChangePassword(ChangePasswordCommand changePasswordCommand)
-    {
-        var result = await Result
+    [HttpPost("change-password")] 
+    public async ValueTask<IActionResult> ChangePassword(ChangePasswordCommand changePasswordCommand)
+        => await Result
             .Create(changePasswordCommand)
-            .Bind(c => _userManagerService.ChangePassword(c));
-        return Ok(result);
-    }
+            .Bind(c => _userManagerService.ChangePassword(c))
+            .Match(Ok, BadRequest);
 
-   
+    [HttpPost("block")]
+    public async ValueTask<IActionResult> BlockUser(UserByEmail userByEmail)
+        => await Result
+            .Create(userByEmail)
+            .Bind(c => _userManagerService.BlockUser(userByEmail))
+            .Match(Ok, BadRequest);
 }

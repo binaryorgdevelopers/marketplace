@@ -1,4 +1,6 @@
 ﻿using Authentication;
+using EventBus.Abstractions;
+using EventBusRabbitMq;
 using Identity.Domain.Entities;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Repositories;
@@ -6,6 +8,7 @@ using Identity.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared.Models;
+using EventBusRabbitMq = EventBusRabbitMq.EventBusRabbitMq;
 
 namespace Identity;
 
@@ -42,4 +45,18 @@ public static class IdentityExtensions
         builder.Services.Configure<JwtOptions>(jwtOptions);
         return builder;
     }
+
+    // public static WebApplicationBuilder AddEventBus(this WebApplicationBuilder builder)
+    // {
+    //     builder.Services.AddSingleton<IEventBus, global::EventBusRabbitMq.EventBusRabbitMq>(serviceProvider =>
+    //     {
+    //         var subsClientName = builder.Configuration["SubscriptionClientName"] ?? "IdentityService";
+    //         var rabbitMqPersistenceConnection = serviceProvider.GetRequiredService<IRabbitMqPersistentConnection>();
+    //         var logger = serviceProvider.GetRequiredService<ILogger<global::EventBusRabbitMq.EventBusRabbitMq>>();
+    //         // var eventBusSubscriptionManager = serviceProvider.GetRequiredService<>();
+    //         return new global::EventBusRabbitMq.EventBusRabbitMq();
+    //     });
+    //
+    //     return builder;
+    // }
 }

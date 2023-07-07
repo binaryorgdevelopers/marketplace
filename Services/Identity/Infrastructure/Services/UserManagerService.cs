@@ -1,8 +1,9 @@
-﻿using Identity.Domain.Entities;
+﻿using EventBus.Abstractions;
+using EventBus.Events;
+using Identity.Domain.Entities;
 using Identity.Infrastructure.Repositories;
 using Identity.Models;
 using Identity.Models.Messages;
-using Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Shared.Messages;
 using Shared.Models;
@@ -17,14 +18,16 @@ public class UserManagerService
     private readonly ITokenProvider _tokenProvider;
     private readonly IRoleRepository _roleRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IEventBus _eventBus;
 
     public UserManagerService(IUserRepository repository, ITokenProvider tokenProvider, IRoleRepository roleRepository,
-        IPasswordHasher<User> passwordHasher)
+        IPasswordHasher<User> passwordHasher, IEventBus eventBus)
     {
         _repository = repository;
         _tokenProvider = tokenProvider;
         _roleRepository = roleRepository;
         _passwordHasher = passwordHasher;
+        _eventBus = eventBus;
     }
 
     public async ValueTask<Result<AuthResult>> Register(UserCreateCommand createCommand)
@@ -124,11 +127,23 @@ public class UserManagerService
         var result = await _repository.GetUserWithCardsAsync(c => c.Id == userById.UserId);
 
         var userCards = new UserCards(userById.UserId, new List<CardReadDto>());
-        if (result.Cards.Any())
+        if (result.Cards != null)
         {
             userCards = userCards with { Cards = result.Cards.Select(c => c.ToDto()) };
         }
 
         return Result.Success(userCards);
+    }
+
+    public async ValueTask<Result> BlockUser(UserByEmail userByEmail)
+    {
+        var user = await _repository.GetUserByEmail(userByEmail.Email);
+        if (user is null)
+            return Result.Failure<UserCards>(
+                new Error(Codes.UserNotFound, $"User with Email:'{userByEmail.Email}' not found"));
+        var blockResult = await _repository.DeactivateUser(user);
+        _eventBus.Publish(new IntegrationEvent(Guid.NewGuid(), DateTime.Now));
+
+        return blockResult ? Result.Create(true) : Result.Create(false);
     }
 }

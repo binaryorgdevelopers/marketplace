@@ -1,4 +1,6 @@
 ﻿using Authentication;
+using Identity.Models.Dtos;
+using Identity.Models.Messages;
 using Microsoft.AspNetCore.Identity;
 using Shared.BaseEntity;
 using Shared.Models;
@@ -33,7 +35,7 @@ public class User : Protectable
 
     public string[] Authorities { get; set; }
     public string Locale { get; set; }
-    public List<CardDetail> Cards { get; set; }
+    public List<CardDetail>? Cards { get; set; }
 
     public void SetPassword(string password, IPasswordHasher<User> passwordHasher)
     {
@@ -59,6 +61,8 @@ public class User : Protectable
         IsActive = false;
     }
 
+    public UserDto ToDto() => new(Id, FirstName, Email, LastName, this.Role.ToDto(), Authorities, Locale,
+        new List<CardReadDto>());
 
     private static bool PhoneNumberValidate(string input)
     {

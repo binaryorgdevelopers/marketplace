@@ -16,7 +16,7 @@ public static class Extensions
 {
     public static WebApplicationBuilder AddSignalR(this WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<IHubWrapper,NotificationsHub>();
+        builder.Services.AddScoped<IHubWrapper, NotificationsHub>();
         builder.Services.AddCors(setup =>
         {
             setup.AddDefaultPolicy(policy =>
@@ -71,7 +71,12 @@ public static class Extensions
             var retryCount = 5;
             if (!string.IsNullOrEmpty(builder.Configuration["EventBusRetryCount"]))
             {
-                retryCount = int.Parse(builder.Configuration["EventBusRetryCount"]);
+                retryCount = int.Parse(builder.Configuration["EventBusRetryCount"]!);
+            }
+
+            if (!string.IsNullOrEmpty(builder.Configuration["EventBusPort"]))
+            {
+                factory.Port = int.Parse(builder.Configuration["EventBusPort"]!);
             }
 
             return new DefaultRabbitMqPersistentConnection(factory, logger, retryCount);

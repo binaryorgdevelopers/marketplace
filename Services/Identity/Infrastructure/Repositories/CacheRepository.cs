@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using Identity.Models.Dtos;
 using StackExchange.Redis;
 
 namespace Identity.Infrastructure.Repositories;
@@ -27,7 +26,6 @@ public class CacheRepository : ICacheRepository
     {
         var data = await _database.StringGetAsync($"user:{key}");
         if (data.IsNullOrEmpty) return null;
-        _logger.LogInformation(data);
         T deserialized = JsonSerializer.Deserialize<T>(data);
         return deserialized;
     }

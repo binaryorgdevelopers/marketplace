@@ -37,7 +37,9 @@ internal class UserRepository : IUserRepository
         var dbUser = await _context.Users
             .Include(u => u.Role)
             .FirstOrDefaultAsync(c => c.Email == email, cancellationToken);
+
         if (dbUser is not null) dbUser.Role.User = null;
+
         await _cacheRepository.SetStringAsync(email, dbUser!);
         return dbUser;
     }
@@ -49,19 +51,14 @@ internal class UserRepository : IUserRepository
 
         var dbUser = await _context.Users
             .Include(u => u.Role)
+            .AsNoTracking()
             .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+
         if (dbUser == null) return null;
 
-        UserDto userDto = new UserDto(
-            dbUser.Id,
-            dbUser.FirstName,
-            dbUser.Email,
-            dbUser.LastName,
-            dbUser.Role.ToDto(),
-            dbUser.Authorities,
-            dbUser.Locale,
-            new List<CardReadDto>());
-        if (dbUser.Cards!=null )
+        UserDto userDto = dbUser.ToDto();
+
+        if (dbUser.Cards != null)
         {
             userDto = userDto with { Cards = dbUser.Cards.Select(c => c.ToDto()) };
         }
@@ -71,14 +68,16 @@ internal class UserRepository : IUserRepository
         return userDto;
     }
 
-    public User? UpdateUser(User user)
+    public User UpdateUser(User user)
     {
         var userToFind = _context.Users.FirstOrDefault(c => c.Id == user.Id);
         if (userToFind is null) throw new AuthException(Codes.UserNotFound, $"User with Id: '{user.Id}' not found");
-        var userToUpdate = _context.Users.Update(user);
+        
+        _context.Entry(userToFind).State = EntityState.Detached;
 
+        var updated = _context.Users.Update(user);
         _context.SaveChanges();
-        return userToUpdate.Entity;
+        return updated.Entity;
     }
 
     public async Task<User?> AddAsync(UserCreateCommand user, CancellationToken cancellationToken = default)
