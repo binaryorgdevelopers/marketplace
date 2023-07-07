@@ -1,4 +1,5 @@
-﻿using Shared.BaseEntity;
+﻿using Identity.Models.Dtos;
+using Shared.BaseEntity;
 using Shared.Extensions;
 
 namespace Identity.Domain.Entities;
@@ -17,4 +18,6 @@ public class Role : BaseEntity
         LastUsed = DateTime.Now.SetKindUtc();
         IsActive = true;
     }
+
+    public RoleDto ToDto() => new(Id, Name);
 }

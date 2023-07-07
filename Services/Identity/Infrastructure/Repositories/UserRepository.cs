@@ -4,6 +4,8 @@ using Authentication;
 using Identity.Domain.Entities;
 using Identity.Infrastructure.Persistence;
 using Identity.Models;
+using Identity.Models.Dtos;
+using Identity.Models.Messages;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared.Models.Constants;
@@ -26,18 +28,47 @@ internal class UserRepository : IUserRepository
         _cacheRepository = cacheRepository;
     }
 
-    public async ValueTask<User?> GetUserAsync(Expression<Func<User, bool>> predicate,
-        CancellationToken cancellationToken = default)
+
+    public async ValueTask<User?> GetUserByEmail(string email, CancellationToken cancellationToken = default)
     {
-        predicate.Name
-        var cacheUser = await _cacheRepository.GetStringAsync<User>(predicate);
+        var cacheUser = await _cacheRepository.GetStringAsync<User>(email);
         if (cacheUser is not null) return cacheUser;
 
         var dbUser = await _context.Users
             .Include(u => u.Role)
-            .FirstOrDefaultAsync(predicate, cancellationToken);
-        await _cacheRepository.SetStringAsync();
+            .FirstOrDefaultAsync(c => c.Email == email, cancellationToken);
+        if (dbUser is not null) dbUser.Role.User = null;
+        await _cacheRepository.SetStringAsync(email, dbUser!);
         return dbUser;
+    }
+
+    public async ValueTask<UserDto?> GetUserById(Guid id, CancellationToken cancellationToken = default)
+    {
+        var cacheUser = await _cacheRepository.GetStringAsync<UserDto>(id.ToString());
+        if (cacheUser is not null) return cacheUser;
+
+        var dbUser = await _context.Users
+            .Include(u => u.Role)
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+        if (dbUser == null) return null;
+
+        UserDto userDto = new UserDto(
+            dbUser.Id,
+            dbUser.FirstName,
+            dbUser.Email,
+            dbUser.LastName,
+            dbUser.Role.ToDto(),
+            dbUser.Authorities,
+            dbUser.Locale,
+            new List<CardReadDto>());
+        if (dbUser.Cards!=null )
+        {
+            userDto = userDto with { Cards = dbUser.Cards.Select(c => c.ToDto()) };
+        }
+
+        await _cacheRepository.SetStringAsync(id.ToString(), userDto);
+
+        return userDto;
     }
 
     public User? UpdateUser(User user)
@@ -55,10 +86,11 @@ internal class UserRepository : IUserRepository
         var userToCreate = new User(user.Firstname, user.Lastname, user.Email, user.PhoneNumber, user.RoleId.Value);
         userToCreate.SetPassword(user.Password, _passwordHasher);
         userToCreate.Activate();
+        userToCreate.Cards = new List<CardDetail>();
 
         var result = await _context.Users.AddAsync(userToCreate, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
-        return await GetUserAsync(c => c.Email == result.Entity.Email, cancellationToken);
+        return result.Entity;
     }
 
     public async ValueTask<bool> DeactivateUser(User user, CancellationToken cancellationToken = default)
@@ -80,15 +112,15 @@ internal class UserRepository : IUserRepository
 
     public async ValueTask<User> GetUserWithCardsAsync(Expression<Func<User, bool>> expression,
         CancellationToken cancellationToken = default)
-        => await _context.Users
+        => (await _context.Users
             .Include(c => c.Cards)
-            .FirstOrDefaultAsync(expression, cancellationToken);
+            .FirstOrDefaultAsync(expression, cancellationToken))!;
 }
 
 public interface IUserRepository
 {
-    public ValueTask<User?> GetUserAsync(Expression<Func<User, bool>> predicate,
-        CancellationToken cancellationToken = default);
+    public ValueTask<User?> GetUserByEmail(string email, CancellationToken cancellationToken = default);
+    public ValueTask<UserDto?> GetUserById(Guid id, CancellationToken cancellationToken = default);
 
     public User? UpdateUser(User user);
     public Task<User?> AddAsync(UserCreateCommand user, CancellationToken cancellationToken = default);

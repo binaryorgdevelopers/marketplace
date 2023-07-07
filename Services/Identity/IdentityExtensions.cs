@@ -22,6 +22,7 @@ public static class IdentityExtensions
     {
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+        builder.Services.AddScoped<ICacheRepository, CacheRepository>();
         return builder;
     }
 

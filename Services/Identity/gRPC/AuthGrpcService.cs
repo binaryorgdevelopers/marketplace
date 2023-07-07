@@ -27,7 +27,7 @@ public class AuthGrpcService : AuthService.AuthServiceBase
             return grpcResult;
         }
 
-        var user = await _userRepository.GetUserAsync(u => u.Id == userId.Value);
+        var user = await _userRepository.GetUserById(userId.Value);
 
         grpcResult.Code = 200;
         grpcResult.User = new User

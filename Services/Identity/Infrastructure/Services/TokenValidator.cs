@@ -20,7 +20,7 @@ public class TokenValidator : ITokenValidator
         {
             Guid? guid = _tokenProvider.ValidateJwtToken(userToken.Token[7..]);
             if (guid is null) return null;
-            var user = await _userRepository.GetUserAsync(u => u.Id == guid.Value);
+            var user = await _userRepository.GetUserById(guid.Value);
             return new UserDto(user.Id, user.FirstName, user.LastName, user.Email, user.Role.Name);
         });
 }

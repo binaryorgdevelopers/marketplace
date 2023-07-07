@@ -1,3 +1,3 @@
 ﻿namespace Identity.Models;
 
-public record BindCardToUserCommand(Guid UserId, CardCreateCommand Card);
+public record BindCardToUserCommand(string Email, CardCreateCommand Card);

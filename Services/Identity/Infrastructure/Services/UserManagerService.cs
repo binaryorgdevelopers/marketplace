@@ -53,7 +53,7 @@ public class UserManagerService
 
     public async ValueTask<Result<AuthResult>> Login(UserSignInCommand command)
     {
-        var user = await _repository.GetUserAsync(u => u.Email == command.Email);
+        var user = await _repository.GetUserByEmail(command.Email);
 
         if (user is null)
             return Result.Failure<AuthResult>(new Error(Codes.UserNotFound,
@@ -73,7 +73,7 @@ public class UserManagerService
 
     public async ValueTask<Result> ChangePassword(ChangePasswordCommand changePasswordCommand)
     {
-        var user = await _repository.GetUserAsync(u => u.Email == changePasswordCommand.Email);
+        var user = await _repository.GetUserByEmail(changePasswordCommand.Email);
 
         if (user is null)
             return Result.Failure(new Error(Codes.UserNotFound,
@@ -93,12 +93,12 @@ public class UserManagerService
 
     public async Task<Result<UserCards>> BindCardToUser(BindCardToUserCommand command)
     {
-        var user = await _repository.GetUserAsync(u => u.Id == command.UserId);
+        var user = await _repository.GetUserByEmail(command.Email);
 
         if (user is null)
             return Result.Failure<UserCards>(
-                new Error(Codes.UserNotFound, $"User with Id:'{command.UserId}' not found"));
-        var card = CardDetail.FromDto(command.Card, command.UserId);
+                new Error(Codes.UserNotFound, $"User with Email:'{command.Email}' not found"));
+        var card = CardDetail.FromDto(command.Card, user.Id);
         if (user.Cards is null)
         {
             user.Cards = new List<CardDetail> { card };
@@ -115,14 +115,14 @@ public class UserManagerService
 
     public async Task<Result<UserCards>> CardByUserId(UserById userById)
     {
-        var user = await _repository.GetUserAsync(u => u.Id == userById.UserId);
+        var user = await _repository.GetUserById(userById.UserId);
 
         if (user is null)
             return Result.Failure<UserCards>(
                 new Error(Codes.UserNotFound, $"User with Id:'{userById.UserId}' not found"));
 
         var result = await _repository.GetUserWithCardsAsync(c => c.Id == userById.UserId);
-        
+
         var userCards = new UserCards(userById.UserId, new List<CardReadDto>());
         if (result.Cards.Any())
         {

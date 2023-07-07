@@ -8,18 +8,23 @@ public static partial class Extensions
 {
     public static WebApplicationBuilder AddCustomLogging(this WebApplicationBuilder builder)
     {
-        builder
-            .Logging
-            .ClearProviders();
+        var canUse = Convert.ToBoolean(builder.Configuration["IsSerilog"]);
+        if (canUse)
+        {
+            builder
+                .Logging
+                .ClearProviders();
 
-        var logger = new LoggerConfiguration()
-            .ReadFrom
-            .Configuration(builder.Configuration)
-            .CreateLogger();
+            var logger = new LoggerConfiguration()
+                .ReadFrom
+                .Configuration(builder.Configuration)
+                .CreateLogger();
 
-        builder
-            .Host
-            .UseSerilog(logger);
+            builder
+                .Host
+                .UseSerilog(logger);
+        }
+        
         return builder;
     }
 }
