@@ -1,7 +1,4 @@
-﻿using Authentication.Attributes;
-using Authentication.Enum;
-using Identity.Domain.Entities;
-using Identity.Infrastructure.Services;
+﻿using Identity.Infrastructure.Services;
 using Identity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Extensions;

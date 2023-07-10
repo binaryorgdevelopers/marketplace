@@ -1,12 +1,9 @@
 ﻿using Amazon.S3;
-using Inventory.Domain.Abstractions;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Abstractions.Services;
-using Inventory.Domain.Entities;
 using Marketplace.Infrastructure.Persistence;
 using Marketplace.Infrastructure.Repositories;
 using Marketplace.Infrastructure.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

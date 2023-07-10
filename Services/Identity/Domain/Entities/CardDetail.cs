@@ -1,5 +1,4 @@
-﻿using System.Runtime.Intrinsics.X86;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using Identity.Models;
 using Identity.Models.Messages;

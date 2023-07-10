@@ -1,7 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using Amazon.S3;
 using Amazon.S3.Model;
-using Inventory.Domain.Abstractions;
 using Inventory.Domain.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

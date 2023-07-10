@@ -1,6 +1,5 @@
 ﻿using Authentication;
 using Marketplace.Application.Common.Messages.Commands;
-using Marketplace.Infrastructure.Services;
 using Newtonsoft.Json;
 using Shared.Models;
 using StackExchange.Redis;

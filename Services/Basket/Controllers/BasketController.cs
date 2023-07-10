@@ -2,7 +2,6 @@
 using Authentication.Enum;
 using Basket.Entities;
 using Basket.Repositories;
-using IdentityModel.Client;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Basket.Controllers;

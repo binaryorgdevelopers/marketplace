@@ -1,6 +1,4 @@
-﻿using EventBus.Abstractions;
-using EventBus.Events;
-using Identity.Domain.Entities;
+﻿using Identity.Domain.Entities;
 using Identity.Infrastructure.Repositories;
 using Identity.Models;
 using Identity.Models.Messages;

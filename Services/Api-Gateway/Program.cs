@@ -1,9 +1,13 @@
 using Authentication.Exceptions;
-using Authentication.Extensions;
+using Shared.Configuration;
 using Shared.Serilog;
-using Shared.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var env = builder.AddEnvironment();
+Host
+    .CreateDefaultBuilder(args)
+    .ConfigureAppConfiguration((_, config) => config.AddJsonFile($"appsettings.{env}.json"));
 
 builder
     .AddCustomLogging();
