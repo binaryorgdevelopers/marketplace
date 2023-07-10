@@ -31,9 +31,6 @@ internal class UserRepository : IUserRepository
 
     public async ValueTask<User?> GetUserByEmail(string email, CancellationToken cancellationToken = default)
     {
-        var cacheUser = await _cacheRepository.GetStringAsync<User>(email);
-        if (cacheUser is not null) return cacheUser;
-
         var dbUser = await _context.Users
             .Include(u => u.Role)
             .FirstOrDefaultAsync(c => c.Email == email, cancellationToken);

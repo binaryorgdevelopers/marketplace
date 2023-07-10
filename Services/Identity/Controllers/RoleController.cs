@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Identity.Controllers;
 
 [ApiController]
-[Route("api/v1/role")]
+[Route("api/v1/auth")]
 public class RoleController : ControllerBase
 {
     private readonly RoleManagerService _roleManagerService;
@@ -17,7 +17,7 @@ public class RoleController : ControllerBase
         _roleManagerService = roleManagerService;
     }
 
-    [HttpPost("create")]
+    [HttpPost("role/create")]
     public async ValueTask<ActionResult> CreateRole(RoleCreateCommand createCommand)
     {
         var result = await _roleManagerService.CreateRole(createCommand);

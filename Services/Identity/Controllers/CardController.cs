@@ -9,7 +9,7 @@ using Shared.Models;
 namespace Identity.Controllers;
 
 [ApiController]
-[Route("api/v1/card")]
+[Route("api/v1/auth")]
 public class CardController : ControllerBase
 {
     private readonly UserManagerService _userManagerService;
@@ -20,14 +20,14 @@ public class CardController : ControllerBase
     }
 
     [AddRoles(Roles.User, Roles.Admin)]
-    [HttpPost("bind")]
+    [HttpPost("card/bind")]
     public async Task<IActionResult> BindCardToUser(BindCardToUserCommand command)
         => await Result.Create(command)
             .Bind(c => _userManagerService.BindCardToUser(c))
             .Match(Ok, BadRequest);
 
     [AddRoles(Roles.User, Roles.Admin)]
-    [HttpGet("{id:guid}")]
+    [HttpGet("card/{id:guid}")]
     public async Task<IActionResult> GetUserCards(Guid id)
         => await Result.Create(new UserById(id))
             .Bind(c => _userManagerService.CardByUserId(c))

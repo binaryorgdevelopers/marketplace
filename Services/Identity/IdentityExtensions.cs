@@ -1,6 +1,4 @@
 ﻿using Authentication;
-using EventBus.Abstractions;
-using EventBusRabbitMq;
 using Identity.Domain.Entities;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Repositories;
@@ -8,7 +6,6 @@ using Identity.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared.Models;
-using EventBusRabbitMq = EventBusRabbitMq.EventBusRabbitMq;
 
 namespace Identity;
 

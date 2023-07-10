@@ -8,7 +8,7 @@ using Shared.Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 builder
-    // .AddCustomGrpcPorts()
+    .AddCustomGrpcPorts()
     .AddServices()
     .AddCustomLogging()
     .AddRepositories()
