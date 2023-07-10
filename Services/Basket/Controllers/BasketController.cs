@@ -47,28 +47,30 @@ public class BasketController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> Index()
     {
-        var serverClient = _httpClientFactory.CreateClient();
-
-        var discoveryDocument = await serverClient.GetDiscoveryDocumentAsync("http://localhost:1111/");
-
-        var tokenResponse = await serverClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-        {
-            Address = discoveryDocument.TokenEndpoint,
-            ClientId = "basket",
-            ClientSecret = "basket",
-            Scope = "basket"
-        });
-
-        var apiClient = _httpClientFactory.CreateClient();
-        apiClient.SetBearerToken(tokenResponse.AccessToken);
-        var response = await apiClient.GetAsync("http://localhost:1111/secret");
-        var content = await response.Content.ReadAsStringAsync();
-
-        return Ok(new
-        {
-            access_token = tokenResponse.AccessToken,
-            message = content
-        });
+        // var serverClient = _httpClientFactory.CreateClient();
+        //
+        // var discoveryDocument = await serverClient.GetDiscoveryDocumentAsync("http://localhost:1111/");
+        //
+        // var tokenResponse = await serverClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+        // {
+        //     Address = discoveryDocument.TokenEndpoint,
+        //     ClientId = "basket",
+        //     ClientSecret = "basket",
+        //     Scope = "basket"
+        // });
+        //
+        // var apiClient = _httpClientFactory.CreateClient();
+        // apiClient.SetBearerToken(tokenResponse.AccessToken);
+        // var response = await apiClient.GetAsync("http://localhost:1111/secret");
+        // var content = await response.Content.ReadAsStringAsync();
+        //
+        // return Ok(new
+        // {
+        //     access_token = tokenResponse.AccessToken,
+        //     message = content
+        // });
+        await Task.CompletedTask;
+        return Ok(new { message="Basket is running",statusCode=200});
     }
 
     [AddRoles(Roles.Admin)]

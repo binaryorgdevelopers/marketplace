@@ -112,6 +112,7 @@ internal class UserRepository : IUserRepository
     public async ValueTask<User> GetUserWithCardsAsync(Expression<Func<User, bool>> expression,
         CancellationToken cancellationToken = default)
         => (await _context.Users
+            .Where(expression)
             .Include(c => c.Cards)
             .FirstOrDefaultAsync(expression, cancellationToken))!;
 }

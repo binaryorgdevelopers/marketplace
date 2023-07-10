@@ -18,16 +18,16 @@ public class UserManagerService
     private readonly ITokenProvider _tokenProvider;
     private readonly IRoleRepository _roleRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
-    private readonly IEventBus _eventBus;
+    // private readonly IEventBus _eventBus;
 
     public UserManagerService(IUserRepository repository, ITokenProvider tokenProvider, IRoleRepository roleRepository,
-        IPasswordHasher<User> passwordHasher, IEventBus eventBus)
+        IPasswordHasher<User> passwordHasher)
     {
         _repository = repository;
         _tokenProvider = tokenProvider;
         _roleRepository = roleRepository;
         _passwordHasher = passwordHasher;
-        _eventBus = eventBus;
+        // _eventBus = eventBus;
     }
 
     public async ValueTask<Result<AuthResult>> Register(UserCreateCommand createCommand)
@@ -118,14 +118,15 @@ public class UserManagerService
 
     public async Task<Result<UserCards>> CardByUserId(UserById userById)
     {
-        var user = await _repository.GetUserById(userById.UserId);
 
-        if (user is null)
+        var result = await _repository.GetUserWithCardsAsync(c => c.Id == userById.UserId);
+        
+        if (result is null)
             return Result.Failure<UserCards>(
                 new Error(Codes.UserNotFound, $"User with Id:'{userById.UserId}' not found"));
 
-        var result = await _repository.GetUserWithCardsAsync(c => c.Id == userById.UserId);
-
+        
+        
         var userCards = new UserCards(userById.UserId, new List<CardReadDto>());
         if (result.Cards != null)
         {
@@ -142,7 +143,7 @@ public class UserManagerService
             return Result.Failure<UserCards>(
                 new Error(Codes.UserNotFound, $"User with Email:'{userByEmail.Email}' not found"));
         var blockResult = await _repository.DeactivateUser(user);
-        _eventBus.Publish(new IntegrationEvent(Guid.NewGuid(), DateTime.Now));
+        // _eventBus.Publish(new IntegrationEvent(Guid.NewGuid(), DateTime.Now));
 
         return blockResult ? Result.Create(true) : Result.Create(false);
     }
