@@ -1,2 +1,2 @@
-FROM nginx:alpine
-COPY . /usr/share/nginx/html
+FROM docker.io/nginx:latest AS stage
+COPY ./usr/share/nginx/html .
