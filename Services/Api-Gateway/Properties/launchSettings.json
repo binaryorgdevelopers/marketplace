@@ -14,7 +14,7 @@
       "launchBrowser": false,
       "applicationUrl": "http://localhost:1010",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Docker"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }
