@@ -1,11 +1,4 @@
-﻿# version: '3'
-# services:
-#   basket-service:
-#     image: basketservice
-#     ports:
-#       - "4000:80"
-#     restart: always
-#     version: '3'
+﻿version: "3"
 
 services:
   redis:
@@ -15,6 +8,7 @@ services:
     ports:
       - "6379:6379"
     command: redis-server --requirepass RRnFPZ93tjBHB9W62p
+
   rabbitmq:
     image: rabbitmq
     container_name: rabbitmq
@@ -24,6 +18,23 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+      - ME_CONFIG_MONGODB_URL=mongodb://root:root@mongo:27017/
 
 volumes:
   redis_data:
