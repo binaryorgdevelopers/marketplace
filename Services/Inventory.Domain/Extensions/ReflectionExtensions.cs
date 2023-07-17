@@ -20,8 +20,7 @@ public static class ReflectionExtensions
         {
             if (parent == currentChild || HasAnyInterfaces(parent, currentChild)) return true;
 
-            currentChild = currentChild.BaseType != null
-                           && currentChild.BaseType.IsGenericType
+            currentChild = currentChild.BaseType is { IsGenericType: true }
                 ? currentChild.BaseType.GetGenericTypeDefinition()
                 : currentChild.BaseType;
             if (currentChild == null)

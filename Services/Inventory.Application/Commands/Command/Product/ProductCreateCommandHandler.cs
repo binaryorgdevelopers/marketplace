@@ -1,4 +1,5 @@
 ﻿using Inventory.Domain.Abstractions.Repositories;
+using Inventory.Domain.Abstractions.Services;
 using Inventory.Domain.Entities;
 using Marketplace.Application.Common.Messages.Commands;
 using Marketplace.Application.Common.Messages.Messages;
@@ -11,14 +12,14 @@ public class ProductCreateCommandHandler : ICommandHandler<ProductCreateCommand,
 {
     private readonly IGenericRepository<Inventory.Domain.Entities.Product> _productRepository;
 
-    // private readonly ICloudUploaderService _uploaderService;
+    private readonly ICloudUploaderService _uploaderService;
 
-    public ProductCreateCommandHandler(IGenericRepository<Inventory.Domain.Entities.Product> productRepository
-        // ICloudUploaderService uploaderService
-        )
+    public ProductCreateCommandHandler(IGenericRepository<Inventory.Domain.Entities.Product> productRepository,
+        ICloudUploaderService uploaderService
+    )
     {
         _productRepository = productRepository;
-        // _uploaderService = uploaderService;
+        _uploaderService = uploaderService;
     }
 
 
@@ -26,9 +27,12 @@ public class ProductCreateCommandHandler : ICommandHandler<ProductCreateCommand,
 
     public async Task<Result<ProductDto>> Handle(ProductCreateCommand request, CancellationToken cancellationToken)
     {
-        // List<Blob> blob = new();
-        // foreach (var b in request.Photos)
-        //     blob.Add(Blob.Create(await _uploaderService.Upload(b.file, string.Empty), b.Extras));
+        List<Blob> blob = new();
+        foreach (var b in request.Photos)
+        {
+            string photo = await _uploaderService.Upload(b.file, string.Empty);
+            blob.Add(Blob.Create(photo, b.Extras));
+        }
 
         var product = Inventory.Domain.Entities.Product.Create(
             request.Title,
@@ -37,7 +41,7 @@ public class ProductCreateCommandHandler : ICommandHandler<ProductCreateCommand,
             request.Description,
             request.CategoryId,
             request.UserId,
-            new List<Blob>(),
+            blob,
             request.Characteristics.Select(c => c.ToChars()),
             request.Badges.Select(c => c.ToBadge()));
 

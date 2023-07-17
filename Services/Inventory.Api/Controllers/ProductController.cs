@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/product")]
+[Route("product")]
 public class ProductController : ControllerBase
 {
     private readonly ISender _sender;

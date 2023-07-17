@@ -37,5 +37,33 @@ function RenderVideo(val){
     content.appendChild(img);
 
 }
-RenderImage('http://localhost:5203/file/image/images.png')
-// RenderVideo('http://localhost:5203/file/video/okmIEVj8D8ANUqQgERrnQsQfrHuEiekqSB6bBM.mp4')
+
+async function listen(){
+    const ipHostInfo = await Dns.GetHostEntryAsync("host.contoso.com");
+    const ipAddress = ipHostInfo.AddressList[0];
+    const ipEndPoint = new IPEndPoint(ipAddress, 11000);
+    const client = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+    await client.ConnectAsync(ipEndPoint);
+    while (true) {
+        // Send message.
+        const message = "Hi friends 👋!<|EOM|>";
+        const messageBytes = Buffer.from(message, "utf8");
+        await client.SendAsync(messageBytes);
+        console.log(`Socket client sent message: "${message}"`);
+
+        // Receive ack.
+        const buffer = Buffer.alloc(1024);
+        const received = await client.ReceiveAsync(buffer);
+        const response = buffer.toString("utf8");
+        if (response === "<|ACK|>") {
+            console.log(`Socket client received acknowledgment: "${response}"`);
+            break;
+        }
+    }
+
+    client.Shutdown(SocketShutdown.Both);
+}
+await listen();
+// RenderImage('http://localhost:5192/file/image/arch_diagram_podcast.png')
+// // RenderVideo('http://localhost:5203/file/video/okmIEVj8D8ANUqQgERrnQsQfrHuEiekqSB6bBM.mp4')

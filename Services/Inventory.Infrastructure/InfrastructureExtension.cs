@@ -1,4 +1,5 @@
-﻿using Amazon.S3;
+﻿using System.Diagnostics;
+using Amazon.S3;
 using Inventory.Domain.Abstractions.Repositories;
 using Inventory.Domain.Abstractions.Services;
 using Marketplace.Infrastructure.Persistence;
@@ -7,6 +8,7 @@ using Marketplace.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Shared.Models;
 
 namespace Marketplace.Infrastructure;
@@ -16,8 +18,22 @@ public static class InfrastructureExtension
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services
-            .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
-            .AddCloudStorage(configuration);
+            .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+        services.AddOptions<FileServerConfiguration>()
+            .BindConfiguration("FileServer")
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        if (Convert.ToBoolean(configuration["UseCloud"]))
+        {
+            services.AddCloudStorage(configuration);
+        }
+        else
+        {
+            services.AddFileServer(configuration);
+        }
+
         return services;
     }
 
@@ -40,6 +56,18 @@ public static class InfrastructureExtension
         services.AddScoped<AWSCredentials>();
         services.AddSingleton<IAmazonS3, AmazonS3Client>();
         services.AddScoped<ICloudUploaderService, CloudUploaderService>();
+        return services;
+    }
+
+    private static IServiceCollection AddFileServer(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddHttpClient("fileServer", (serviceProvider, httpClient) =>
+        {
+            var serverSettings = serviceProvider.GetRequiredService<IOptions<FileServerConfiguration>>().Value;
+            httpClient.DefaultRequestHeaders.Add("Username", serverSettings.Username);
+            httpClient.BaseAddress = new Uri(serverSettings.Url);
+        });
+        services.AddScoped<ICloudUploaderService, FileUploaderService>();
         return services;
     }
 }
