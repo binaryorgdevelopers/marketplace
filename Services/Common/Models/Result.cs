@@ -1,11 +1,14 @@
-﻿namespace Shared.Models;
+﻿using System.Runtime.Serialization;
 
+namespace Shared.Models;
+
+[DataContract]
 public class Result
 {
     public bool IsSuccess { get; set; }
     public bool IsFailure { get; set; }
-    public Error Error { get; set; }
-    public string Message { get; set; }
+    [DataMember] public Error Error { get; set; }
+    [DataMember] public string Message { get; set; }
 
     public Result(bool isSuccess, Error error = null)
     {
@@ -47,9 +50,10 @@ public class Result
     }
 }
 
+[DataContract]
 public class Result<T> : Result
 {
-    public T Value { get; }
+    [DataMember] public T Value { get; }
 
     public Result(bool isSuccess, T value, Error error = null)
         : base(isSuccess, error)

@@ -34,6 +34,21 @@ public class ProductDto : BaseDto<ProductDto, Product>
         Characteristics = characteristics.Select(CharacteristicsDto.FromEntity);
     }
 
+    public new static ProductDto FromEntity(Product product)
+    {
+        var res = new ProductDto(
+            product.Id,
+            product.Attributes,
+            product.Badges.Select(BadgeDto.FromEntity),
+            product.Synonyms,
+            product.Title,
+            product.Description,
+            CategoryDto.FromEntity(product.Category),
+            product.Photos.Select(c => new BlobDto(c.Id, c.Title, c.Title, c.Extras)),
+            product.Characteristics.Select(c => new CharacteristicsDto(c.Id, c.Title, null)));
+        return res;
+    }
+
     public ProductDto()
     {
     }
