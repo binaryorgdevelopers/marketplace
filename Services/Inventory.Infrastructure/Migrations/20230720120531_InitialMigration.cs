@@ -92,6 +92,8 @@ namespace Marketplace.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title=table.Column<string>(type:"text",nullable:false),
+                    Extras=table.Column<string>(type:"text",nullable:true),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     ProductId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),

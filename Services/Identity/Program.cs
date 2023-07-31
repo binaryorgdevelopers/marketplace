@@ -23,10 +23,16 @@ builder.Services
 builder.Services
     .AddResponseCaching()
     .AddResponseCompression();
+builder.Services.AddCors();
 
 
 var app = builder.Build();
-
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true)
+    .AllowCredentials()
+);
 app.UseHttpsRedirection();
 app.UseCustomMiddlewares();
 app.UseAuthorization();

@@ -7,7 +7,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-# Copy csproj and rstore as distinct layers
+# Copy csproj and restore as distinct layers
 COPY "Identity/Identity.csproj"  "Identity/Identity.csproj"
 COPY "Authentication/Authentication.csproj" "Authentication/Authentication.csproj"
 COPY "Common/Common.csproj" "Common/Common.csproj"

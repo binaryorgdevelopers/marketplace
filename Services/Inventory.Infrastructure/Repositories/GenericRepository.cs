@@ -53,19 +53,6 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
             .FirstOrDefault(predicate);
     }
 
-    // public TEntity? GetWithInclude(
-    //     Func<TEntity, bool> predicate,
-    //     params Expression<Func<TEntity,object>>[] includes)
-    // {
-    //     var entity = _dataContext.Set<TEntity>()
-    //         .AsNoTracking().AsEnumerable()
-    //         .Where(predicate);
-    //     var included = includes
-    //         .Aggregate(_dataContext.Set<TEntity>(),
-    //             (query, path) => query.Include(path));
-    //     // return included.FirstOrDefault(predicate);
-    // }
-
     public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         await _dataContext.Set<TEntity>().AddAsync(entity, cancellationToken);

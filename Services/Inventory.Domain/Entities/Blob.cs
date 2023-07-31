@@ -1,5 +1,6 @@
 ﻿using Authentication;
 using Inventory.Domain.Abstractions;
+using Shared.Extensions;
 using Shared.Models.Constants;
 
 namespace Inventory.Domain.Entities;
@@ -14,9 +15,13 @@ public class Blob : IIdentifiable, ICommon
     {
         if (string.IsNullOrWhiteSpace(title))
             throw new AuthException(Codes.InvalidCredential, $"Field can't be empty: '{nameof(title)}'");
-
+        Id = Guid.NewGuid();
         Title = title;
         Extras = extras;
+
+        CreatedAt = DateTime.Now.SetKindUtc();
+        UpdatedAt = DateTime.Now.SetKindUtc();
+        LastSession = DateTime.Now.SetKindUtc();
     }
 
     private Blob(string title, string? extras, Guid productId)
@@ -26,9 +31,12 @@ public class Blob : IIdentifiable, ICommon
         ProductId = productId;
     }
 
-    public string Title { get; }
-    public string? Extras { get; }
 
+    public Guid Id { get; set; }
+
+    public string Title { get; set; }
+
+    public string? Extras { get; set; }
 
     //FK s
     public Guid UserId { get; set; }
@@ -38,16 +46,15 @@ public class Blob : IIdentifiable, ICommon
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public DateTime LastSession { get; set; }
-    public Guid Id { get; set; }
 
 
     public static Blob Create(string title, string? extras)
     {
-        return new(title, extras);
+        return new Blob(title, extras);
     }
 
     public static Blob Create(string title, string? extras, Guid productId)
     {
-        return new(title, extras, productId);
+        return new Blob(title, extras, productId);
     }
 }

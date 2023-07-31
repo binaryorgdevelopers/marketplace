@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Marketplace.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230708125821_InitialMigration")]
+    [Migration("20230720120531_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

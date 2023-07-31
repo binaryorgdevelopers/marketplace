@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/category")]
+[Route("category")]
 public class CategoryController : ControllerBase
 {
     private readonly ISender _sender;

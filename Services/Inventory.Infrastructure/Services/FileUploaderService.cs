@@ -1,6 +1,4 @@
 ﻿using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
 using Inventory.Domain.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;

@@ -18,7 +18,8 @@ public static class InfrastructureExtension
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services
-            .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
+            .AddScoped<IProductRepository, ProductRepository>();
 
         services.AddOptions<FileServerConfiguration>()
             .BindConfiguration("FileServer")
