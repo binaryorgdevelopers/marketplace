@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Collections.Immutable;
+using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using Polly;
 using RabbitMQ.Client;
@@ -96,7 +97,7 @@ public class ConnectionBuilder : IConnectionBuilder
     {
         if (Disposed) return;
 
-        _logger.LogWarning("A RabbitMQ connection is shutdown. Trying to re-connect...");
+        _logger.LogWarning("A RabbitMQ connection is shutdown. Trying to re-connect..."); 
 
         TryConnect();
     }
@@ -126,3 +127,4 @@ public interface IConnectionBuilder
     bool IsConnected { get; }
     bool TryConnect();
 }
+

@@ -67,7 +67,7 @@ public class FileUploaderService : ICloudUploaderService
     private string GetFileExtension(byte[] file)
     {
 // Define file signature/magic numbers for the file types you want to identify
-        Dictionary<string, string> fileSignatures = new Dictionary<string, string>()
+        Dictionary<string, string> fileSignatures = new()
         {
             { ".jpeg", "FFD8FF" },
             { ".png", "89504E47" },

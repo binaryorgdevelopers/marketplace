@@ -4,7 +4,7 @@ using Shared.Extensions;
 
 namespace Identity.Infrastructure.Persistence;
 
-internal class IdentityContext : DbContext
+public class IdentityContext : DbContext
 {
     public IdentityContext(DbContextOptions<IdentityContext> options) : base(options)
     {

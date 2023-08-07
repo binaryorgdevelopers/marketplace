@@ -7,7 +7,7 @@ using Shared.Models;
 
 namespace Identity.Infrastructure.Services;
 
-internal class TokenProvider : ITokenProvider
+public class TokenProvider : ITokenProvider
 {
     private readonly JwtOptions _jwtOptions;
 
@@ -53,6 +53,8 @@ internal class TokenProvider : ITokenProvider
                 ClockSkew = TimeSpan.Zero,
                 ValidIssuer = "http://localhost:1111",
                 ValidAudience = _jwtOptions.ValidAudience,
+                RequireSignedTokens = false
+                
             }, out SecurityToken validatedToken);
             var jwtToken = (JwtSecurityToken)validatedToken;
             var userId = Guid.Parse(jwtToken.Claims.First(c => c.Type == "id").Value);

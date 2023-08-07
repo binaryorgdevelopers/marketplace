@@ -6,13 +6,11 @@ namespace Identity.Infrastructure.Repositories;
 public class CacheRepository : ICacheRepository
 {
     private readonly IDatabase _database;
-    private readonly ConnectionMultiplexer _redis;
     private readonly ILogger<CacheRepository> _logger;
 
-    public CacheRepository(ConnectionMultiplexer redis,ILogger<CacheRepository> logger)
+    public CacheRepository(IConnectionMultiplexer redis,ILogger<CacheRepository> logger)
     {
         _database = redis.GetDatabase();
-        _redis = redis;
         _logger = logger;
     }
 

@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using Authentication;
 using Identity.Domain.Entities;
 using Identity.Infrastructure.Persistence;
@@ -11,7 +12,7 @@ using Shared.Models.Constants;
 
 namespace Identity.Infrastructure.Repositories;
 
-internal class UserRepository : IUserRepository
+public class UserRepository : IUserRepository
 {
     private readonly IdentityContext _context;
     private readonly IPasswordHasher<User> _passwordHasher;
