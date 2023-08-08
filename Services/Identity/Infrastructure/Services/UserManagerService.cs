@@ -15,6 +15,7 @@ public class UserManagerService
     private readonly IUserRepository _repository;
     private readonly ITokenProvider _tokenProvider;
     private readonly IRoleRepository _roleRepository;
+
     private readonly IPasswordHasher<User> _passwordHasher;
     // private readonly IEventBus _eventBus;
 
@@ -32,7 +33,7 @@ public class UserManagerService
     {
         if (await _repository.ExistsAsync(u => u.Email == createCommand.Email))
             return Result.Failure<AuthResult>(
-                new Error(Codes.InvalidCredential, $"User with email:''{createCommand.Email} already exists"));
+                new Error(Codes.EmailInUse, $"User with email:''{createCommand.Email} already exists"));
 
         var role = await _roleRepository.GetRoleAsync(r => r.Name == createCommand.RoleName);
 
@@ -56,7 +57,7 @@ public class UserManagerService
     {
         var user = await _repository.GetUserByEmail(command.Email);
 
-        if (user is null)
+        if (user?.FirstName is null)
             return Result.Failure<AuthResult>(new Error(Codes.UserNotFound,
                 $"User with email:'{command.Email}' not found"));
 
@@ -116,15 +117,13 @@ public class UserManagerService
 
     public async Task<Result<UserCards>> CardByUserId(UserById userById)
     {
-
         var result = await _repository.GetUserWithCardsAsync(c => c.Id == userById.UserId);
-        
+
         if (result is null)
             return Result.Failure<UserCards>(
                 new Error(Codes.UserNotFound, $"User with Id:'{userById.UserId}' not found"));
 
-        
-        
+
         var userCards = new UserCards(userById.UserId, new List<CardReadDto>());
         if (result.Cards != null)
         {

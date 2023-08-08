@@ -54,8 +54,8 @@ public class IdentityContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder
-            .LogTo(Console.WriteLine, new[] { InMemoryEventId.ChangesSaved })
-            .UseInMemoryDatabase("UserContextWithNullCheckingDisabled",b=>b.EnableNullChecks(false));
+        // optionsBuilder
+        //     .LogTo(Console.WriteLine, new[] { InMemoryEventId.ChangesSaved })
+        //     .UseInMemoryDatabase("UserContextWithNullCheckingDisabled",b=>b.EnableNullChecks(false));
     }
 }
