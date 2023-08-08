@@ -1,5 +1,6 @@
 ﻿using Identity.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Shared.Extensions;
 
 namespace Identity.Infrastructure.Persistence;
@@ -17,6 +18,7 @@ public class IdentityContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<CardDetail> Cards { get; set; }
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -48,5 +50,12 @@ public class IdentityContext : DbContext
         });
 
         base.OnModelCreating(modelBuilder);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder
+            .LogTo(Console.WriteLine, new[] { InMemoryEventId.ChangesSaved })
+            .UseInMemoryDatabase("UserContextWithNullCheckingDisabled",b=>b.EnableNullChecks(false));
     }
 }

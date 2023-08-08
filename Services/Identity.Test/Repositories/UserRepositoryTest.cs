@@ -1,6 +1,7 @@
 ﻿using Identity.Domain.Entities;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Repositories;
+using Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -9,32 +10,42 @@ namespace Identity.Test.Repositories;
 
 public class UserRepositoryTest
 {
-    private readonly UserRepository _userRepository;
-    private readonly Mock<IdentityContext> _repositoryMock;
-    private readonly Mock<IPasswordHasher<User>> _passwordHasherMock;
-    private readonly Mock<ICacheRepository> _cacheRepositoryMock;
+    private UserRepository _userRepository;
+
     public UserRepositoryTest()
     {
-        _repositoryMock = new Mock<IdentityContext>();
+        Mock<IPasswordHasher<User>> hasher = new Mock<IPasswordHasher<User>>();
+        Mock<ICacheRepository> cacheRepository = new Mock<ICacheRepository>();
 
-
-
-        var phMock = new Mock<IPasswordHasher<User>>();
-        var cacheMock = new Mock<ICacheRepository>();
-        _userRepository = new UserRepository(_repositoryMock.Object, phMock.Object,cacheMock.Object);
-        
-        _repositoryMock = new Mock<IdentityContext>();
-
-        // Create mock for IPasswordHasher<User>
-        _passwordHasherMock = new Mock<IPasswordHasher<User>>();
-        // Set up any necessary behavior for the passwordHasherMock
-
-        // Create mock for ICacheRepository
-        _cacheRepositoryMock = new Mock<ICacheRepository>();
-        // Set up any necessary behavior for the cacheRepositoryMock
-
-        // Create an instance of UserRepository with the mocked dependencies
-        _userRepository = new UserRepository(_repositoryMock.Object, _passwordHasherMock.Object, _cacheRepositoryMock.Object);
-
+        var optionsBuilder = new DbContextOptionsBuilder<IdentityContext>()
+            .UseInMemoryDatabase("UserContextWithNullCheckingDisabled");
+        IdentityContext identityContext = new IdentityContext(optionsBuilder.Options);
+        _userRepository = new UserRepository(context: identityContext, passwordHasher: hasher.Object,
+            cacheRepository: cacheRepository.Object);
+        _userRepository.AddAsync(new UserCreateCommand("+998997541642", "dilshodbekkhamidov@gmail.com", "dilshod",
+            "Dilshodbek", "Hamidov"));
     }
+
+    [Theory]
+    [InlineData("+998997541642", "dilshodbekkhamidov@gmail.com", "Dilshodbek", "Dilshodbek", "Hamidov")]
+    [InlineData("+998997541642", "khamidovdilshodbek@gmail.com", "Dilshodbek", "Dilshodbek", "Hamidov")]
+    [InlineData("+998997541642", "dilshod@gmail.com", "Dilshodbek", "Dilshodbek", "Hamidov")]
+    public async Task AddUser_Should_Add_New_User(string phoneNumber, string email, string password, string firstName,
+        string lastName)
+    {
+        var command = new UserCreateCommand(phoneNumber, email, password, firstName, lastName, Guid.NewGuid());
+        var user = await _userRepository.AddAsync(command);
+
+        Assert.NotNull(user);
+    }
+    [Theory]
+    [InlineData("khamidovdilshodbek@gmail.com")]
+    [InlineData("dilshodbekkhamidov@gmail.com")]
+    [InlineData("dilshod@gmail.com")]
+    public async Task GetUserByEmail_Should_Return_User(string email)
+    {
+        var user = await _userRepository.GetUserByEmail(email);
+        Assert.NotNull(user);
+    }
+
 }

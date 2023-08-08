@@ -7,7 +7,7 @@ using Shared.Models.Constants;
 
 namespace Identity.Infrastructure.Repositories;
 
-internal class RoleRepository : IRoleRepository
+public class RoleRepository : IRoleRepository
 {
     private readonly IdentityContext _identityContext;
 

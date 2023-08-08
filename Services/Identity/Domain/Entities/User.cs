@@ -19,6 +19,22 @@ public class User : Protectable
     {
         ArgumentNullException.ThrowIfNull(firstName);
         ArgumentNullException.ThrowIfNull(lastName);
+        Id = Guid.NewGuid();
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        PhoneNumber = phoneNumber ?? "_";
+        Locale = locale ?? "UZ";
+        RoleId = roleId;
+        Authorities = new[] { "UZ" };
+    }
+
+    public User(Guid id, string firstName, string lastName, string email, string? phoneNumber, Guid roleId,
+        string? locale = null)
+    {
+        ArgumentNullException.ThrowIfNull(firstName);
+        ArgumentNullException.ThrowIfNull(lastName);
+        Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
